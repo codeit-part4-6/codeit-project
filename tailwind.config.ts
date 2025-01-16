@@ -17,12 +17,16 @@ export default {
       colors: {
         transparent: "transparent",
         white: 'var(--white)',
-        black: 'var(--black)',
+        // black: 'var(--black)',
         'nomad-black': 'var(--nomad-black)',
         primary: 'var(--primary)',
         secondary: 'var(--secondary)',
         'accent-green': 'var(--accent-green)',
         yellow: 'var(--yellow)',
+
+        black:{
+          50: '#000000',
+        },
 
         gray: {
           50: '#FAFAFA',
