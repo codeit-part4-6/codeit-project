@@ -4,16 +4,23 @@ import navlogo from '@/public/img/img_navlogo.svg'
 
 export default function Navbar() {
   return (
-    <div className="sticky top-0 flex h-[70px] justify-center items-center z-50 px-[24px] t:px-[24px] m:px-[24px] border-b border-solid border-var-gray3 bg-var-gray1 dark:bg-var-dark1 dark:border-var-dark1">
-      <div className="w-[1200px] flex justify-between items-center">
-      <div className="flex items-center">
+    <div className="sticky flex h-20 p-3">
+      <div className="flex w-full items-center justify-between">
+        <div>
           <Link href="/">
             <Image
               src={navlogo}
               alt="로고 아이콘"
-              className="m:w-[120px]"
             />
           </Link>
+        </div>
+        <div className="flex items-center justify-center gap-6 text-[14px] font-[500] leading-[24px] text-[#1B1B1B]">
+          <div>
+            <Link href='/signin'>로그인</Link>
+          </div>
+          <div>
+            <Link href='/signup'>회원가입</Link>
+          </div>
         </div>
       </div>
     </div>
