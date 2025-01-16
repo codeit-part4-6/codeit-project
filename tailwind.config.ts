@@ -15,24 +15,45 @@ export default {
   theme: {
     extend: {
       colors: {
-        black: '#101318',
-        white: '#FFFFFF',
+        transparent: "transparent",
+        white: 'var(--white)',
+        black: 'var(--black)',
+        'nomad-black': 'var(--nomad-black)',
+        primary: 'var(--primary)',
+        secondary: 'var(--secondary)',
+        'accent-green': 'var(--accent-green)',
+        yellow: 'var(--yellow)',
 
         gray: {
-          100: '#F2F4F8',
-          300: '#CFDBEA',
-          500: '#9FACBD',
-          800: '#2D3034',
+          50: '#FAFAFA',
+          100: '#EEEEEE',
+          200: '#DDDDDD',
+          300: '#CBC9CF',
+          400: "ADAEB8",
+          500: "#A4A1AA",
+          600: "#A1A1A1",
+          700: "#79747E",
+          800: "#4B4B4B",
         },
 
-        purple: {
-          100: '#6A42DB',
-          10: '#F1EDFC',
+        red: {
+          50: "#FFE4E0",
+          100: "#FFC2BA",
+          200: "#FF472E",
+        },
+
+        orange: {
+          50: '#FFF4E8',
+          100: '#FF7C1D',
+        },
+
+        blue: {
+          50: "#E5F3FF",
+          100: "#2EB4FF",
+          200: "#0085FF",
         },
       },
-      fontFamily: {
-        sans: ['var(--font-pretendard)', 'sans-serif'],
-      },
+      
       fontSize: {
         '3xl': ['32px', '42px'],
         '2xl': ['24px', '32px'],
@@ -41,7 +62,7 @@ export default {
         lg: ['16px', '26px'],
         md: ['14px', '24px'],
         sm: ['13px', '22px'],
-        xs: ['12px', '20px'],
+        xs: ['12px', '18px'],
       },
       fontWeight: {
         bold: '700',
