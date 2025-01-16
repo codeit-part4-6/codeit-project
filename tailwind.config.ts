@@ -17,7 +17,6 @@ export default {
       colors: {
         transparent: "transparent",
         white: 'var(--white)',
-        // black: 'var(--black)',
         'nomad-black': 'var(--nomad-black)',
         primary: 'var(--primary)',
         secondary: 'var(--secondary)',
@@ -26,6 +25,7 @@ export default {
 
         black:{
           50: '#000000',
+          100: '#1B1B1B'
         },
 
         gray: {
