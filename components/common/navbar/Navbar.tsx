@@ -4,7 +4,7 @@ import navlogo from '@/public/img/img_navlogo.svg';
 
 export default function Navbar() {
   return (
-    <>
+    <header>
       <nav className="sticky flex h-[4.375rem] px-[1.25rem] py-[1.25rem] md:px-[0.625rem] md:py-[0.625rem] md:gap-[1.3125rem]">
         <div className="flex w-full items-center justify-between">
           <div>
@@ -23,6 +23,6 @@ export default function Navbar() {
         </div>
       </nav>
       <hr className="border-b-[0.0625rem] border-gray-200" />
-    </>
+    </header>
   );
 }
