@@ -1,31 +1,28 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import navlogo from '@/public/img/img_navlogo.svg'
+import navlogo from '@/public/img/img_navlogo.svg';
 
 export default function Navbar() {
   return (
     <>
-      <nav className="sticky flex h-[70px] px-[20px] py-[20px] md:px-[10px] md:py-[10px] md:gap-[21px]">
+      <nav className="sticky flex h-[4.375rem] px-[1.25rem] py-[1.25rem] md:px-[0.625rem] md:py-[0.625rem] md:gap-[1.3125rem]">
         <div className="flex w-full items-center justify-between">
           <div>
             <Link href="/">
-              <Image
-                src={navlogo}
-                alt="로고 아이콘"
-              />
+              <Image src={navlogo} alt="로고 아이콘" />
             </Link>
           </div>
-          <div className="flex items-center justify-center gap-6 text-[14px] font-[500] leading-[24px] text-[#1B1B1B]">
+          <div className="flex items-center justify-center gap-[1.5rem] text-md font-medium text-black-100">
             <div>
-              <Link href='/signin'>로그인</Link>
+              <Link href="/signin">로그인</Link>
             </div>
             <div>
-              <Link href='/signup'>회원가입</Link>
+              <Link href="/signup">회원가입</Link>
             </div>
           </div>
         </div>
       </nav>
-      <hr className="border-b-[1px] border-#DDDDDD" />
+      <hr className="border-b-[0.0625rem] border-gray-200" />
     </>
   );
 }
