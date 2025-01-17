@@ -16,7 +16,7 @@ export default function Page() {
   return (
     <main>
       <Navbar />
-      <div className="flex flex-col items-center max-w-[640px] m-auto pt-[110px] gap-[24px]">
+      <div className="flex flex-col items-center max-w-[640px] m-auto pt-[110px] gap-[24px] tablet:pt-[126px] tablet:gap-[40px] desktop:pt-[118px] destop:gap-[56px]">
         <Link href="/">
           <Image src={signLogo} alt="로고" />
         </Link>
