@@ -3,6 +3,7 @@
 import React, {useState} from 'react';
 import ReviewModal from '@/components/common/modal/review-modal';
 import Modal from '@/components/common/modal/modal';
+import Navbar from '@/components/common/navbar/Navbar';
 
 const Page = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +26,7 @@ const Page = () => {
       {/* {isOpen && <ReviewModal message={'후기 작성'} onClose={handleCloseModal} />} */}
       {isOpen && <Modal type="small" message="예약을 취소하시겠습니까?" onClose={handleCloseModal} />}
       {/* {isOpen && <Modal type="big" message="모달모달모달" onClose={handleCloseModal} />} */}
+      <Navbar />
     </>
   );
 };
