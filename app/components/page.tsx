@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@/components/common/button';
 import Navbar from '@/components/common/navbar/Navbar';
 import ModalComponent from './modal';
+import InputPage from './InputPage';
 
 async function Page() {
   const data = await new Promise<string>(resolve => setTimeout(() => resolve('비동기 데이터 1초'), 1000));
@@ -36,6 +37,10 @@ async function Page() {
         <div className="m-5 mt-0 h-24pxr w-150pxr">{data}</div>
       </li>
       <hr />
+      <br />
+      <li>
+        <InputPage />
+      </li>
     </ul>
   );
 }
