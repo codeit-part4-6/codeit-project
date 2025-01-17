@@ -1,19 +1,26 @@
+import Button from '../button';
+import OverlayContainer from './overlay-container';
 
-import OverlayContainer from "./overlay-container";
-
-interface ModalProps{
-    message: string;
-    onClose: () => void;
+interface ModalProps {
+  message: string;
+  onClose: () => void;
 }
 
-export default function ReviewModal({message, onClose}: ModalProps){
-    return (
-        <OverlayContainer>
-          <div className="bg-white rounded-3xl w-full h-full pc:w-[480px] pc:h-[70%] pc:max-w-[750px] tablet:w-[480px] tablet:h-[70%] tablet:max-w-[750px] flex flex-col items-center justify-center gap-8">
-            {/* 후기 작성 모달 내용 구성하세요 */}
-            <p>{message}</p>
-            <button onClick={onClose}>작성하기</button>
-          </div>
-        </OverlayContainer>
-      );
+export default function ReviewModal({message, onClose}: ModalProps) {
+  return (
+    <OverlayContainer onClose={onClose}>
+      <div onClick={e => e.stopPropagation()} className="review-modal">
+        {/* 후기 작성 모달 내용 구성하세요 */}
+        <p>{message}</p>
+        <Button
+          className={
+            'sticky bottom-0 h-54pxr w-full rounded-md bg-nomad-black px-8pxr text-center align-middle text-lg font-bold text-white tablet:h-56pxr tablet:rounded pc:h-56pxr pc:rounded'
+          }
+          onClick={onClose}
+        >
+          작성하기
+        </Button>
+      </div>
+    </OverlayContainer>
+  );
 }

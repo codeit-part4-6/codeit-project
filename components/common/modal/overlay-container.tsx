@@ -1,5 +1,14 @@
-import React from "react";
+import React from 'react';
 
-export default function OverlayContainer ({children}: {children: React.ReactNode}) {
-return <div className="z-50 bg-opacity-70 bg-black-50 fixed inset-0 flex items-center justify-center">{children}</div>
+interface OverlayContainerProps {
+  onClose: () => void;
+  children: React.ReactNode;
+}
+
+export default function OverlayContainer({children, onClose}: OverlayContainerProps) {
+  return (
+    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center bg-black-50 bg-opacity-70">
+      {children}
+    </div>
+  );
 }
