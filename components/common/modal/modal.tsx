@@ -13,11 +13,11 @@ export default function Modal({type, message, onClose}: ModalProps) {
   const modalConfig = {
     small: {
       containerClass:
-        'bg-white rounded-xl w-full h-[184px] mx-[38px] p-6 pc:w-[298px] tablet:w-[298px] flex flex-col items-center justify-center gap-8',
+        'bg-white rounded-xl w-full h-[11.5rem] mx-[2.375rem] p-[0.375rem] pc:w-[18.625rem] tablet:w-[18.625rem] flex flex-col items-center justify-center gap-8',
       content: (
         <>
           <div>
-            <div className="relative mb-4 h-[24px] w-[24px]">
+            <div className="relative mb-4 h-24pxr w-24pxr">
               <Image src={checkConfirm} alt="예약 취소 확인 체크" fill className="absolute" />
             </div>
             <p className="text-lg font-regular">{message}</p>
@@ -43,7 +43,7 @@ export default function Modal({type, message, onClose}: ModalProps) {
     },
     big: {
       containerClass:
-        'relative bg-white rounded-lg mx-6 w-full h-[220px] pc:w-[540px] pc:h-[250px] tablet:w-[540px] tablet:h-[250px] flex items-center justify-center',
+        'relative bg-white rounded-lg mx-6 w-full h-[13.75rem] pc:w-[33.75rem] pc:h-[15.625rem] tablet:w-[33.75rem] tablet:h-[15.625rem] flex items-center justify-center',
       content: (
         <>
           <p className="mb-43pxr text-lg font-medium tablet:mb-0 tablet:text-2lg pc:mb-0 pc:text-2lg">{message}</p>

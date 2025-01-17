@@ -23,9 +23,9 @@ export default {
         'accent-green': 'var(--accent-green)',
         yellow: 'var(--yellow)',
 
-        black:{
+        black: {
           50: '#000000',
-          100: '#1B1B1B'
+          100: '#1B1B1B',
         },
 
         gray: {
