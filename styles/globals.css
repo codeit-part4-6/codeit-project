@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,17 +11,25 @@
 }
 
 :root {
-  --white: #FFFFFF;
-  --black: #1B1B1B;
+  --white: #ffffff;
+  --black: #1b1b1b;
   --nomad-black: #112211;
-  --primary: #0B3B2D;
-  --secondary: #CED8D5;
-  --accent-green: #00AC07;
-  --yellow: #FFC23D;
+  --primary: #0b3b2d;
+  --secondary: #ced8d5;
+  --accent-green: #00ac07;
+  --yellow: #ffc23d;
 }
 
 html,
 body {
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
 }
 
+@layer components {
+  .review-modal {
+    @apply flex h-full w-full flex-col bg-white px-16pxr pb-33pxr pt-35pxr tablet:h-[70%] tablet:w-[480px] tablet:max-w-[750px] tablet:rounded-3xl tablet:px-24pxr tablet:pb-41pxr tablet:pt-23pxr pc:h-[70%] pc:w-[480px] pc:max-w-[750px] pc:rounded-3xl pc:px-24pxr pc:pb-41pxr pc:pt-23pxr;
+  }
+  .big-button {
+    @apply h-42pxr w-138pxr rounded-lg bg-nomad-black px-56pxr py-12pxr text-center align-middle text-md font-medium leading-none text-white tablet:h-48pxr tablet:w-120pxr tablet:px-46pxr tablet:py-14pxr tablet:text-lg tablet:leading-none pc:h-48pxr pc:w-120pxr pc:px-46pxr pc:py-14pxr pc:text-lg pc:leading-none;
+  }
+}
