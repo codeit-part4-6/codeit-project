@@ -15,7 +15,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        transparent: "transparent",
+        transparent: 'transparent',
         white: 'var(--white)',
         black: 'var(--black)',
         'nomad-black': 'var(--nomad-black)',
@@ -29,17 +29,17 @@ export default {
           100: '#EEEEEE',
           200: '#DDDDDD',
           300: '#CBC9CF',
-          400: "ADAEB8",
-          500: "#A4A1AA",
-          600: "#A1A1A1",
-          700: "#79747E",
-          800: "#4B4B4B",
+          400: 'ADAEB8',
+          500: '#A4A1AA',
+          600: '#A1A1A1',
+          700: '#79747E',
+          800: '#4B4B4B',
         },
 
         red: {
-          50: "#FFE4E0",
-          100: "#FFC2BA",
-          200: "#FF472E",
+          50: '#FFE4E0',
+          100: '#FFC2BA',
+          200: '#FF472E',
         },
 
         orange: {
@@ -48,12 +48,12 @@ export default {
         },
 
         blue: {
-          50: "#E5F3FF",
-          100: "#2EB4FF",
-          200: "#0085FF",
+          50: '#E5F3FF',
+          100: '#2EB4FF',
+          200: '#0085FF',
         },
       },
-      
+
       fontSize: {
         '3xl': ['32px', '42px'],
         '2xl': ['24px', '32px'],
