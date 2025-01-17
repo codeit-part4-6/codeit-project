@@ -1,0 +1,26 @@
+@charset "UTF-8";
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 0;
+}
+
+:root {
+  --white: #ffffff;
+  --black: #1b1b1b;
+  --nomad-black: #112211;
+  --primary: #0b3b2d;
+  --secondary: #ced8d5;
+  --accent-green: #00ac07;
+  --yellow: #ffc23d;
+}
+
+html,
+body {
+  font-family: 'Pretendard';
+}
