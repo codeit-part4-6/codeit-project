@@ -72,7 +72,7 @@ export default {
       },
       spacing: {
         // 기존 spacing 값에 pxr 단위 추가
-        ...range(1, 100).reduce(
+        ...range(1, 200).reduce(
           (acc, px) => {
             acc[`${px}pxr`] = pxToRem(px); // 1pxr은 rem으로 변환
             return acc;
