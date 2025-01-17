@@ -13,56 +13,54 @@ import { useState } from 'react';
 export default function Page() {
   const [inputLogin, setInputLogin] = useState('');
   const [inputPassword, setInputPassword] = useState('');
-  
+
   return (
     <>
       <Navbar />
       <main>
-        <div className="flex flex-col items-center max-w-[640px] m-auto pt-[110px] gap-[24px] tablet:pt-[126px] tablet:gap-[40px] desktop:pt-[118px] destop:gap-[56px]">
+        <div className="flex flex-col items-center max-w-[40rem] m-auto pt-[6.875rem] gap-[1.5rem] tablet:pt-[7.875rem] tablet:gap-[2.5rem] desktop:pt-[7.375rem] desktop:gap-[3.5rem]">
           <Link href="/">
             <Image src={signLogo} alt="로고" />
           </Link>
-          <form className="flex flex-col gap-[40px] w-full items-center justify-center tablet:gap-[48px]">
-            <div className='flex flex-col gap-[26px] tablet:gap-[32px]'>
-              <div className='flex flex-col gap-[28px]'>
+          <form className="flex flex-col gap-[2.5rem] w-full items-center justify-center tablet:gap-[3rem]">
+            <div className="flex flex-col gap-[1.625rem] tablet:gap-[2rem]">
+              <div className="flex flex-col gap-[1.75rem]">
                 <Input
-                label="이메일"
-                placeholder="이메일을 입력해 주세요"
-                labelClassName="block text-lg pb-2"
-                className="w-[350px] h-[58px] sm:w-[640px] sm:h-[58px]" 
-                value={inputLogin}
-                onChange={e => setInputLogin(e.target.value)}
+                  label="이메일"
+                  placeholder="이메일을 입력해 주세요"
+                  labelClassName="block text-lg pb-2"
+                  className="w-[21.875rem] h-[3.625rem] sm:w-[40rem] sm:h-[3.625rem]"
+                  value={inputLogin}
+                  onChange={e => setInputLogin(e.target.value)}
                 />
-
                 <Input
-                label="비밀번호"
-                placeholder="비밀번호를 입력해 주세요"
-                labelClassName="block text-lg pb-2"
-                className="w-[350px] h-[58px] sm:w-[640px] sm:h-[58px]" 
-                value={inputPassword}
-                onChange={e => setInputPassword(e.target.value)}
-                onBlur={e => {console.log(e);}}
+                  label="비밀번호"
+                  placeholder="비밀번호를 입력해 주세요"
+                  labelClassName="block text-lg pb-2"
+                  className="w-[21.875rem] h-[3.625rem] sm:w-[40rem] sm:h-[3.625rem]"
+                  value={inputPassword}
+                  onChange={e => setInputPassword(e.target.value)}
+                  onBlur={e => { console.log(e); }}
                 />
-
-                <Button className="bg-primary text-white w-[350px] h-[54px] rounded-[6px] pt-[14px] pr-[136px] pb-[14px] pl-[136px] gap-[8px] sm:w-[300px] sm:px-4 tablet:w-[640px] tablet:h-[48px]">
+                <Button className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] pt-[0.875rem] pr-[8.5rem] pb-[0.875rem] pl-[8.5rem] gap-[0.5rem] sm:w-[18.75rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]">
                   로그인 하기
                 </Button>
               </div>
-              <span className="text-[#4B4B4B] text-[16px] font-[400] leading-[19.09px] text-center">
+              <span className="text-gray-800 text-[1rem] font-regular leading-[1.19rem] text-center">
                 회원이 아니신가요?
-                <Link href="/signup" className="underline ml-[5px]">
+                <Link href="/signup" className="underline ml-[0.3125rem]">
                   회원가입하기
                 </Link>
               </span>
-              <div className="flex flex-col gap-[24px] tablet:gap-[40px]">
+              <div className="flex flex-col gap-[1.5rem] tablet:gap-[2.5rem]">
                 <div className="flex items-center">
-                  <hr className="w-20 border border-gray-300" />
-                  <span className="text-[#79747E] text-[14px] leading-[24px] font-[400] text-center">
+                  <hr className="w-[5rem] border border-gray-300" />
+                  <span className="text-gray-700 text-[0.875rem] leading-[1.5rem] font-regular text-center">
                     SNS 계정으로 로그인하기
                   </span>
-                  <hr className="w-20 border border-gray-300" />
+                  <hr className="w-[5rem] border border-gray-300" />
                 </div>
-                <div className="flex gap-[16px]">
+                <div className="flex gap-[1rem]">
                   <Image src={GoogleIcon} alt="google icon" />
                   <Image src={KakaoIcon} alt="kakao icon" />
                 </div>
