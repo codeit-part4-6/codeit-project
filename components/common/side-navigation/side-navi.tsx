@@ -1,5 +1,6 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 import defaultProfile from '@/public/img/img_default_profile.svg';
 import profileButton from '@/public/icon/icon_profile-button.svg';
 import accountCheck from '@/public/icon/icon_accoutn_check.svg';
@@ -14,15 +15,19 @@ import unReserveCalendar from '@/public/icon/icon_calendar_uncheck.svg';
 interface SideNaviProps {
   selectedMenu: string;
   onSelectMenu: (menuId: string) => void;
+  isMobile?: boolean;
 }
 
-export default function SideNavi({selectedMenu, onSelectMenu}: SideNaviProps) {
+export default function SideNavi({selectedMenu, onSelectMenu, isMobile}: SideNaviProps) {
   const menus = [
-    {id: 'myinfo', label: '내 정보', icon: accountCheck, nonIcon: accountUncheck},
-    {id: 'reserveList', label: '예약 내역', icon: reserveListCheck, nonIcon: reserveListUncheck},
-    {id: 'treatReservation', label: '내 체험 관리', icon: treatReservation, nonIcon: unTreatReservation},
-    {id: 'reserveCalendar', label: '예약 현황', icon: reserveCalendar, nonIcon: unReserveCalendar},
+    {id: 'myinfo', label: '내 정보', icon: accountCheck, nonIcon: accountUncheck, path: '/myinfo'},
+    {id: 'reserveList', label: '예약 내역', icon: reserveListCheck, nonIcon: reserveListUncheck, path: '/reservelist'},
+    {id: 'treatReservation', label: '내 체험 관리', icon: treatReservation, nonIcon: unTreatReservation, path: '/treatreservation'},
+    {id: 'reserveCalendar', label: '예약 현황', icon: reserveCalendar, nonIcon: unReserveCalendar, path: '/reservecalendar'},
   ];
+  {
+    /*여기 path는 얼마든지 변경경*/
+  }
 
   return (
     <div className="h-[27rem] min-w-full rounded-xl border border-gray-200 p-6 shadow-sidenavi-box tablet:w-[15.6875rem] tablet:min-w-[15.6875rem] pc:w-[26rem] pc:min-w-[26rem] pc:p-6">
@@ -35,22 +40,39 @@ export default function SideNavi({selectedMenu, onSelectMenu}: SideNaviProps) {
 
       {/* 메뉴 */}
       <div className="flex flex-col gap-2">
-        {menus.map(menu => (
-          <button
-            key={menu.id}
-            onClick={() => onSelectMenu(menu.id)}
-            className={`flex w-full items-center gap-[0.875rem] rounded-xl px-4 py-[0.625rem] hover:bg-green-50 ${
-              selectedMenu === menu.id ? 'bg-green-50' : ''
-            }`}
-          >
-            <div className="relative h-6 w-6">
-              <Image src={selectedMenu === menu.id ? menu.icon : menu.nonIcon} alt={`${menu.label} 이미지`} className="absolute" fill />
-            </div>
-            <div className="flex flex-grow">
-              <p className={`text-lg font-bold ${selectedMenu === menu.id ? 'text-nomad-black' : 'text-gray-600'}`}>{menu.label}</p>
-            </div>
-          </button>
-        ))}
+        {menus.map(menu =>
+          isMobile ? (
+            <Link key={menu.id} href={menu.path} className="flex w-full">
+              <button
+                className={`flex w-full items-center gap-[0.875rem] rounded-xl px-4 py-[0.625rem] hover:bg-green-50 ${
+                  selectedMenu === menu.id ? 'bg-green-50' : ''
+                }`}
+              >
+                <div className="relative h-6 w-6">
+                  <Image src={selectedMenu === menu.id ? menu.icon : menu.nonIcon} alt={`${menu.label} 이미지`} className="absolute" fill />
+                </div>
+                <div className="flex flex-grow">
+                  <p className={`text-lg font-bold ${selectedMenu === menu.id ? 'text-nomad-black' : 'text-gray-600'}`}>{menu.label}</p>
+                </div>
+              </button>
+            </Link>
+          ) : (
+            <button
+              key={menu.id}
+              onClick={() => onSelectMenu(menu.id)}
+              className={`flex w-full items-center gap-[0.875rem] rounded-xl px-4 py-[0.625rem] hover:bg-green-50 ${
+                selectedMenu === menu.id ? 'bg-green-50' : ''
+              }`}
+            >
+              <div className="relative h-6 w-6">
+                <Image src={selectedMenu === menu.id ? menu.icon : menu.nonIcon} alt={`${menu.label} 이미지`} className="absolute" fill />
+              </div>
+              <div className="flex flex-grow">
+                <p className={`text-lg font-bold ${selectedMenu === menu.id ? 'text-nomad-black' : 'text-gray-600'}`}>{menu.label}</p>
+              </div>
+            </button>
+          ),
+        )}
       </div>
     </div>
   );
