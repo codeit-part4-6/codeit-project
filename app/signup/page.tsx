@@ -14,6 +14,16 @@ export default function Page() {
   const [inputLogin, setInputLogin] = useState('');
   const [inputNickname, setInputNickname] = useState('');
   const [inputPassword, setInputPassword] = useState('');
+  const [inputConfirmPassword, setInputConfirmPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const handlePasswordBlur = () => {
+    if (inputPassword !== inputConfirmPassword) {
+      setPasswordError('비밀번호가 일치하지 않습니다.');
+    } else {
+      setPasswordError('');
+    }
+  };
 
   return (
     <>
@@ -49,25 +59,26 @@ export default function Page() {
                   className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
                   value={inputPassword}
                   onChange={e => setInputPassword(e.target.value)}
-                  onBlur={e => {
-                    console.log(e);
-                  }}
+                  onBlur={handlePasswordBlur}
                   isPassword={true}
                   type="password"
                 />
-                <Input
-                  label="비밀번호 확인"
-                  placeholder="비밀번호를 한번 더 입력해 주세요"
-                  labelClassName="block text-lg pb-2"
-                  className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
-                  value={inputPassword}
-                  onChange={e => setInputPassword(e.target.value)}
-                  onBlur={e => {
-                    console.log(e);
-                  }}
-                  isPassword={true}
-                  type="password"
-                />
+                <div>
+                  <Input
+                    label="비밀번호 확인"
+                    placeholder="비밀번호를 한번 더 입력해 주세요"
+                    labelClassName="block text-lg pb-2"
+                    className={`w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem] border ${passwordError ? 'border-red-200' : 'border-gray-300'}`}
+                    value={inputConfirmPassword}
+                    onChange={e => setInputConfirmPassword(e.target.value)}
+                    onBlur={handlePasswordBlur}
+                    isPassword={true}
+                    type="password"
+                  />
+                  {passwordError && (
+                    <span className="text-red-200 text-sm">{passwordError}</span>
+                  )}
+                </div>
                 <Button className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]">
                   회원가입 하기
                 </Button>
