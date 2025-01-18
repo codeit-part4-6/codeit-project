@@ -40,7 +40,11 @@ export default function Page() {
                   className="w-[21.875rem] h-[3.625rem] sm:w-[40rem] sm:h-[3.625rem]"
                   value={inputPassword}
                   onChange={e => setInputPassword(e.target.value)}
-                  onBlur={e => { console.log(e); }}
+                  onBlur={e => {
+                    console.log(e);
+                  }}
+                  isPassword={true}
+                  type="password"
                 />
                 <Button className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] pt-[0.875rem] pr-[8.5rem] pb-[0.875rem] pl-[8.5rem] gap-[0.5rem] sm:w-[18.75rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]">
                   로그인 하기
