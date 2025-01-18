@@ -32,6 +32,7 @@ const InputPage = () => {
 
   const [inputMoney, setInputMoney] = useState('');
   const [inputLogin, setInputLogin] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
 
   return (
     <>
@@ -91,7 +92,21 @@ const InputPage = () => {
             />
           )}
         />
-
+        <div className="flex">
+          <Input
+            label="비밀번호"
+            placeholder="비밀번호를 입력해 주세요"
+            labelClassName="block text-lg pb-2"
+            className="w-[400px]"
+            value={inputPassword}
+            onChange={e => setInputPassword(e.target.value)}
+            onBlur={e => {
+              console.log(e);
+            }}
+            isPassword={true}
+            type="password"
+          />
+        </div>
         <Input label="가격" className="" isMoney={true} value={inputMoney} onChange={e => setInputMoney(e.target.value)}></Input>
         <Input label="주소" className="" isMoney={true} value={inputMoney} onChange={e => setInputMoney(e.target.value)} error="에러입니다."></Input>
         <Input
@@ -104,7 +119,7 @@ const InputPage = () => {
         ></Input>
         <div className="mt-4">
           <Button
-            className="m-5 h-56pxr w-96pxr flex-row items-center justify-center gap-4pxr rounded-lg border-slate-800 bg-black px-8pxr text-center align-middle text-white tablet:w-136pxr pc:w-136pxr"
+            className="bg-black m-5 h-56pxr w-96pxr flex-row items-center justify-center gap-4pxr rounded-lg border-slate-800 px-8pxr text-center align-middle text-white tablet:w-136pxr pc:w-136pxr"
             type="submit"
             disabled={!isValid}
           >
