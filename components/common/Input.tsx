@@ -1,4 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
+import eyesOn from '@/public/icon/ic_eyes_on.svg';
+import eyesOff from '@/public/icon/ic_eyes_off.svg';
+import Image from 'next/image';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -11,6 +14,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   labelClassName?: string;
   isMoney?: boolean;
+  isPassword?: boolean;
 }
 
 const INPUT_STYLES = {
@@ -37,8 +41,11 @@ const Input: React.FC<InputProps> = ({
   labelClassName = '',
   isMoney = false,
   type = 'text',
+  isPassword = false,
   ...props
 }: InputProps) => {
+  const [isPasswordShow, setIsPasswordShow] = useState(false);
+
   const formatMoney = (val: string | number): string => {
     const num = Number(val);
     if (isNaN(num)) return '';
@@ -101,9 +108,21 @@ const Input: React.FC<InputProps> = ({
           value={isMoney ? formatMoney(value) : value}
           onChange={handleChange}
           onBlur={handleBlur}
-          type={type}
+          type={isPassword && isPasswordShow ? 'text' : type}
           className={inputClassNames}
+          autoComplete="current-password"
         />
+        {isPassword === true && (
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 cursor-pointer">
+            <Image
+              src={isPasswordShow ? eyesOn : eyesOff}
+              onClick={() => setIsPasswordShow(!isPasswordShow)}
+              alt={isPasswordShow ? '비밀번호 숨기기' : '비밀번호 표시'}
+              width={24}
+              height={24}
+            />
+          </span>
+        )}
       </div>
       {/* Error message */}
       {error && <span className={INPUT_STYLES.errorMessage}>{error}</span>}
