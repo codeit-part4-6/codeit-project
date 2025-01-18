@@ -30,7 +30,7 @@ export default function Page() {
                   label="이메일"
                   placeholder="이메일을 입력해 주세요"
                   labelClassName="block text-lg pb-2"
-                  className="w-[21.875rem] h-[3.625rem] sm:w-[40rem] sm:h-[3.625rem]"
+                  className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
                   value={inputLogin}
                   onChange={e => setInputLogin(e.target.value)}
                 />
@@ -38,7 +38,7 @@ export default function Page() {
                   label="닉네임"
                   placeholder="닉네임을 입력해 주세요"
                   labelClassName="block text-lg pb-2"
-                  className="w-[21.875rem] h-[3.625rem] sm:w-[40rem] sm:h-[3.625rem]"
+                  className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
                   value={inputNickname}
                   onChange={e => setInputNickname(e.target.value)}
                 />
@@ -46,7 +46,7 @@ export default function Page() {
                   label="비밀번호"
                   placeholder="비밀번호를 입력해 주세요"
                   labelClassName="block text-lg pb-2"
-                  className="w-[21.875rem] h-[3.625rem] sm:w-[40rem] sm:h-[3.625rem]"
+                  className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
                   value={inputPassword}
                   onChange={e => setInputPassword(e.target.value)}
                   onBlur={e => {
@@ -59,7 +59,7 @@ export default function Page() {
                   label="비밀번호 확인"
                   placeholder="비밀번호를 한번 더 입력해 주세요"
                   labelClassName="block text-lg pb-2"
-                  className="w-[21.875rem] h-[3.625rem] sm:w-[40rem] sm:h-[3.625rem]"
+                  className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
                   value={inputPassword}
                   onChange={e => setInputPassword(e.target.value)}
                   onBlur={e => {
@@ -68,8 +68,8 @@ export default function Page() {
                   isPassword={true}
                   type="password"
                 />
-                <Button className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] pt-[0.875rem] pr-[8.5rem] pb-[0.875rem] pl-[8.5rem] gap-[0.5rem] sm:w-[18.75rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]">
-                  로그인 하기
+                <Button className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]">
+                  회원가입 하기
                 </Button>
               </div>
               <span className="text-gray-800 text-[1rem] font-regular leading-[1.19rem] text-center">
