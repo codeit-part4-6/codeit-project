@@ -8,22 +8,36 @@ import Button from '@/components/common/button';
 import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
-import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+
+interface IFormInput {
+  email: string;
+  nickname: string;
+  password: string;
+  confirmPassword: string;
+}
 
 export default function Page() {
-  const [inputLogin, setInputLogin] = useState('');
-  const [inputNickname, setInputNickname] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
-  const [inputConfirmPassword, setInputConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+    watch,
+  } = useForm<IFormInput>({
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      nickname: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
-  const handlePasswordBlur = () => {
-    if (inputPassword !== inputConfirmPassword) {
-      setPasswordError('비밀번호가 일치하지 않습니다.');
-    } else {
-      setPasswordError('');
-    }
+  const onSubmit = (data: IFormInput) => {
+    console.log('Form Data:', data);
   };
+
+  const passwordValue = watch('password');
 
   return (
     <>
@@ -33,53 +47,109 @@ export default function Page() {
           <Link href="/">
             <Image src={signLogo} alt="로고" />
           </Link>
-          <form className="flex flex-col gap-[2.5rem] w-full items-center justify-center tablet:gap-[3rem]">
+          <form
+            className="flex flex-col gap-[2.5rem] w-full items-center justify-center tablet:gap-[3rem]"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <div className="flex flex-col gap-[1.625rem] tablet:gap-[2rem]">
               <div className="flex flex-col gap-[1.75rem]">
-                <Input
-                  label="이메일"
-                  placeholder="이메일을 입력해 주세요"
-                  labelClassName="block text-lg pb-2"
-                  className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
-                  value={inputLogin}
-                  onChange={e => setInputLogin(e.target.value)}
-                />
-                <Input
-                  label="닉네임"
-                  placeholder="닉네임을 입력해 주세요"
-                  labelClassName="block text-lg pb-2"
-                  className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
-                  value={inputNickname}
-                  onChange={e => setInputNickname(e.target.value)}
-                />
-                <Input
-                  label="비밀번호"
-                  placeholder="비밀번호를 입력해 주세요"
-                  labelClassName="block text-lg pb-2"
-                  className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
-                  value={inputPassword}
-                  onChange={e => setInputPassword(e.target.value)}
-                  onBlur={handlePasswordBlur}
-                  isPassword={true}
-                  type="password"
-                />
-                <div>
-                  <Input
-                    label="비밀번호 확인"
-                    placeholder="비밀번호를 한번 더 입력해 주세요"
-                    labelClassName="block text-lg pb-2"
-                    className={`w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem] border ${passwordError ? 'border-red-200' : 'border-gray-300'}`}
-                    value={inputConfirmPassword}
-                    onChange={e => setInputConfirmPassword(e.target.value)}
-                    onBlur={handlePasswordBlur}
-                    isPassword={true}
-                    type="password"
-                  />
-                  {passwordError && (
-                    <span className="text-red-200 text-sm">{passwordError}</span>
+                {/* Email Input */}
+                <Controller
+                  name="email"
+                  control={control}
+                  rules={{
+                    required: '필수값입니다.',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                      message: '잘못된 이메일입니다.',
+                    },
+                  }}
+                  render={({ field }) => (
+                    <Input
+                      label="이메일"
+                      placeholder="이메일을 입력해 주세요"
+                      labelClassName="block text-lg pb-2"
+                      className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={errors.email?.message}
+                    />
                   )}
-                </div>
-                <Button className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]">
+                />
+                {/* Nickname Input */}
+                <Controller
+                  name="nickname"
+                  control={control}
+                  rules={{
+                    required: '필수값입니다.',
+                  }}
+                  render={({ field }) => (
+                    <Input
+                      label="닉네임"
+                      placeholder="닉네임을 입력해 주세요"
+                      labelClassName="block text-lg pb-2"
+                      className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
+                      value={field.value}
+                      onChange={field.onChange}
+                      error={errors.nickname?.message}
+                    />
+                  )}
+                />
+                {/* Password Input */}
+                <Controller
+                  name="password"
+                  control={control}
+                  rules={{
+                    required: '필수값입니다.',
+                    minLength: {
+                      value: 8,
+                      message: '8자리 이상으로 작성해 주세요.',
+                    },
+                  }}
+                  render={({ field }) => (
+                    <Input
+                      label="비밀번호"
+                      placeholder="비밀번호를 입력해 주세요"
+                      labelClassName="block text-lg pb-2"
+                      className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
+                      value={field.value}
+                      onChange={field.onChange}
+                      isPassword={true}
+                      type="password"
+                      error={errors.password?.message}
+                    />
+                  )}
+                />
+                {/* Confirm Password Input */}
+                <Controller
+                  name="confirmPassword"
+                  control={control}
+                  rules={{
+                    required: '필수값입니다.',
+                    validate: (value) =>
+                      value === passwordValue || '비밀번호가 일치하지 않습니다.',
+                  }}
+                  render={({ field }) => (
+                    <div>
+                      <Input
+                        label="비밀번호 확인"
+                        placeholder="비밀번호를 한번 더 입력해 주세요"
+                        labelClassName="block text-lg pb-2"
+                        className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
+                        value={field.value}
+                        onChange={field.onChange}
+                        isPassword={true}
+                        type="password"
+                        error={errors.confirmPassword?.message}
+                      />
+                    </div>
+                  )}
+                />
+                <Button
+                  className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]"
+                  type="submit"
+                  disabled={!isValid}
+                >
                   회원가입 하기
                 </Button>
               </div>
