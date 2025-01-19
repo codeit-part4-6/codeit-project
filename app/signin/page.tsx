@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import Navbar from '@/components/common/navbar/Navbar';
+import Navbar from '@/components/common/navbar/navbar';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
 import signLogo from '@/public/img/img_signlogo.svg';
