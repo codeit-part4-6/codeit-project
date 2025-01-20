@@ -1,8 +1,12 @@
 import React from 'react';
 import Button from '@/components/common/button';
-import Navbar from '@/components/common/navbar/Navbar';
+import Navbar from '@/components/common/navbar';
+import Footer from '@/components/common/footer';
 import ModalComponent from './modal';
 import InputPage from './InputPage';
+import Mypage from './mypage';
+import PagenationComponent from './pagenation';
+import KakaoMap from './kakomap';
 
 async function Page() {
   const data = await new Promise<string>(resolve => setTimeout(() => resolve('비동기 데이터 1초'), 1000));
@@ -40,6 +44,15 @@ async function Page() {
       <br />
       <li>
         <InputPage />
+      </li>
+      <li>
+        <Mypage />
+        <Footer />
+        <PagenationComponent />
+      </li>
+      <hr />
+      <li>
+        <KakaoMap address="서울 중구 청계천로 100" houseName="코드잇" />
       </li>
     </ul>
   );
