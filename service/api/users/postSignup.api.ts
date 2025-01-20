@@ -1,8 +1,5 @@
 import INSTANCE_URL from '../instance';
-import {
-  SignupBody,
-  SignupResponse,
-} from './users.types';
+import {SignupBody, SignupResponse} from '../../../types/postSignup.types';
 
 // 회원가입
 export async function apiSignup(body: SignupBody): Promise<SignupResponse> {
