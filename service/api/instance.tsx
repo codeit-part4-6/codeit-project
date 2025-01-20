@@ -13,7 +13,10 @@ INSTANCE_URL.interceptors.request.use(
 
     return config;
   },
-  (error) => Promise.reject(error)
+  (error) => {
+    console.error('Request interceptor error:', error.message);
+    throw error;
+  }
 );
 
 export default INSTANCE_URL;
