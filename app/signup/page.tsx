@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useForm, Controller } from 'react-hook-form';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
 import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
-import { useForm, Controller } from 'react-hook-form';
 
 interface IFormInput {
   email: string;
