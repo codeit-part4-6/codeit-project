@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from '@/components/common/button';
 import Navbar from '@/components/common/navbar/Navbar';
+import Footer from '@/components/common/footer';
 import ModalComponent from './modal';
 import InputPage from './InputPage';
 import PagenationComponent from './pagenation';
@@ -44,6 +45,7 @@ async function Page() {
         <InputPage />
       </li>
       <li>
+        <Footer />
         <PagenationComponent />
       </li>
       <hr />
