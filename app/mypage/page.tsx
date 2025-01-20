@@ -72,7 +72,7 @@ export default function Page() {
   }
 
   return (
-    <div className="px-4 pt-6 tablet:p-6 pc:mt-[4.5rem] pc:w-full pc:max-w-[75rem] pc:p-0">
+    <div className="mx-auto px-4 pt-6 tablet:p-6 pc:mt-[4.5rem] pc:w-full pc:max-w-[75rem] pc:p-0">
       {isMobile ? (
         // **모바일 환경**
         <div>

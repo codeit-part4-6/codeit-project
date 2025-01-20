@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import nonData from '@/public/img/img_non_data.svg';
-import arrowDown from '@/public/icon/icon_arrow_down.svg';
 import Image from 'next/image';
 import Button from '@/components/common/button';
 import OverlayContainer from '@/components/common/modal/overlay-container';
 import Modal from '@/components/common/modal/modal';
 import ReviewModal from '@/components/common/modal/review-modal';
+import CustomSelect from '@/components/common/reservation-list/custom-select';
 
 const mock = {
   reservations: [
@@ -144,7 +144,7 @@ export default function ReservationList() {
   const [orderBy, setOrderBy] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState<string | null>(null);
-  console.log(orderBy);
+
   const handleButtonClick = (status: string) => {
     setIsOpen(true);
     setModalType(status);
@@ -164,37 +164,11 @@ export default function ReservationList() {
   const filteredReservation = mock.reservations.filter(reservation => !orderBy || reservation.status === orderBy);
 
   return (
-    <div className="h-full w-full">
+    <div className="mb-16 h-full w-full">
       <div className="mb-3 flex w-full items-center justify-between tablet:mb-6">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
-        <div className="m-0 hidden h-53pxr w-40 rounded-2xl border border-nomad-black px-5 py-4 pc:block">
-          <div className="relative flex items-center">
-            <select
-              value={orderBy}
-              onChange={e => setOrderBy(e.target.value)}
-              className="appearance-none text-2xl font-medium leading-none text-green-100 focus:outline-none"
-            >
-              <option value="">전체</option>
-              <option value="pending" className="text-gray-800">
-                예약 신청
-              </option>
-              <option value="canceled" className="text-gray-800">
-                예약 취소
-              </option>
-              <option value="confirmed" className="text-gray-800">
-                예약 승인
-              </option>
-              <option value="declined" className="text-gray-800">
-                예약 거절
-              </option>
-              <option value="completed" className="text-gray-800">
-                체험 완료
-              </option>
-            </select>
-            <div className="absolute right-1">
-              <Image className="m-0 h-22pxr w-22pxr" src={arrowDown} alt="필터 선택 화살표" />
-            </div>
-          </div>
+        <div className="m-0">
+          <CustomSelect orderBy={orderBy} handleOrderBy={(value: string) => setOrderBy(value)} />
         </div>
       </div>
 
