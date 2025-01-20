@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
@@ -40,8 +40,15 @@ export default function Page() {
   });
 
   const onSubmit = (data: IFormInput) => {
-    alert('회원가입완료!');
-    signupMutation.mutate(data);
+    signupMutation.mutate(data, {
+      onError: (error: any) => {
+        // 경고
+        alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+      },
+      onSuccess: () => {
+        alert('회원가입 성공!');
+      },
+    });
   };
 
   const passwordValue = watch('password');
@@ -152,9 +159,9 @@ export default function Page() {
               />
               {/* 회원가입 버튼 */}
               <Button
-                className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]"
+                className={`bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem] ${!isValid ? 'bg-[#A4A1AA]' : ''}`}
                 type="submit"
-                disabled={!isValid} // 유효하지 않으면 버튼 비활성화
+                disabled={!isValid}
               >
                 회원가입 하기
               </Button>
