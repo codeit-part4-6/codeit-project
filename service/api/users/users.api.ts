@@ -1,4 +1,3 @@
-import { useMutation } from '@tanstack/react-query';
 import INSTANCE_URL from '../instance';
 import {
   SignupBody,
@@ -6,9 +5,7 @@ import {
 } from './users.types';
 
 // 회원가입
-export function useSignup() {
-  return useMutation({
-    mutationFn: (body: SignupBody): Promise<SignupResponse> =>
-      INSTANCE_URL.post<SignupResponse>('/users', body).then((res) => res.data)
-  });
+export async function apiSignup(body: SignupBody): Promise<SignupResponse> {
+  const response = await INSTANCE_URL.post('/users', body);
+  return response.data;
 }
