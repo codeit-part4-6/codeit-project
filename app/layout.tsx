@@ -1,6 +1,8 @@
 import type {Metadata} from 'next';
 import '@/styles/globals.css';
 import Script from 'next/script';
+import Navbar from '@/components/common/navbar';
+import Footer from '@/components/common/footer';
 
 export const metadata: Metadata = {
   title: 'Global Nomad',
@@ -25,7 +27,11 @@ export default function RootLayout({
           strategy="beforeInteractive"
         />
       </head>
-      <body className="max-w-full">{children}</body>
+
+      <body className="max-w-full">
+        <Navbar /> <main>{children} </main>
+        <Footer />
+      </body>
     </html>
   );
 }
