@@ -2,10 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 import { useForm, Controller, } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
+import Modal from '@/components/common/modal/modal';
 import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
@@ -20,6 +22,9 @@ interface IFormInput {
 }
 
 export default function Page() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+
   const {
     control,
     handleSubmit,
@@ -41,17 +46,23 @@ export default function Page() {
 
   const onSubmit = (data: IFormInput) => {
     signupMutation.mutate(data, {
+      // 경고
       onError: () => {
-        // 경고
-        alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+        setModalMessage('이미 사용중인 이메일입니다.');
+        setIsModalOpen(true);
       },
       onSuccess: () => {
-        alert('회원가입 성공!');
+        setModalMessage('가입이 완료되었습니다!');
+        setIsModalOpen(true);
       },
     });
   };
 
   const passwordValue = watch('password');
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -61,7 +72,7 @@ export default function Page() {
         </Link>
         <form
           className="flex flex-col gap-[2.5rem] w-full items-center justify-center tablet:gap-[3rem]"
-          onSubmit={handleSubmit(onSubmit)} // 폼 제출 시 onSubmit 호출
+          onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col gap-[1.625rem] tablet:gap-[2rem]">
             <div className="flex flex-col gap-[1.75rem]">
@@ -190,6 +201,7 @@ export default function Page() {
           </div>
         </form>
       </div>
+      {isModalOpen && <Modal type="big" message={modalMessage} onClose={handleCloseModal} />}
     </>
   );
 }
