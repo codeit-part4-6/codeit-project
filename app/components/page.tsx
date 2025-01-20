@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '@/components/common/button';
-import Navbar from '@/components/common/navbar/Navbar';
+import Navbar from '@/components/common/navbar';
 import Footer from '@/components/common/footer';
 import ModalComponent from './modal';
 import InputPage from './InputPage';
