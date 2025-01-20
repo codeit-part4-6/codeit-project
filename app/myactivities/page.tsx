@@ -33,11 +33,15 @@ export default function Page() {
   };
 
   return (
-    <div className="px-4 pt-6 tablet:p-6 pc:mt-[4.5rem] pc:w-full pc:max-w-[75rem] pc:p-0">
-      <div className="flex tablet:gap-4 pc:gap-6">
-        <SideNavi selectedMenu={selectedMenu} onSelectMenu={handleSelectMenu} />
-        <div key={key} className="flex-grow">
-          {renderContent()}
+    <div className="bg-gray-50">
+      <div className="flex justify-center tablet:gap-4 pc:gap-6">
+        <div className="flex w-full px-4 tablet:gap-4 tablet:p-6 pc:mt-[4.5rem] pc:max-w-[75rem] pc:p-0">
+          <div className="hidden tablet:block">
+            <SideNavi selectedMenu={selectedMenu} onSelectMenu={handleSelectMenu} />
+          </div>
+          <div key={key} className="flex-grow">
+            {renderContent()}
+          </div>
         </div>
       </div>
     </div>
