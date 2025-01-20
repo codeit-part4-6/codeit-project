@@ -41,7 +41,7 @@ export default function Page() {
 
   const onSubmit = (data: IFormInput) => {
     signupMutation.mutate(data, {
-      onError: (error: any) => {
+      onError: () => {
         // 경고
         alert('회원가입에 실패했습니다. 다시 시도해주세요.');
       },
