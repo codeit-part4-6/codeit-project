@@ -2,17 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import {useState} from 'react';
-import {useForm, Controller} from 'react-hook-form';
-import {useMutation} from '@tanstack/react-query';
+import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
 import Modal from '@/components/common/modal/modal';
 import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
-import {apiSignup} from '@/service/api/users/postSignup.api';
-import {SignupBody} from '@/types/postSignup.types';
+import { postSignup } from '@/service/api/users/postSignup.api';
+import { SignupBody } from '@/types/postSignup.types';
 
 interface IFormInput {
   email: string;
@@ -41,7 +41,7 @@ export default function Page() {
   });
 
   const signupMutation = useMutation({
-    mutationFn: (signupData: SignupBody) => apiSignup(signupData),
+    mutationFn: (signupData: SignupBody) => postSignup(signupData),
   });
 
   const onSubmit = (data: IFormInput) => {

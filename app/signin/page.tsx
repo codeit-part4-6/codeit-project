@@ -2,16 +2,38 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
 import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
-import { useState } from 'react';
+
+interface IFormInput {
+  email: string;
+  password: string;
+}
 
 export default function Page() {
   const [inputLogin, setInputLogin] = useState('');
   const [inputPassword, setInputPassword] = useState('');
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors, isValid},
+    watch,
+  } = useForm<IFormInput>({
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      nickname: '',
+      password: '',
+      confirmPassword: '',
+    },
+  });
 
   return (
     <>
@@ -43,7 +65,12 @@ export default function Page() {
                 isPassword={true}
                 type="password"
               />
-              <Button className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]">
+              <Button 
+                className={`h-[3.375rem] w-[21.875rem] gap-[0.5rem] rounded-[0.375rem] text-white sm:px-4 tablet:h-[3rem] tablet:w-[40rem] ${
+                  isValid ? 'bg-primary' : 'bg-[#A4A1AA]'
+                }`}
+                type="submit"
+                disabled={!isValid}>
                 로그인 하기
               </Button>
             </div>
