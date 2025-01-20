@@ -14,6 +14,11 @@ export default {
   content: ['./pages/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
+      boxShadow: {
+        'sidenavi-box': '0 4px 16px rgba(17, 34, 17, 0.05)',
+        'sidenavi-profile': '0 4px 16px rgba(0, 0, 0, 0.08)',
+      },
+
       colors: {
         transparent: 'transparent',
         white: 'var(--white)',
@@ -33,7 +38,7 @@ export default {
           100: '#EEEEEE',
           200: '#DDDDDD',
           300: '#CBC9CF',
-          400: 'ADAEB8',
+          400: '#ADAEB8',
           500: '#A4A1AA',
           600: '#A1A1A1',
           700: '#79747E',
@@ -55,6 +60,10 @@ export default {
           50: '#E5F3FF',
           100: '#2EB4FF',
           200: '#0085FF',
+        },
+
+        green: {
+          50: '#CED8D5',
         },
       },
 
