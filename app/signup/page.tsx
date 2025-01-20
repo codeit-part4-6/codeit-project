@@ -2,17 +2,17 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import { useForm, Controller, } from 'react-hook-form';
-import { useMutation } from '@tanstack/react-query';
+import {useState} from 'react';
+import {useForm, Controller} from 'react-hook-form';
+import {useMutation} from '@tanstack/react-query';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
 import Modal from '@/components/common/modal/modal';
 import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
-import { apiSignup } from '@/service/api/users/users.api';
-import { SignupBody } from '@/service/api/users/users.types';
+import {apiSignup} from '@/service/api/users/postSignup.api';
+import {SignupBody} from '@/types/postSignup.types';
 
 interface IFormInput {
   email: string;
@@ -28,7 +28,7 @@ export default function Page() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: {errors, isValid},
     watch,
   } = useForm<IFormInput>({
     mode: 'onChange',
@@ -66,14 +66,11 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex flex-col items-center max-w-[40rem] m-auto pt-[6.875rem] gap-[1.5rem] tablet:pt-[7.875rem] tablet:gap-[2.5rem] desktop:pt-[7.375rem] desktop:gap-[3.5rem]">
+      <div className="desktop:pt-[7.375rem] desktop:gap-[3.5rem] m-auto flex max-w-[40rem] flex-col items-center gap-[1.5rem] pt-[6.875rem] tablet:gap-[2.5rem] tablet:pt-[7.875rem]">
         <Link href="/">
           <Image src={signLogo} alt="로고" />
         </Link>
-        <form
-          className="flex flex-col gap-[2.5rem] w-full items-center justify-center tablet:gap-[3rem]"
-          onSubmit={handleSubmit(onSubmit)}
-        >
+        <form className="flex w-full flex-col items-center justify-center gap-[2.5rem] tablet:gap-[3rem]" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col gap-[1.625rem] tablet:gap-[2rem]">
             <div className="flex flex-col gap-[1.75rem]">
               {/* 이메일 입력란 */}
@@ -87,12 +84,12 @@ export default function Page() {
                     message: '이메일 형식으로 작성해 주세요.',
                   },
                 }}
-                render={({ field }) => (
+                render={({field}) => (
                   <Input
                     label="이메일"
                     placeholder="이메일을 입력해 주세요"
                     labelClassName="block text-lg pb-2"
-                    className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
+                    className="h-[3.625rem] w-[21.875rem] tablet:h-[3.625rem] tablet:w-[40rem]"
                     value={field.value}
                     onChange={field.onChange}
                     error={errors.email?.message}
@@ -110,12 +107,12 @@ export default function Page() {
                     message: '열 자 이하로 작성해 주세요.',
                   },
                 }}
-                render={({ field }) => (
+                render={({field}) => (
                   <Input
                     label="닉네임"
                     placeholder="닉네임을 입력해 주세요"
                     labelClassName="block text-lg pb-2"
-                    className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
+                    className="h-[3.625rem] w-[21.875rem] tablet:h-[3.625rem] tablet:w-[40rem]"
                     value={field.value}
                     onChange={field.onChange}
                     error={errors.nickname?.message}
@@ -133,12 +130,12 @@ export default function Page() {
                     message: '8자 이상으로 작성해 주세요.',
                   },
                 }}
-                render={({ field }) => (
+                render={({field}) => (
                   <Input
                     label="비밀번호"
                     placeholder="비밀번호를 입력해 주세요"
                     labelClassName="block text-lg pb-2"
-                    className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
+                    className="h-[3.625rem] w-[21.875rem] tablet:h-[3.625rem] tablet:w-[40rem]"
                     value={field.value}
                     onChange={field.onChange}
                     isPassword={true}
@@ -153,16 +150,15 @@ export default function Page() {
                 control={control}
                 rules={{
                   required: '필수값입니다.',
-                  validate: (value) =>
-                    value === passwordValue || '비밀번호가 일치하지 않습니다.',
+                  validate: value => value === passwordValue || '비밀번호가 일치하지 않습니다.',
                 }}
-                render={({ field }) => (
+                render={({field}) => (
                   <div>
                     <Input
                       label="비밀번호 확인"
                       placeholder="비밀번호를 한번 더 입력해 주세요"
                       labelClassName="block text-lg pb-2"
-                      className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
+                      className="h-[3.625rem] w-[21.875rem] tablet:h-[3.625rem] tablet:w-[40rem]"
                       value={field.value}
                       onChange={field.onChange}
                       isPassword={true}
@@ -174,7 +170,7 @@ export default function Page() {
               />
               {/* 회원가입 버튼 */}
               <Button
-                className={`text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem] ${
+                className={`h-[3.375rem] w-[21.875rem] gap-[0.5rem] rounded-[0.375rem] text-white sm:px-4 tablet:h-[3rem] tablet:w-[40rem] ${
                   isValid ? 'bg-primary' : 'bg-[#A4A1AA]'
                 }`}
                 type="submit"
@@ -184,9 +180,9 @@ export default function Page() {
               </Button>
             </div>
             {/* 로그인 링크 */}
-            <span className="text-gray-800 text-[1rem] font-regular leading-[1.19rem] text-center">
+            <span className="text-center text-[1rem] font-regular leading-[1.19rem] text-gray-800">
               회원이신가요?
-              <Link href="/signin" className="underline ml-[0.3125rem]">
+              <Link href="/signin" className="ml-[0.3125rem] underline">
                 로그인하기
               </Link>
             </span>
@@ -194,9 +190,7 @@ export default function Page() {
               {/* SNS 로그인 섹션 */}
               <div className="flex items-center">
                 <hr className="w-[5rem] border border-gray-300" />
-                <span className="text-gray-700 text-[0.875rem] leading-[1.5rem] font-regular text-center">
-                  SNS 계정으로 로그인하기
-                </span>
+                <span className="text-center text-[0.875rem] font-regular leading-[1.5rem] text-gray-700">SNS 계정으로 로그인하기</span>
                 <hr className="w-[5rem] border border-gray-300" />
               </div>
               <div className="flex gap-[1rem]">
