@@ -84,7 +84,7 @@ export default function Page() {
                   required: '필수값입니다.',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: '잘못된 이메일입니다.',
+                    message: '이메일 형식으로 작성해 주세요.',
                   },
                 }}
                 render={({ field }) => (
@@ -130,7 +130,7 @@ export default function Page() {
                   required: '필수값입니다.',
                   minLength: {
                     value: 8,
-                    message: '8자리 이상으로 작성해 주세요.',
+                    message: '8자 이상으로 작성해 주세요.',
                   },
                 }}
                 render={({ field }) => (
@@ -174,7 +174,9 @@ export default function Page() {
               />
               {/* 회원가입 버튼 */}
               <Button
-                className={`bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem] ${!isValid ? 'bg-[#A4A1AA]' : ''}`}
+                className={`text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem] ${
+                  isValid ? 'bg-primary' : 'bg-[#A4A1AA]'
+                }`}
                 type="submit"
                 disabled={!isValid}
               >
@@ -184,7 +186,7 @@ export default function Page() {
             {/* 로그인 링크 */}
             <span className="text-gray-800 text-[1rem] font-regular leading-[1.19rem] text-center">
               회원이신가요?
-              <Link href="/signup" className="underline ml-[0.3125rem]">
+              <Link href="/signin" className="underline ml-[0.3125rem]">
                 로그인하기
               </Link>
             </span>
