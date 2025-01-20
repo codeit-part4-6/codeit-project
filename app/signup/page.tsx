@@ -70,7 +70,10 @@ export default function Page() {
         <Link href="/">
           <Image src={signLogo} alt="로고" />
         </Link>
-        <form className="flex w-full flex-col items-center justify-center gap-[2.5rem] tablet:gap-[3rem]" onSubmit={handleSubmit(onSubmit)}>
+        <form 
+          className="flex w-full flex-col items-center justify-center gap-[2.5rem] tablet:gap-[3rem]"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="flex flex-col gap-[1.625rem] tablet:gap-[2rem]">
             <div className="flex flex-col gap-[1.75rem]">
               {/* 이메일 입력란 */}

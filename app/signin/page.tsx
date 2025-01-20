@@ -17,23 +17,21 @@ interface IFormInput {
 }
 
 export default function Page() {
-  const [inputLogin, setInputLogin] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
-
   const {
     control,
     handleSubmit,
     formState: {errors, isValid},
-    watch,
   } = useForm<IFormInput>({
     mode: 'onChange',
     defaultValues: {
       email: '',
-      nickname: '',
       password: '',
-      confirmPassword: '',
     },
   });
+
+  const onSubmit = (data: IFormInput) => {
+    console.log(data);
+  };
 
   return (
     <>
@@ -41,29 +39,57 @@ export default function Page() {
         <Link href="/">
           <Image src={signLogo} alt="로고" />
         </Link>
-        <form className="flex flex-col gap-[2.5rem] w-full items-center justify-center tablet:gap-[3rem]">
+        <form 
+          className="flex flex-col gap-[2.5rem] w-full items-center justify-center tablet:gap-[3rem]" 
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="flex flex-col gap-[1.625rem] tablet:gap-[2rem]">
             <div className="flex flex-col gap-[1.75rem]">
-              <Input
-                label="이메일"
-                placeholder="이메일을 입력해 주세요"
-                labelClassName="block text-lg pb-2"
-                className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
-                value={inputLogin}
-                onChange={e => setInputLogin(e.target.value)}
-              />
-              <Input
-                label="비밀번호"
-                placeholder="비밀번호를 입력해 주세요"
-                labelClassName="block text-lg pb-2"
-                className="w-[21.875rem] h-[3.625rem] tablet:w-[40rem] tablet:h-[3.625rem]"
-                value={inputPassword}
-                onChange={e => setInputPassword(e.target.value)}
-                onBlur={e => {
-                  console.log(e);
+              <Controller
+                name="email"
+                control={control}
+                rules={{
+                  required: '필수값입니다.',
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: '이메일 형식으로 작성해 주세요.',
+                  },
                 }}
-                isPassword={true}
-                type="password"
+                render={({field}) => (
+                  <Input
+                    label="이메일"
+                    placeholder="이메일을 입력해 주세요"
+                    labelClassName="block text-lg pb-2"
+                    className="h-[3.625rem] w-[21.875rem] tablet:h-[3.625rem] tablet:w-[40rem]"
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={errors.email?.message}
+                  />
+                )}
+              />
+              <Controller
+                name="password"
+                control={control}
+                rules={{
+                  required: '필수값입니다.',
+                  minLength: {
+                    value: 8,
+                    message: '8자 이상으로 작성해 주세요.',
+                  },
+                }}
+                render={({field}) => (
+                  <Input
+                    label="비밀번호"
+                    placeholder="비밀번호를 입력해 주세요"
+                    labelClassName="block text-lg pb-2"
+                    className="h-[3.625rem] w-[21.875rem] tablet:h-[3.625rem] tablet:w-[40rem]"
+                    value={field.value}
+                    onChange={field.onChange}
+                    isPassword={true}
+                    type="password"
+                    error={errors.password?.message}
+                  />
+                )}
               />
               <Button 
                 className={`h-[3.375rem] w-[21.875rem] gap-[0.5rem] rounded-[0.375rem] text-white sm:px-4 tablet:h-[3rem] tablet:w-[40rem] ${
