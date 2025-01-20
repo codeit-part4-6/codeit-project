@@ -1,8 +1,11 @@
 import React from 'react';
 import Button from '@/components/common/button';
-import Navbar from '@/components/common/navbar/Navbar';
+import Navbar from '@/components/common/navbar';
+import Footer from '@/components/common/footer';
 import ModalComponent from './modal';
 import InputPage from './InputPage';
+import Mypage from './mypage';
+import PagenationComponent from './pagenation';
 import KakaoMap from './kakomap';
 
 async function Page() {
@@ -41,6 +44,11 @@ async function Page() {
       <br />
       <li>
         <InputPage />
+      </li>
+      <li>
+        <Mypage />
+        <Footer />
+        <PagenationComponent />
       </li>
       <hr />
       <li>
