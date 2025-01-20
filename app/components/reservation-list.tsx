@@ -1,58 +1,142 @@
-import React from 'react';
+import React, {useState} from 'react';
 import nonData from '@/public/img/img_non_data.svg';
+import arrowDown from '@/public/icon/icon_arrow_down.svg';
 import Image from 'next/image';
+import Button from '@/components/common/button';
+import OverlayContainer from '@/components/common/modal/overlay-container';
+import Modal from '@/components/common/modal/modal';
+import ReviewModal from '@/components/common/modal/review-modal';
 
 const mock = {
   reservations: [
-    // {
-    //   id: 1,
-    //   teamId: '11-6',
-    //   userId: 0,
-    //   activity: {
-    //     bannerImageUrl: '/img/img_navlogo.svg',
-    //     title: '테스트 예약 체험1',
-    //     id: 1,
-    //   },
-    //   scheduleId: 1,
-    //   status: 'pending',
-    //   reviewSubmitted: true,
-    //   totalPrice: 10000,
-    //   headCount: 0,
-    //   date: '날짜',
-    //   startTime: '시작 시간',
-    //   endTime: '종료 시간',
-    //   createdAt: '2025-01-20T01:55:20.317Z',
-    //   updatedAt: '2025-01-20T01:55:20.317Z',
-    // },
-    // {
-    //   id: 2,
-    //   teamId: '11-6',
-    //   userId: 0,
-    //   activity: {
-    //     bannerImageUrl: '/img/img_navlogo.svg',
-    //     title: '테스트 예약 체험2',
-    //     id: 2,
-    //   },
-    //   scheduleId: 2,
-    //   status: 'confirmed',
-    //   reviewSubmitted: true,
-    //   totalPrice: 20000,
-    //   headCount: 0,
-    //   date: '날짜',
-    //   startTime: '시작 시간',
-    //   endTime: '종료 시간',
-    //   createdAt: '2025-01-20T01:55:20.317Z',
-    //   updatedAt: '2025-01-20T01:55:20.317Z',
-    // },
+    {
+      id: 1,
+      teamId: '11-6',
+      userId: 0,
+      activity: {
+        bannerImageUrl: '/img/img_navlogo.svg',
+        title: '테스트 예약 체험1',
+        id: 1,
+      },
+      scheduleId: 1,
+      status: 'pending',
+      reviewSubmitted: true,
+      totalPrice: 10000,
+      headCount: 0,
+      date: '날짜',
+      startTime: '시작 시간',
+      endTime: '종료 시간',
+      createdAt: '2025-01-20T01:55:20.317Z',
+      updatedAt: '2025-01-20T01:55:20.317Z',
+    },
+    {
+      id: 2,
+      teamId: '11-6',
+      userId: 0,
+      activity: {
+        bannerImageUrl: '/img/img_navlogo.svg',
+        title: '테스트 예약 체험2',
+        id: 2,
+      },
+      scheduleId: 2,
+      status: 'confirmed',
+      reviewSubmitted: true,
+      totalPrice: 20000,
+      headCount: 0,
+      date: '날짜',
+      startTime: '시작 시간',
+      endTime: '종료 시간',
+      createdAt: '2025-01-20T01:55:20.317Z',
+      updatedAt: '2025-01-20T01:55:20.317Z',
+    },
+    {
+      id: 3,
+      teamId: '11-6',
+      userId: 0,
+      activity: {
+        bannerImageUrl: '/img/img_navlogo.svg',
+        title: '테스트 예약 체험3',
+        id: 3,
+      },
+      scheduleId: 3,
+      status: 'completed',
+      reviewSubmitted: true,
+      totalPrice: 30000,
+      headCount: 0,
+      date: '날짜',
+      startTime: '시작 시간',
+      endTime: '종료 시간',
+      createdAt: '2025-01-20T01:55:20.317Z',
+      updatedAt: '2025-01-20T01:55:20.317Z',
+    },
   ],
 };
 
+const statusLabels: Record<string, string> = {
+  pending: '예약 완료',
+  confirmed: '예약 승인',
+  declined: '예약 거절',
+  canceled: '예약 취소',
+  completed: '체험 완료',
+};
+
+const statusLabelsColor: Record<string, string> = {
+  pending: 'text-blue-100',
+  confirmed: 'text-orange-100',
+  declined: 'text-red-200',
+  canceled: 'text-gray-700',
+  completed: 'text-gray-700',
+};
+
+const buttonByStatus: Record<string, string> = {
+  pending: '예약 취소',
+  completed: '후기 작성',
+};
+
+const buttonStyleByStatus: Record<string, string> = {
+  pending:
+    'w-80pxr h-8 py-1 px-2 font-bold text-md text-nomad-black tablet:text-lg tablet:w-112pxr tablet:h-40pxr tablet:px-3 tablet:py-2 bg-white border border-nomad-black rounded-md',
+  completed:
+    'w-80pxr h-8 py-1 px-2 font-bold text-md text-white tablet:text-lg tablet:w-112pxr tablet:h-40pxr tablet:px-3 tablet:py-2 bg-nomad-black rounded-md',
+};
+
 export default function ReservationList() {
+  // const [orderBy, setOrderBy] = useState();
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalType, setModalType] = useState<string | null>(null);
+
+  const handleButtonClick = (status: string) => {
+    setIsOpen(true);
+    setModalType(status); // 버튼 클릭 시 모달 유형 설정
+  };
+
+  const getModalContent = () => {
+    switch (modalType) {
+      case 'pending':
+        return <Modal type="small" message="예약을 취소하시겠습니까?" onClose={() => setIsOpen(false)} />;
+      case 'completed':
+        return <ReviewModal message={'후기 작성'} onClose={() => setIsOpen(false)} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="h-full w-full">
-      <div className="mb-3 tablet:mb-6">
+      <div className="mb-3 flex w-full items-center justify-between tablet:mb-6">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
-        {/* pc일때만 <div>필터</div> */}
+        <div className="m-0 hidden h-53pxr w-40 pc:block">
+          <select>
+            <option>예약 신청</option>
+            <option>예약 취소</option>
+            <option>예약 승인</option>
+            <option>예약 거절</option>
+            <option>체험 완료</option>
+          </select>
+          <div>
+            <Image src={arrowDown} alt="필터 선택 화살표" />
+          </div>
+        </div>
       </div>
       {!mock.reservations || mock.reservations.length === 0 ? (
         <div className="mt-60pxr flex flex-col items-center justify-center gap-3 tablet:mt-14 pc:mt-86pxr">
@@ -69,24 +153,29 @@ export default function ReservationList() {
                 <Image className="absolute" fill src={reservation.activity.bannerImageUrl} alt="체험 배너 이미지" />
               </div>
               <div className="flex-grow py-11pxr pl-2 pr-14pxr tablet:py-3 tablet:pl-3 tablet:pr-18pxr pc:px-6 pc:py-21pxr">
-                <p className="text-md font-bold tablet:text-lg pc:mb-2">{reservation.status}</p>
+                <p className={`${statusLabelsColor[reservation.status]} text-md font-bold tablet:text-lg pc:mb-2`}>
+                  {statusLabels[reservation.status]}
+                </p>
                 <p className="text-md font-bold text-nomad-black tablet:mb-1 tablet:text-2lg pc:mb-3 pc:text-xl">{reservation.activity.title}</p>
-                <div className="pc: mb-4 flex items-center gap-[0.125rem] text-xs font-regular text-nomad-black tablet:mb-10pxr tablet:text-md pc:text-lg">
+                <div className="mb-0 flex items-center gap-[0.125rem] text-xs font-regular text-nomad-black tablet:mb-10pxr tablet:text-md pc:mb-4 pc:text-lg">
                   <p>{reservation.date}</p>
                   <p>·</p>
                   <p>{reservation.startTime}</p>
                   <p>·</p>
                   <p>{reservation.endTime}</p>
                 </div>
-                <div>
+                <div className="flex items-center justify-between">
                   <p className="text-lg font-medium text-black-100 tablet:text-xl">￦{reservation.totalPrice}</p>
-                  {/* 여기는 상태에 따른 버튼 */}
+                  <Button onClick={() => handleButtonClick(`${reservation.status}`)} className={`${buttonStyleByStatus[reservation.status]}`}>
+                    {buttonByStatus[reservation.status]}
+                  </Button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       )}
+      {isOpen && <OverlayContainer>{getModalContent()}</OverlayContainer>}
     </div>
   );
 }
