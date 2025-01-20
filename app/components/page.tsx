@@ -4,6 +4,7 @@ import Navbar from '@/components/common/navbar/Navbar';
 import Footer from '@/components/common/footer';
 import ModalComponent from './modal';
 import InputPage from './InputPage';
+import Mypage from './mypage';
 import PagenationComponent from './pagenation';
 import KakaoMap from './kakomap';
 
@@ -45,6 +46,7 @@ async function Page() {
         <InputPage />
       </li>
       <li>
+        <Mypage />
         <Footer />
         <PagenationComponent />
       </li>
