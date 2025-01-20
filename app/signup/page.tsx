@@ -33,9 +33,7 @@ export default function Page() {
   });
 
   const onSubmit = (data: IFormInput) => {
-    const { email, nickname, password } = data;
-    const signUpData: SignupBody = { email, nickname, password };
-    postSignupMutation.mutate(signUpData);
+    console.log('Form Data:', data);
   };
 
   const passwordValue = watch('password');
