@@ -42,8 +42,7 @@ export default function Page() {
     switch (selectedMenu) {
       case 'myinfo':
         return (
-          <div>
-            {/*여기 컴포넌트 갈아끼워야해요*/}
+          <div className="flex justify-center">
             <Mypage />
           </div>
         );
