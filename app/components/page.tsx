@@ -3,6 +3,7 @@ import Button from '@/components/common/button';
 import Navbar from '@/components/common/navbar/Navbar';
 import ModalComponent from './modal';
 import InputPage from './InputPage';
+import PagenationComponent from './pagenation';
 import KakaoMap from './kakomap';
 
 async function Page() {
@@ -41,6 +42,9 @@ async function Page() {
       <br />
       <li>
         <InputPage />
+      </li>
+      <li>
+        <PagenationComponent />
       </li>
       <hr />
       <li>
