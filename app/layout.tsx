@@ -1,5 +1,6 @@
 import type {Metadata} from 'next';
 import '@/styles/globals.css';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'Global Nomad',
@@ -18,6 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <Script
+          src={`https://dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}&libraries=services&autoload=false`}
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className="max-w-full">{children}</body>
     </html>
   );

@@ -57,7 +57,7 @@ export default {
           200: '#0085FF',
         },
       },
-  
+
       fontSize: {
         '3xl': ['32px', '42px'],
         '2xl': ['24px', '32px'],
@@ -76,7 +76,7 @@ export default {
       },
       spacing: {
         // 기존 spacing 값에 pxr 단위 추가
-        ...range(1, 500).reduce(
+        ...range(1, 800).reduce(
           (acc, px) => {
             acc[`${px}pxr`] = pxToRem(px); // 1pxr은 rem으로 변환
             return acc;
