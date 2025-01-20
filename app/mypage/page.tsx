@@ -4,7 +4,7 @@ import SideNavi from '@/components/common/side-navigation/side-navi';
 import Test from '@/components/common/side-navigation/test';
 import React, {useState, useEffect} from 'react';
 import ReservationList from '../components/reservation-list';
-import Navbar from '@/components/common/navbar/Navbar';
+import Navbar from '@/components/common/navbar';
 
 export default function Page() {
   const [selectedMenu, setSelectedMenu] = useState('myinfo');
