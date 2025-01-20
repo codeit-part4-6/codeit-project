@@ -105,6 +105,10 @@ export default function Page() {
                 control={control}
                 rules={{
                   required: '필수값입니다.',
+                  maxLength: {
+                    value: 10,
+                    message: '열 자 이하로 작성해 주세요.',
+                  },
                 }}
                 render={({ field }) => (
                   <Input
