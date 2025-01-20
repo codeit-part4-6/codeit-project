@@ -79,7 +79,7 @@ export default function Page() {
           <SideNavi selectedMenu={selectedMenu} onSelectMenu={setSelectedMenu} isMobile={isMobile} onOpenModal={() => setIsOpen(true)} />
           {isOpen && (
             <OverlayContainer>
-              <div className="h-full w-full bg-white">
+              <div className="h-full w-full overflow-y-auto bg-white">
                 <Navbar />
                 <div className="px-4 pt-6">{renderContent()}</div>
               </div>
@@ -88,7 +88,7 @@ export default function Page() {
         </div>
       ) : (
         // **PC/태블릿 환경**
-        <div className="flex tablet:gap-4 pc:gap-6">
+        <div className="flex overflow-y-auto tablet:gap-4 pc:gap-6">
           <SideNavi selectedMenu={selectedMenu} onSelectMenu={setSelectedMenu} />
           <div className="flex-grow">{renderContent()}</div>
         </div>

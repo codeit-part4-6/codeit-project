@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import nonData from '@/public/img/img_non_data.svg';
 import Image from 'next/image';
 import Button from '@/components/common/button';
-import OverlayContainer from '@/components/common/modal/overlay-container';
 import Modal from '@/components/common/modal/modal';
 import ReviewModal from '@/components/common/modal/review-modal';
 import CustomSelect from '@/components/common/reservation-list/custom-select';
+import {statusLabels, buttonByStatus} from '@/constant/reservation-list-constant';
 
 const mock = {
   reservations: [
@@ -112,15 +112,7 @@ const mock = {
   ],
 };
 
-const statusLabels: Record<string, string> = {
-  pending: '예약 완료',
-  confirmed: '예약 승인',
-  declined: '예약 거절',
-  canceled: '예약 취소',
-  completed: '체험 완료',
-};
-
-const statusLabelsColor: Record<string, string> = {
+export const statusLabelsColor: Record<string, string> = {
   pending: 'text-blue-100',
   confirmed: 'text-orange-100',
   declined: 'text-red-200',
@@ -128,12 +120,7 @@ const statusLabelsColor: Record<string, string> = {
   completed: 'text-gray-700',
 };
 
-const buttonByStatus: Record<string, string> = {
-  pending: '예약 취소',
-  completed: '후기 작성',
-};
-
-const buttonStyleByStatus: Record<string, string> = {
+export const buttonStyleByStatus: Record<string, string> = {
   pending:
     'w-80pxr h-8 py-1 px-2 font-bold text-md text-nomad-black tablet:text-lg tablet:w-112pxr tablet:h-40pxr tablet:px-3 tablet:py-2 bg-white border border-nomad-black rounded-md',
   completed:
@@ -144,10 +131,12 @@ export default function ReservationList() {
   const [orderBy, setOrderBy] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const handleButtonClick = (status: string) => {
+  const handleButtonClick = (status: string, id: number) => {
     setIsOpen(true);
     setModalType(status);
+    setSelectedId(id);
   };
 
   const getModalContent = () => {
@@ -155,13 +144,26 @@ export default function ReservationList() {
       case 'pending':
         return <Modal type="small" message="예약을 취소하시겠습니까?" onClose={() => setIsOpen(false)} />;
       case 'completed':
-        return <ReviewModal message={'후기 작성'} onClose={() => setIsOpen(false)} />;
+        const selectedData = mock.reservations.find(reservation => reservation.status === 'completed' && reservation.id === selectedId);
+        return <ReviewModal data={selectedData} message={'후기 작성'} onClose={() => setIsOpen(false)} />;
       default:
         return null;
     }
   };
 
   const filteredReservation = mock.reservations.filter(reservation => !orderBy || reservation.status === orderBy);
+
+  useEffect(() => {
+    // 모달 dim 부분 스크롤 막기
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+    } else {
+      document.body.style.overflow = ''; // 기본 스크롤 상태로 복구
+    }
+    return () => {
+      document.body.style.overflow = ''; // 컴포넌트가 unmount 될 때도 스크롤 상태 복구
+    };
+  }, [isOpen]);
 
   return (
     <div className="mb-16 h-full w-full">
@@ -200,7 +202,10 @@ export default function ReservationList() {
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-lg font-medium text-black-100 tablet:text-xl">￦{reservation.totalPrice}</p>
-                  <Button onClick={() => handleButtonClick(`${reservation.status}`)} className={`${buttonStyleByStatus[reservation.status]}`}>
+                  <Button
+                    onClick={() => handleButtonClick(`${reservation.status}`, reservation.id)}
+                    className={`${buttonStyleByStatus[reservation.status]}`}
+                  >
                     {buttonByStatus[reservation.status]}
                   </Button>
                 </div>
@@ -209,7 +214,7 @@ export default function ReservationList() {
           ))}
         </div>
       )}
-      {isOpen && <OverlayContainer>{getModalContent()}</OverlayContainer>}
+      {isOpen && <>{getModalContent()}</>}
     </div>
   );
 }

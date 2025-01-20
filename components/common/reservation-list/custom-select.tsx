@@ -27,7 +27,7 @@ export default function CustomSelect({orderBy, handleOrderBy}: CustomSelectProps
   return (
     <div
       onClick={() => setIsOpen(prev => !prev)}
-      className="relative hidden h-53pxr w-40 cursor-pointer rounded-2xl border border-nomad-black px-5 py-4 pc:block"
+      className="relative hidden h-53pxr w-40 cursor-pointer rounded-2xl border border-nomad-black px-5 py-4 tablet:block pc:block"
     >
       <div className="flex items-center justify-between rounded-md">
         <span className="text-2lg font-medium leading-none text-green-100">{selectedLabel}</span>

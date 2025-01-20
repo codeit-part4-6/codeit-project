@@ -28,7 +28,7 @@ export default function SideNavi({selectedMenu, onSelectMenu, isMobile, onOpenMo
 
   return (
     <div className="shadow-sidenavi-box h-[27rem] min-w-full rounded-xl border border-gray-200 p-6 tablet:w-[15.6875rem] tablet:min-w-[15.6875rem] pc:w-[26rem] pc:min-w-[26rem] pc:p-6">
-      <div className="relative mb-2 h-40 w-40">
+      <div className="relative mx-auto mb-2 h-40 w-40">
         <Image src={defaultProfile} alt="기본 프로필" className="absolute" fill priority />
         <div className="absolute bottom-4 right-4 h-11 w-11">
           <Image src={profileButton} alt="프로필 수정 버튼" fill />
