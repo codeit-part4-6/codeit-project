@@ -3,11 +3,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useForm, Controller } from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
 import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
+import { apiSignup } from '@/service/api/users/users.api';
+import { SignupBody } from '@/service/api/users/users.types';
 
 interface IFormInput {
   email: string;
@@ -32,8 +35,13 @@ export default function Page() {
     },
   });
 
+  const signupMutation = useMutation({
+    mutationFn: (signupData: SignupBody) => apiSignup(signupData),
+  });
+
   const onSubmit = (data: IFormInput) => {
-    console.log('Form Data:', data);
+    alert('회원가입완료!');
+    signupMutation.mutate(data);
   };
 
   const passwordValue = watch('password');
@@ -46,11 +54,11 @@ export default function Page() {
         </Link>
         <form
           className="flex flex-col gap-[2.5rem] w-full items-center justify-center tablet:gap-[3rem]"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)} // 폼 제출 시 onSubmit 호출
         >
           <div className="flex flex-col gap-[1.625rem] tablet:gap-[2rem]">
             <div className="flex flex-col gap-[1.75rem]">
-              {/* Email Input */}
+              {/* 이메일 입력란 */}
               <Controller
                 name="email"
                 control={control}
@@ -73,7 +81,7 @@ export default function Page() {
                   />
                 )}
               />
-              {/* Nickname Input */}
+              {/* 닉네임 입력란 */}
               <Controller
                 name="nickname"
                 control={control}
@@ -92,7 +100,7 @@ export default function Page() {
                   />
                 )}
               />
-              {/* Password Input */}
+              {/* 비밀번호 입력란 */}
               <Controller
                 name="password"
                 control={control}
@@ -117,7 +125,7 @@ export default function Page() {
                   />
                 )}
               />
-              {/* Confirm Password Input */}
+              {/* 비밀번호 확인 입력란 */}
               <Controller
                 name="confirmPassword"
                 control={control}
@@ -142,14 +150,16 @@ export default function Page() {
                   </div>
                 )}
               />
+              {/* 회원가입 버튼 */}
               <Button
                 className="bg-primary text-white w-[21.875rem] h-[3.375rem] rounded-[0.375rem] gap-[0.5rem] sm:px-4 tablet:w-[40rem] tablet:h-[3rem]"
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid} // 유효하지 않으면 버튼 비활성화
               >
                 회원가입 하기
               </Button>
             </div>
+            {/* 로그인 링크 */}
             <span className="text-gray-800 text-[1rem] font-regular leading-[1.19rem] text-center">
               회원이신가요?
               <Link href="/signup" className="underline ml-[0.3125rem]">
@@ -157,6 +167,7 @@ export default function Page() {
               </Link>
             </span>
             <div className="flex flex-col gap-[1.5rem] tablet:gap-[2.5rem]">
+              {/* SNS 로그인 섹션 */}
               <div className="flex items-center">
                 <hr className="w-[5rem] border border-gray-300" />
                 <span className="text-gray-700 text-[0.875rem] leading-[1.5rem] font-regular text-center">
