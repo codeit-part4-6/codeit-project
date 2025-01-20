@@ -64,6 +64,7 @@ export default {
 
         green: {
           50: '#CED8D5',
+          100: '#OB3B2D',
         },
       },
 

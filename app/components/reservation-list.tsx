@@ -69,6 +69,46 @@ const mock = {
       createdAt: '2025-01-20T01:55:20.317Z',
       updatedAt: '2025-01-20T01:55:20.317Z',
     },
+    {
+      id: 4,
+      teamId: '11-6',
+      userId: 0,
+      activity: {
+        bannerImageUrl: '/img/img_navlogo.svg',
+        title: '테스트 예약 체험4',
+        id: 4,
+      },
+      scheduleId: 4,
+      status: 'declined',
+      reviewSubmitted: true,
+      totalPrice: 40000,
+      headCount: 0,
+      date: '날짜',
+      startTime: '시작 시간',
+      endTime: '종료 시간',
+      createdAt: '2025-01-20T01:55:20.317Z',
+      updatedAt: '2025-01-20T01:55:20.317Z',
+    },
+    {
+      id: 5,
+      teamId: '11-6',
+      userId: 0,
+      activity: {
+        bannerImageUrl: '/img/img_navlogo.svg',
+        title: '테스트 예약 체험3',
+        id: 5,
+      },
+      scheduleId: 5,
+      status: 'canceled',
+      reviewSubmitted: true,
+      totalPrice: 50000,
+      headCount: 0,
+      date: '날짜',
+      startTime: '시작 시간',
+      endTime: '종료 시간',
+      createdAt: '2025-01-20T01:55:20.317Z',
+      updatedAt: '2025-01-20T01:55:20.317Z',
+    },
   ],
 };
 
@@ -101,13 +141,13 @@ const buttonStyleByStatus: Record<string, string> = {
 };
 
 export default function ReservationList() {
-  // const [orderBy, setOrderBy] = useState();
+  const [orderBy, setOrderBy] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState<string | null>(null);
-
+  console.log(orderBy);
   const handleButtonClick = (status: string) => {
     setIsOpen(true);
-    setModalType(status); // 버튼 클릭 시 모달 유형 설정
+    setModalType(status);
   };
 
   const getModalContent = () => {
@@ -121,24 +161,44 @@ export default function ReservationList() {
     }
   };
 
+  const filteredReservation = mock.reservations.filter(reservation => !orderBy || reservation.status === orderBy);
+
   return (
     <div className="h-full w-full">
       <div className="mb-3 flex w-full items-center justify-between tablet:mb-6">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
-        <div className="m-0 hidden h-53pxr w-40 pc:block">
-          <select>
-            <option>예약 신청</option>
-            <option>예약 취소</option>
-            <option>예약 승인</option>
-            <option>예약 거절</option>
-            <option>체험 완료</option>
-          </select>
-          <div>
-            <Image src={arrowDown} alt="필터 선택 화살표" />
+        <div className="m-0 hidden h-53pxr w-40 rounded-2xl border border-nomad-black px-5 py-4 pc:block">
+          <div className="relative flex items-center">
+            <select
+              value={orderBy}
+              onChange={e => setOrderBy(e.target.value)}
+              className="appearance-none text-2xl font-medium leading-none text-green-100 focus:outline-none"
+            >
+              <option value="">전체</option>
+              <option value="pending" className="text-gray-800">
+                예약 신청
+              </option>
+              <option value="canceled" className="text-gray-800">
+                예약 취소
+              </option>
+              <option value="confirmed" className="text-gray-800">
+                예약 승인
+              </option>
+              <option value="declined" className="text-gray-800">
+                예약 거절
+              </option>
+              <option value="completed" className="text-gray-800">
+                체험 완료
+              </option>
+            </select>
+            <div className="absolute right-1">
+              <Image className="m-0 h-22pxr w-22pxr" src={arrowDown} alt="필터 선택 화살표" />
+            </div>
           </div>
         </div>
       </div>
-      {!mock.reservations || mock.reservations.length === 0 ? (
+
+      {!filteredReservation || filteredReservation.length === 0 ? (
         <div className="mt-60pxr flex flex-col items-center justify-center gap-3 tablet:mt-14 pc:mt-86pxr">
           <div className="h-200pxr w-200pxr pc:h-60 pc:w-60">
             <Image src={nonData} alt="내역이 없어요" />
@@ -147,7 +207,7 @@ export default function ReservationList() {
         </div>
       ) : (
         <div className="flex flex-col gap-2 tablet:gap-4 pc:gap-6">
-          {mock.reservations.map(reservation => (
+          {filteredReservation.map(reservation => (
             <div key={`list_${reservation.id}`} className="shadow-sidenavi-box flex h-32 w-full items-center rounded-3xl tablet:h-156pxr pc:h-204pxr">
               <div className="relative h-32 w-32 flex-shrink tablet:h-156pxr tablet:w-156pxr pc:h-204pxr pc:w-204pxr">
                 <Image className="absolute" fill src={reservation.activity.bannerImageUrl} alt="체험 배너 이미지" />
