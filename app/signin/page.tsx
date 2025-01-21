@@ -46,7 +46,9 @@ export default function Page() {
         setModalMessage('비밀번호가 일치하지 않습니다.');
         setIsModalOpen(true);
       },
-      onSuccess: () => {
+      onSuccess: (data) => {
+        sessionStorage.setItem('accessToken', data.accessToken);
+        sessionStorage.setItem('refreshToken', data.refreshToken);
         alert('성공');
       },
     });
