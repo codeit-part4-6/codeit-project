@@ -1,8 +1,6 @@
 import type {Metadata} from 'next';
 import '@/styles/globals.css';
 import Script from 'next/script';
-import Navbar from '@/components/common/navbar';
-import Footer from '@/components/common/footer';
 import ClientSideLayout from './ClientSideLayout';
 
 export const metadata: Metadata = {
@@ -26,9 +24,7 @@ export default function RootLayout({children}: Readonly<{children: React.ReactNo
       </head>
       <body className="max-w-full">
         <ClientSideLayout>
-          <Navbar />
           <main>{children}</main>
-          <Footer />
         </ClientSideLayout>
       </body>
     </html>
