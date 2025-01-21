@@ -57,7 +57,7 @@ export default {
           200: '#0085FF',
         },
       },
-  
+
       fontSize: {
         '3xl': ['32px', '42px'],
         '2xl': ['24px', '32px'],
