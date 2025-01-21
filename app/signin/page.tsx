@@ -15,6 +15,7 @@ import KakaoIcon from '@/public/icon/ic_kakao.svg';
 import { postSignin } from '@/service/api/auth/postSignin.api';
 import { postTokens } from '@/service/api/auth/postTokens.api';
 import { SigninBody } from '@/types/postSignin.types';
+import { useAuthStore } from '@/service/store/authStore';
 
 interface IFormInput {
   email: string;
@@ -22,6 +23,7 @@ interface IFormInput {
 }
 
 export default function Page() {
+  const { setLogin } = useAuthStore(); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const router = useRouter();
@@ -51,6 +53,9 @@ export default function Page() {
       },
       onSuccess: async (data) => {
         try {
+          // Zustand에 로그인 상태 업데이트
+          setLogin(data.accessToken, data.refreshToken);
+
           sessionStorage.setItem('accessToken', data.accessToken);
           sessionStorage.setItem('refreshToken', data.refreshToken);
 
