@@ -1,7 +1,7 @@
 'use client';
 import OverlayContainer from '@/components/common/modal/overlay-container';
 import SideNavi from '@/components/common/side-navigation/side-navi';
-import Test from '@/components/common/side-navigation/test';
+import Mypage from '@/components/common/side-navigation/mypage';
 import React, {useState, useEffect} from 'react';
 import ReservationList from '../components/reservation-list';
 import Navbar from '@/components/common/navbar';
@@ -42,9 +42,8 @@ export default function Page() {
     switch (selectedMenu) {
       case 'myinfo':
         return (
-          <div>
-            {/*여기 컴포넌트 갈아끼워야해요*/}
-            <Test />
+          <div className="flex justify-center">
+            <Mypage />
           </div>
         );
       case 'reserveList':
