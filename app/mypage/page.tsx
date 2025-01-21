@@ -5,6 +5,8 @@ import Mypage from '@/components/common/side-navigation/mypage';
 import React, {useState, useEffect} from 'react';
 import ReservationList from '../components/reservation-list';
 import Navbar from '@/components/common/navbar';
+import ReservationCalendar from '../components/reservation-calendar';
+import Footer from '@/components/common/footer';
 
 export default function Page() {
   const [selectedMenu, setSelectedMenu] = useState('myinfo');
@@ -54,7 +56,7 @@ export default function Page() {
           /*여기 컴포넌트 갈아끼워야해요*/
         }
       case 'reserveCalendar':
-        return <div>예약 현황 컴포넌트</div>;
+        return <ReservationCalendar />;
         {
           /*여기 컴포넌트 갈아끼워야해요*/
         }
@@ -81,6 +83,7 @@ export default function Page() {
               <div className="h-full w-full overflow-y-auto bg-white">
                 <Navbar />
                 <div className="px-4 pt-6">{renderContent()}</div>
+                <Footer />
               </div>
             </OverlayContainer>
           )}

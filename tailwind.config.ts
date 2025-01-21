@@ -31,6 +31,7 @@ export default {
         black: {
           50: '#000000',
           100: '#1B1B1B',
+          200: '#1C1B1F',
         },
 
         gray: {
