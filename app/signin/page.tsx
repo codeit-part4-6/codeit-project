@@ -7,9 +7,12 @@ import { useForm, Controller } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
+import Modal from '@/components/common/modal/modal';
 import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
+import { postSignin } from '@/service/api/auth/postSignin.api';
+import { SigninBody } from '@/types/postSignin.types';
 
 interface IFormInput {
   email: string;
@@ -17,6 +20,9 @@ interface IFormInput {
 }
 
 export default function Page() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+
   const {
     control,
     handleSubmit,
@@ -29,8 +35,25 @@ export default function Page() {
     },
   });
 
+  const signinMutation = useMutation({
+      mutationFn: (signinData: SigninBody) => postSignin(signinData),
+    });
+
   const onSubmit = (data: IFormInput) => {
-    console.log(data);
+    signinMutation.mutate(data, {
+      // 경고
+      onError: () => {
+        setModalMessage('비밀번호가 일치하지 않습니다.');
+        setIsModalOpen(true);
+      },
+      onSuccess: () => {
+        alert('성공');
+      },
+    });
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -45,6 +68,7 @@ export default function Page() {
         >
           <div className="flex flex-col gap-[1.625rem] tablet:gap-[2rem]">
             <div className="flex flex-col gap-[1.75rem]">
+              {/* 이메일 입력란 */}
               <Controller
                 name="email"
                 control={control}
@@ -67,6 +91,7 @@ export default function Page() {
                   />
                 )}
               />
+              {/* 비밀번호 입력란 */}
               <Controller
                 name="password"
                 control={control}
@@ -122,6 +147,7 @@ export default function Page() {
           </div>
         </form>
       </div>
+      {isModalOpen && <Modal type="big" message={modalMessage} onClose={handleCloseModal} />}
     </>
   );
 }
