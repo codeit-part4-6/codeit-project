@@ -31,6 +31,8 @@ export default {
         black: {
           50: '#000000',
           100: '#1B1B1B',
+          200: '#1C1B1F',
+          300: '#969696',
         },
 
         gray: {
@@ -43,6 +45,7 @@ export default {
           600: '#A1A1A1',
           700: '#79747E',
           800: '#4B4B4B',
+          900: '#E8E8E8',
         },
 
         red: {
@@ -64,6 +67,7 @@ export default {
 
         green: {
           50: '#CED8D5',
+          100: '#OB3B2D',
         },
       },
 
