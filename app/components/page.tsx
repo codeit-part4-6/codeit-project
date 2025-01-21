@@ -4,7 +4,7 @@ import Navbar from '@/components/common/navbar';
 import Footer from '@/components/common/footer';
 import ModalComponent from './modal';
 import InputPage from './InputPage';
-import Mypage from '../../components/common/side-navigation/mypage';
+import Mypage from '../../components/side-navigation/mypage';
 import PagenationComponent from './pagenation';
 import KakaoMap from './kakomap';
 
