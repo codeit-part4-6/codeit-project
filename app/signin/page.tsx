@@ -13,6 +13,7 @@ import signLogo from '@/public/img/img_signlogo.svg';
 import GoogleIcon from '@/public/icon/ic_google.svg';
 import KakaoIcon from '@/public/icon/ic_kakao.svg';
 import { postSignin } from '@/service/api/auth/postSignin.api';
+import { postTokens } from '@/service/api/auth/postTokens.api';
 import { SigninBody } from '@/types/postSignin.types';
 
 interface IFormInput {
@@ -48,10 +49,18 @@ export default function Page() {
         setModalMessage('비밀번호가 일치하지 않습니다.');
         setIsModalOpen(true);
       },
-      onSuccess: (data) => {
-        sessionStorage.setItem('accessToken', data.accessToken);
-        sessionStorage.setItem('refreshToken', data.refreshToken);
-        router.push('/');
+      onSuccess: async (data) => {
+        try {
+          sessionStorage.setItem('accessToken', data.accessToken);
+          sessionStorage.setItem('refreshToken', data.refreshToken);
+
+          const refreshedData = await postTokens(data.refreshToken);
+          if (refreshedData) sessionStorage.setItem('accessToken', refreshedData.accessToken);
+
+          router.push('/');
+        } catch (e) {
+          console.error(e);
+        }
       },
     });
   };

@@ -1,6 +1,6 @@
 import INSTANCE_URL from '../instance';
 
-export async function postSignin(refreshToken: string) {
+export async function postTokens(refreshToken: string) {
   const response = await INSTANCE_URL.post(
     "auth/tokens",
     {},
