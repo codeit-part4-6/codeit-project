@@ -1,7 +1,7 @@
 'use client';
 import OverlayContainer from '@/components/common/modal/overlay-container';
-import SideNavi from '@/components/common/side-navigation/side-navi';
-import Mypage from '@/components/common/side-navigation/mypage';
+import SideNavi from '@/components/side-navigation/side-navi';
+import Mypage from '@/components/side-navigation/mypage';
 import React, {useState, useEffect} from 'react';
 import ReservationList from '../components/reservation-list';
 import Navbar from '@/components/common/navbar';

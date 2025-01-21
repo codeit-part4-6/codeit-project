@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Button from '@/components/common/button';
 import Modal from '@/components/common/modal/modal';
 import ReviewModal from '@/components/common/modal/review-modal';
-import CustomSelect from '@/components/common/reservation-list/custom-select';
+import CustomSelect from '@/components/reservation-list/custom-select';
 import {statusLabels, buttonByStatus} from '@/constant/reservation-list-constant';
 
 const mock = {

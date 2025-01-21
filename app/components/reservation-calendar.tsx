@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, {useState} from 'react';
 import selectDown from '@/public/icon/ic_chevron_down.svg';
+import BigCalendar from '@/components/reservation-calendar/big-calendar';
 
 const mock = {
   activities: [
@@ -73,9 +74,12 @@ export default function ReservationCalendar() {
   };
 
   return (
-    <div onClick={() => setIsOptionOpen(prev => !prev)} className="mb-16 h-full w-full cursor-pointer">
+    <div className="mb-16 h-full w-full">
       <p className="mb-8 text-3xl font-bold text-black-50">예약 현황</p>
-      <div className="relative h-14 min-h-14 w-full rounded border border-gray-700 px-5">
+      <div
+        onClick={() => setIsOptionOpen(prev => !prev)}
+        className="relative mb-8 h-14 min-h-14 w-full cursor-pointer rounded border border-gray-700 px-5"
+      >
         <p className="absolute -top-3 left-4 bg-white px-1 text-md font-regular text-nomad-black">체험명</p>
         <div className="mt-4 flex items-center justify-between">
           <span className="text-balck-200 text-lg font-regular">{selectedTitle}</span>
@@ -99,7 +103,9 @@ export default function ReservationCalendar() {
             ))}
           </ul>
         )}
-        {/* <div>달력달력</div> */}
+      </div>
+      <div>
+        <BigCalendar />
       </div>
     </div>
   );
