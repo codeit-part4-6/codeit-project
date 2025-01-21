@@ -1,8 +1,10 @@
 'use client';
 import OverlayContainer from '@/components/common/modal/overlay-container';
 import SideNavi from '@/components/common/side-navigation/side-navi';
-import Test from '@/components/common/side-navigation/test';
+import Mypage from '@/components/common/side-navigation/mypage';
 import React, {useState, useEffect} from 'react';
+import ReservationList from '../components/reservation-list';
+import Navbar from '@/components/common/navbar';
 
 export default function Page() {
   const [selectedMenu, setSelectedMenu] = useState('myinfo');
@@ -14,15 +16,15 @@ export default function Page() {
   }
 
   useEffect(() => {
-    const initialIsMobil = getPageSize(window.innerWidth);
+    const initialIsMobil = getPageSize(document.documentElement.clientWidth);
     setIsMobile(initialIsMobil); // 브라우저에서만 실행
   }, []);
 
   useEffect(() => {
     const handleResize = () => {
-      const mobile = getPageSize(window.innerWidth);
+      const mobile = getPageSize(document.documentElement.clientWidth);
       setIsMobile(mobile);
-      setIsOpen(false);
+
       if (!mobile && selectedMenu === '') {
         setSelectedMenu('myinfo');
       }
@@ -40,16 +42,12 @@ export default function Page() {
     switch (selectedMenu) {
       case 'myinfo':
         return (
-          <div>
-            {/*여기 컴포넌트 갈아끼워야해요*/}
-            <Test />
+          <div className="flex justify-center">
+            <Mypage />
           </div>
         );
       case 'reserveList':
-        return <div>예약 내역 컴포넌트</div>;
-        {
-          /*여기 컴포넌트 갈아끼워야해요*/
-        }
+        return <ReservationList />;
       case 'treatReservation':
         return <div>내 체험 관리 컴포넌트</div>;
         {
@@ -73,20 +71,23 @@ export default function Page() {
   }
 
   return (
-    <div className="px-4 pt-6 tablet:p-6 pc:mt-[4.5rem] pc:w-full pc:max-w-[75rem] pc:p-0">
+    <div className="mx-auto px-4 pt-6 tablet:p-6 pc:mt-[4.5rem] pc:w-full pc:max-w-[75rem] pc:p-0">
       {isMobile ? (
         // **모바일 환경**
         <div>
           <SideNavi selectedMenu={selectedMenu} onSelectMenu={setSelectedMenu} isMobile={isMobile} onOpenModal={() => setIsOpen(true)} />
           {isOpen && (
             <OverlayContainer>
-              <div className="h-full w-full bg-white">{renderContent()}</div>
+              <div className="h-full w-full overflow-y-auto bg-white">
+                <Navbar />
+                <div className="px-4 pt-6">{renderContent()}</div>
+              </div>
             </OverlayContainer>
           )}
         </div>
       ) : (
         // **PC/태블릿 환경**
-        <div className="flex tablet:gap-4 pc:gap-6">
+        <div className="flex overflow-y-auto tablet:gap-4 pc:gap-6">
           <SideNavi selectedMenu={selectedMenu} onSelectMenu={setSelectedMenu} />
           <div className="flex-grow">{renderContent()}</div>
         </div>
