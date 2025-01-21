@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface OverlayContainerProps {
-  onClose: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
 }
 
