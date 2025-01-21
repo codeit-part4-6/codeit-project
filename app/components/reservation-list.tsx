@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Button from '@/components/common/button';
 import Modal from '@/components/common/modal/modal';
 import ReviewModal from '@/components/common/modal/review-modal';
-import CustomSelect from '@/components/common/reservation-list/custom-select';
+import CustomSelect from '@/components/reservation-list/custom-select';
 import {statusLabels, buttonByStatus} from '@/constant/reservation-list-constant';
 
 const mock = {
@@ -167,7 +167,7 @@ export default function ReservationList() {
 
   return (
     <div className="mb-16 h-full w-full">
-      <div className="mb-3 flex w-full items-center justify-between tablet:mb-6">
+      <div className="mb-3 flex w-full items-start justify-between tablet:mb-6">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
         <div className="m-0">
           <CustomSelect orderBy={orderBy} handleOrderBy={(value: string) => setOrderBy(value)} />
@@ -184,7 +184,7 @@ export default function ReservationList() {
       ) : (
         <div className="flex flex-col gap-2 tablet:gap-4 pc:gap-6">
           {filteredReservation.map(reservation => (
-            <div key={`list_${reservation.id}`} className="shadow-sidenavi-box flex h-32 w-full items-center rounded-3xl tablet:h-156pxr pc:h-204pxr">
+            <div key={`list_${reservation.id}`} className="flex h-32 w-full items-center rounded-3xl shadow-sidenavi-box tablet:h-156pxr pc:h-204pxr">
               <div className="relative h-32 w-32 flex-shrink tablet:h-156pxr tablet:w-156pxr pc:h-204pxr pc:w-204pxr">
                 <Image className="absolute" fill src={reservation.activity.bannerImageUrl} alt="체험 배너 이미지" />
               </div>
