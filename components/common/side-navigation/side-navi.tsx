@@ -20,15 +20,15 @@ interface SideNaviProps {
 
 export default function SideNavi({selectedMenu, onSelectMenu, isMobile, onOpenModal}: SideNaviProps) {
   const menus = [
-    {id: 'myinfo', label: '내 정보', icon: accountCheck, nonIcon: accountUncheck, path: '/myinfo'},
-    {id: 'reserveList', label: '예약 내역', icon: reserveListCheck, nonIcon: reserveListUncheck, path: '/reservelist'},
-    {id: 'treatReservation', label: '내 체험 관리', icon: treatReservation, nonIcon: unTreatReservation, path: '/treatreservation'},
-    {id: 'reserveCalendar', label: '예약 현황', icon: reserveCalendar, nonIcon: unReserveCalendar, path: '/reservecalendar'},
+    {id: 'myinfo', label: '내 정보', icon: accountCheck, nonIcon: accountUncheck},
+    {id: 'reserveList', label: '예약 내역', icon: reserveListCheck, nonIcon: reserveListUncheck},
+    {id: 'treatReservation', label: '내 체험 관리', icon: treatReservation, nonIcon: unTreatReservation},
+    {id: 'reserveCalendar', label: '예약 현황', icon: reserveCalendar, nonIcon: unReserveCalendar},
   ];
 
   return (
-    <div className="h-[27rem] min-w-full rounded-xl border border-gray-200 p-6 shadow-sidenavi-box tablet:w-[15.6875rem] tablet:min-w-[15.6875rem] pc:w-[26rem] pc:min-w-[26rem] pc:p-6">
-      <div className="relative mb-2 h-40 w-40">
+    <div className="shadow-sidenavi-box h-[27rem] min-w-full rounded-xl border border-gray-200 p-6 tablet:w-[15.6875rem] tablet:min-w-[15.6875rem] pc:w-[26rem] pc:min-w-[26rem] pc:p-6">
+      <div className="relative mx-auto mb-2 h-40 w-40">
         <Image src={defaultProfile} alt="기본 프로필" className="absolute" fill priority />
         <div className="absolute bottom-4 right-4 h-11 w-11">
           <Image src={profileButton} alt="프로필 수정 버튼" fill />
