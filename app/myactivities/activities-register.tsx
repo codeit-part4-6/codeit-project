@@ -17,7 +17,7 @@ export interface IFormInput {
 }
 
 interface ActivitiesRegisterProps {
-  onSubmitParent: (data: IFormInput) => void;
+  onSubmitParent?: (data: IFormInput) => void;
 }
 
 const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegisterProps>(({onSubmitParent}, ref) => {
