@@ -174,7 +174,7 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
           <Image src={closeButton} alt="모달 닫기 버튼" className="absolute cursor-pointer" fill />
         </div>
       </div>
-      <div className="mb-3 hidden w-full items-start justify-between tablet:mb-6 tablet:block tablet:flex">
+      <div className="mb-3 hidden w-full items-start justify-between tablet:mb-6 tablet:flex">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
         <div className="m-0">
           <CustomSelect orderBy={orderBy} handleOrderBy={(value: string) => setOrderBy(value)} />
