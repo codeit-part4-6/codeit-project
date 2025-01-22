@@ -1,12 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Calendar} from 'antd';
 import type {Dayjs} from 'dayjs';
 import CalendarHeader from './calendar-header';
+import ReservationContainer from '../common/modal/reservation-container';
+import ReservationModal from '../common/modal/reservation-modal';
 
 export default function BigCalendar() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleDateClick = () => {
+    setIsModalOpen(prev => !prev);
+  };
+
   const DateCell = (date: Dayjs) => (
-    <div className="relative h-154pxr border-collapse border border-gray-900 hover:bg-green-50">
-      <span className="text-black-300 absolute left-1 top-1 px-1 text-xl font-medium">{date.date()}</span>
+    <div>
+      <div onClick={() => handleDateClick()} className="relative h-154pxr border-collapse border border-gray-900 hover:bg-green-50">
+        <span className="text-black-300 absolute left-1 top-1 px-1 text-xl font-medium">{date.date()}</span>
+      </div>
+      {isModalOpen && (
+        <ReservationContainer>
+          <ReservationModal onClose={() => setIsModalOpen(false)} />
+        </ReservationContainer>
+      )}
     </div>
   );
 
@@ -18,7 +32,7 @@ export default function BigCalendar() {
             <CalendarHeader {...props} />
           </>
         )}
-        dateFullCellRender={DateCell}
+        fullCellRender={DateCell}
       />
       <style>
         {`
