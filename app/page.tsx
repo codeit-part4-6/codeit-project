@@ -1,8 +1,8 @@
 import Image from 'next/image';
-import Search from './components/search';
+import Search from '../components/main/search';
 import ExPopular from '@/public/img/img_exPopular.webp';
 import Star from '@/public/icon/ic_yellowStar.svg';
-import Option from './components/option';
+import Option from '../components/main/option';
 
 const page = () => {
   return (
