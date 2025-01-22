@@ -4,10 +4,10 @@ import SearchIcon from '@/public/icon/ic_search.svg';
 
 const Search = () => {
   return (
-    <div className="absolute left-14pxr top-180pxr flex flex-col items-center justify-center pt-14pxr">
-      <div className="flex h-auto w-auto flex-col gap-15pxr rounded-2xl bg-white px-24pxr py-16pxr shadow-lg">
+    <div className="flex flex-col items-center justify-center pt-14pxr">
+      <div className="absolute flex h-auto w-auto flex-col gap-15pxr rounded-2xl bg-white px-24pxr py-16pxr shadow-lg">
         <h2 className="text-lg font-bold text-nomad-black">무엇을 체험하고 싶으신가요?</h2>
-        <div className="w-295pxr flex justify-between gap-10pxr">
+        <div className="flex justify-between gap-10pxr">
           <div className="relative flex items-center rounded border border-solid border-gray-700">
             <Image src={SearchIcon} alt="검색" width={24} height={24} className="absolute" />
             <label htmlFor="search">

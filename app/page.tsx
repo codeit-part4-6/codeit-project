@@ -6,7 +6,7 @@ import Option from './components/option';
 
 const page = () => {
   return (
-    <div className="bg-[rgba(250, 251, 252, 1)] mx-24pxr">
+    <div className="bg-[rgba(250, 251, 252, 1)]">
       <section className="h-240pxr relative flex w-auto flex-col bg-[url('/img/img_banner.jpg')] bg-cover bg-no-repeat">
         <div className="ml-24pxr mt-74pxr flex h-auto w-184pxr flex-col gap-8pxr text-white">
           <h3 className="text-[1.5rem]/[1.75rem] font-bold">부산 광안리 드론쇼</h3>
@@ -14,7 +14,7 @@ const page = () => {
         </div>
       </section>
       <Search />
-      <section className="mb-40pxr mt-101pxr flex flex-col gap-16pxr">
+      <section className="mx-24pxr mb-40pxr mt-101pxr flex flex-col gap-16pxr">
         <h2 className="text-[1.125rem]/[1.313rem] font-bold text-black-100">🔥 인기 체험</h2>
         <div className='flex h-186pxr w-186pxr rounded-3xl bg-[url("/img/img_exPopular.webp")] bg-cover bg-no-repeat text-white'>
           <div className="flex flex-col gap-6pxr pb-24pxr pl-20pxr pt-42pxr">
@@ -31,7 +31,7 @@ const page = () => {
         </div>
       </section>
       <Option />
-      <section className="mb-24pxr mt-24pxr flex flex-col gap-24pxr">
+      <section className="mx-24pxr mb-24pxr mt-24pxr flex flex-col gap-24pxr">
         <h2 className="text-[1.125rem]/[1.313rem] font-bold text-black-100">🥽 모든 체험</h2>
         <div className="flex flex-col gap-16pxr">
           <Image src={ExPopular} alt="부산 광안리 드론쇼" width={168} height={168} className="rounded-3xl" />
