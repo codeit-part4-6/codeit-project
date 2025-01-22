@@ -1,9 +1,12 @@
 import React, {forwardRef, useImperativeHandle, useState} from 'react';
 import Input from '@/components/common/Input';
 import SelectBox from '@/components/common/selectbox';
-import {Controller, SubmitHandler, useForm} from 'react-hook-form';
+import {Controller, SubmitHandler, useFieldArray, useForm} from 'react-hook-form';
 import arrowDown from '@/public/icon/icon_arrow_down.svg';
+import minusBtn from '@/public/icon/ic_minus_btn.svg';
+import plusBtn from '@/public/icon/ic_plus_btn.svg';
 import AddressModal from './address-modal';
+import Image from 'next/image';
 
 export interface IFormInput {
   username: string;
@@ -14,6 +17,11 @@ export interface IFormInput {
   description: string;
   price: number;
   address: string;
+  rows: Array<{
+    date: string;
+    startTime: string;
+    endTime: string;
+  }>;
 }
 
 interface ActivitiesRegisterProps {
@@ -38,11 +46,25 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
       description: '',
       price: 0,
       address: '',
+      rows: [{date: '', startTime: '', endTime: ''}],
     },
   });
 
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const {fields, append, remove} = useFieldArray({
+    control,
+    name: 'rows',
+  });
+
+  const handleAddRow = () => {
+    append({date: '', startTime: '', endTime: ''});
+  };
+
+  const handleMinusRow = (index: number) => {
+    remove(index);
+  };
 
   const handleComplete = (data: {address: string; zonecode: string}) => {
     setIsOpen(false);
@@ -57,8 +79,21 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
 
   const onSubmit: SubmitHandler<IFormInput> = data => {
     console.log('Form Data:', data);
-    onSubmitParent(data);
+    if (onSubmitParent) {
+      onSubmitParent(data);
+    }
   };
+  const generateTimeOptions = (): {value: string; label: string}[] => {
+    const times: {value: string; label: string}[] = [];
+    for (let hour = 0; hour < 24; hour++) {
+      const formattedHour = hour < 10 ? `0${hour}` : `${hour}`;
+      const time = `${formattedHour}:00`;
+      times.push({value: time, label: time});
+    }
+    return times;
+  };
+
+  const timeOptions: {value: string; label: string}[] = generateTimeOptions();
 
   useImperativeHandle(ref, () => ({
     submitForm: handleSubmit(onSubmit),
@@ -172,6 +207,75 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
         )}
       ></Controller>
       {isFocused && isOpen && <AddressModal onClose={() => setIsOpen(false)} onComplete={handleComplete} />}
+      <label className="mb-3 block text-xl font-bold tablet:text-2xl">예약 가능한 시간대</label>
+      {fields.map((row, index) => (
+        <div key={index} className="grid grid-cols-[1fr,auto,auto,auto] gap-5 pc:grid-cols-[1fr,auto,auto,auto,auto]">
+          <div>
+            <label className="text-xl font-medium text-gray-800">날짜</label>
+            <Controller
+              name={`rows.${index}.date` as const} // index로 고유하게 설정
+              control={control}
+              render={({field}) => (
+                <Input
+                  type="date"
+                  value={field.value}
+                  onChange={e => field.onChange(e.target.value)} // onChange로 처리
+                  error={errors?.rows?.[index]?.date?.message}
+                  className="mt-10pxr w-full"
+                />
+              )}
+            />
+          </div>
+
+          <div>
+            <label className="text-xl font-medium text-gray-800">시작 시간</label>
+            <Controller
+              name={`rows.${index}.startTime` as const}
+              control={control}
+              render={({field}) => (
+                <SelectBox
+                  value={field.value}
+                  onChange={e => field.onChange(e.target.value)}
+                  options={timeOptions}
+                  className="w-full bg-white"
+                  deleteButtonImage={arrowDown}
+                  label="00:00"
+                />
+              )}
+            />
+          </div>
+
+          <div>
+            <label className="text-xl font-medium text-gray-800">종료 시간</label>
+            <Controller
+              name={`rows.${index}.endTime` as const}
+              control={control}
+              render={({field}) => (
+                <SelectBox
+                  value={field.value}
+                  onChange={e => field.onChange(e.target.value)}
+                  options={timeOptions}
+                  className="w-full bg-white"
+                  deleteButtonImage={arrowDown}
+                  label="00:00"
+                />
+              )}
+            />
+          </div>
+
+          {index === 0 ? (
+            <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={handleAddRow}>
+              <Image src={plusBtn} alt="Add row" fill />
+            </div>
+          ) : (
+            <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={() => handleMinusRow(index)}>
+              <Image src={minusBtn} alt="Remove row" fill />
+            </div>
+          )}
+        </div>
+      ))}
+      <label className="mb-3 block text-xl font-bold tablet:text-2xl">배너 이미지</label>
+      <div></div>
     </form>
   );
 });

@@ -8,11 +8,12 @@ export interface SelectBoxType {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   deleteButtonImage?: string;
   onDelete?: () => void;
+  label?: string;
 }
 
-export default function SelectBox({className = '', options, value, onChange, deleteButtonImage, onDelete}: SelectBoxType) {
+export default function SelectBox({className = '', options, value, onChange, deleteButtonImage, onDelete, label}: SelectBoxType) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState('');
+  const [selectedLabel, setSelectedLabel] = useState(label);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -63,7 +64,7 @@ export default function SelectBox({className = '', options, value, onChange, del
       {/* 드롭다운 */}
       {isOpen && (
         <div ref={dropdownRef} className="absolute left-0 right-0 top-full z-10 mt-2 rounded-lg border bg-white shadow-lg">
-          <ul>
+          <ul className="max-h-60 overflow-y-auto">
             {options.map(option => (
               <li
                 key={option.value}
