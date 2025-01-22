@@ -6,6 +6,12 @@ export const statusLabels: Record<string, string> = {
   completed: '체험 완료',
 };
 
+export const calendarStatusLabels: Record<string, string> = {
+  pending: '예약',
+  confirmed: '승인',
+  completed: '완료',
+};
+
 export const buttonByStatus: Record<string, string> = {
   pending: '예약 취소',
   completed: '후기 작성',

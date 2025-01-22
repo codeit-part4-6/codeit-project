@@ -3,9 +3,9 @@ import OverlayContainer from '@/components/common/modal/overlay-container';
 import SideNavi from '@/components/side-navigation/side-navi';
 import Mypage from '@/components/side-navigation/mypage';
 import React, {useState, useEffect} from 'react';
-import ReservationList from '../components/reservation-list';
+import ReservationList from '../../components/reservation-list/reservation-list';
 import Navbar from '@/components/common/navbar';
-import ReservationCalendar from '../components/reservation-calendar';
+import ReservationCalendar from '../../components/reservation-calendar/reservation-calendar';
 import Footer from '@/components/common/footer';
 
 export default function Page() {
@@ -49,14 +49,14 @@ export default function Page() {
           </div>
         );
       case 'reserveList':
-        return <ReservationList />;
+        return <ReservationList onClose={() => setIsOpen(false)} />;
       case 'treatReservation':
         return <div>내 체험 관리 컴포넌트</div>;
         {
           /*여기 컴포넌트 갈아끼워야해요*/
         }
       case 'reserveCalendar':
-        return <ReservationCalendar />;
+        return <ReservationCalendar onClose={() => setIsOpen(false)} />;
         {
           /*여기 컴포넌트 갈아끼워야해요*/
         }
