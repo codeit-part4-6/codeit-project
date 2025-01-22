@@ -6,6 +6,7 @@ import ReviewModal from '@/components/common/modal/review-modal';
 import CustomSelect from '@/components/reservation-list/custom-select';
 import {statusLabels, buttonByStatus} from '@/constant/reservation-list-constant';
 import NonDataPage from '../common/non-data';
+import closeButton from '@/public/icon/ic_close_button.svg';
 
 const mock = {
   reservations: [
@@ -127,7 +128,7 @@ export const buttonStyleByStatus: Record<string, string> = {
     'w-80pxr h-8 py-1 px-2 font-bold text-md text-white tablet:text-lg tablet:w-112pxr tablet:h-40pxr tablet:px-3 tablet:py-2 bg-nomad-black rounded-md',
 };
 
-export default function ReservationList() {
+export default function ReservationList({onClose}: {onClose: () => void}) {
   const [orderBy, setOrderBy] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [modalType, setModalType] = useState<string | null>(null);
@@ -167,7 +168,13 @@ export default function ReservationList() {
 
   return (
     <div className="mb-16 h-full w-full">
-      <div className="mb-3 flex w-full items-start justify-between tablet:mb-6">
+      <div className="mb-3 flex w-full items-start justify-between tablet:hidden">
+        <p className="text-3xl font-bold text-black-100">예약 내역</p>
+        <div className="relative h-12 w-12 tablet:hidden" onClick={onClose}>
+          <Image src={closeButton} alt="모달 닫기 버튼" className="absolute cursor-pointer" fill />
+        </div>
+      </div>
+      <div className="mb-3 hidden w-full items-start justify-between tablet:mb-6 tablet:block tablet:flex">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
         <div className="m-0">
           <CustomSelect orderBy={orderBy} handleOrderBy={(value: string) => setOrderBy(value)} />

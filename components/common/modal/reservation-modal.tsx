@@ -24,8 +24,11 @@ export default function ReservationModal({onClose}: ReservationModalProps) {
   const [reservationStatus, setReservationStatus] = useState('pending');
 
   return (
-    <div className="h-full w-full overflow-y-auto border-gray-200 bg-white tablet:absolute tablet:z-[60] tablet:max-h-697pxr tablet:rounded-3xl tablet:border pc:h-[70%] pc:max-h-697pxr pc:w-429pxr">
-      <div className="pt-6">
+    <div
+      onClick={e => e.stopPropagation()}
+      className="h-full w-full overflow-y-auto border-gray-200 bg-white tablet:absolute tablet:z-[60] tablet:max-h-697pxr tablet:rounded-3xl tablet:border pc:h-[70%] pc:max-h-697pxr pc:w-429pxr"
+    >
+      <div className="h-full w-full pt-6">
         <div className="mb-19pxr flex items-center justify-between px-6 tablet:mb-27pxr">
           <p className="tablet: text-2xl text-[1.75rem] font-bold text-black-100">예약 정보</p>
           <div className="relative h-12 w-12 tablet:h-10 tablet:w-10" onClick={onClose}>

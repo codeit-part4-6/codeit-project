@@ -49,14 +49,14 @@ export default function Page() {
           </div>
         );
       case 'reserveList':
-        return <ReservationList />;
+        return <ReservationList onClose={() => setIsOpen(false)} />;
       case 'treatReservation':
         return <div>내 체험 관리 컴포넌트</div>;
         {
           /*여기 컴포넌트 갈아끼워야해요*/
         }
       case 'reserveCalendar':
-        return <ReservationCalendar />;
+        return <ReservationCalendar onClose={() => setIsOpen(false)} />;
         {
           /*여기 컴포넌트 갈아끼워야해요*/
         }
