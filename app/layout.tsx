@@ -6,7 +6,7 @@ import ClientSideLayout from './ClientSideLayout';
 export const metadata: Metadata = {
   title: 'Global Nomad',
   description: '나에게 꼭 맞는 체험상품 찾기',
-  metadataBase: new URL('https://codeit-global-nomad.vercel.app/main'),
+  metadataBase: new URL('https://codeit-global-nomad.vercel.app'),
   icons: {
     icon: '/logo.svg',
     apple: '/logo.svg',
