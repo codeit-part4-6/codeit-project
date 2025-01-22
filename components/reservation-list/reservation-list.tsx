@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import nonData from '@/public/img/img_non_data.svg';
 import Image from 'next/image';
 import Button from '@/components/common/button';
 import Modal from '@/components/common/modal/modal';
 import ReviewModal from '@/components/common/modal/review-modal';
 import CustomSelect from '@/components/reservation-list/custom-select';
 import {statusLabels, buttonByStatus} from '@/constant/reservation-list-constant';
+import NonDataPage from '../common/non-data';
 
 const mock = {
   reservations: [
@@ -175,12 +175,7 @@ export default function ReservationList() {
       </div>
 
       {!filteredReservation || filteredReservation.length === 0 ? (
-        <div className="mt-60pxr flex flex-col items-center justify-center gap-3 tablet:mt-14 pc:mt-86pxr">
-          <div className="h-200pxr w-200pxr pc:h-60 pc:w-60">
-            <Image src={nonData} alt="내역이 없어요" />
-          </div>
-          <p className="text-xl font-medium text-gray-700">아직 등록한 체험이 없어요</p>
-        </div>
+        <NonDataPage />
       ) : (
         <div className="flex flex-col gap-2 tablet:gap-4 pc:gap-6">
           {filteredReservation.map(reservation => (

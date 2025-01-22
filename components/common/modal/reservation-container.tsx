@@ -6,8 +6,13 @@ interface ReservationContainerProps {
 }
 
 export default function ReservationContainer({children, onClose}: ReservationContainerProps) {
+  const handleContainerClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onClose?.();
+  };
+
   return (
-    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center">
+    <div onClick={handleContainerClick} className="absolute inset-0 z-50 flex items-center justify-center">
       {children}
     </div>
   );
