@@ -80,7 +80,7 @@ function Pagenation({size, showItemCount, onChange}: PagenationType) {
   }, [showItemCount, size]);
 
   return (
-    <div className={'flex flex-row items-center justify-center gap-10pxr p-0'}>
+    <div className={'flex flex-row items-center gap-10pxr p-0'}>
       <Button
         key={'prevBtn'}
         className={

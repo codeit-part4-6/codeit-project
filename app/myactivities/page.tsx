@@ -1,5 +1,5 @@
 'use client';
-import SideNavi from '@/components/side-navigation/side-navi';
+import SideNavi from '@/components/common/side-navigation/side-navi';
 import {useState} from 'react';
 import MyActivities from './myactivities';
 import ActivitiesRegister from './activities-register';
