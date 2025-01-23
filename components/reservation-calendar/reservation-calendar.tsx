@@ -2,6 +2,8 @@ import Image from 'next/image';
 import React, {useState} from 'react';
 import selectDown from '@/public/icon/ic_chevron_down.svg';
 import BigCalendar from '@/components/reservation-calendar/big-calendar';
+import NonDataPage from '../common/non-data';
+import closeButton from '@/public/icon/ic_close_button.svg';
 
 const mock = {
   activities: [
@@ -36,7 +38,7 @@ const mock = {
   ],
 };
 
-export default function ReservationCalendar() {
+export default function ReservationCalendar({onClose}: {onClose: () => void}) {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const [selectedTitle, setSelectedTitle] = useState(mock.activities[0].title);
 
@@ -47,7 +49,13 @@ export default function ReservationCalendar() {
 
   return (
     <div className="mb-16 h-full w-full">
-      <p className="mb-8 text-3xl font-bold text-black-50">예약 현황</p>
+      <div className="flex items-start justify-between">
+        <p className="mb-8 text-3xl font-bold text-black-50">예약 현황</p>
+        <div className="relative h-12 w-12 tablet:hidden" onClick={onClose}>
+          <Image src={closeButton} alt="모달 닫기 버튼" className="absolute cursor-pointer" fill />
+        </div>
+      </div>
+      {mock.activities.length === 0 && <NonDataPage />}
       <div
         onClick={() => setIsOptionOpen(prev => !prev)}
         className="relative mb-8 h-14 min-h-14 w-full cursor-pointer rounded border border-gray-700 px-5"
@@ -75,6 +83,7 @@ export default function ReservationCalendar() {
             ))}
           </ul>
         )}
+        {/* 위 list에는 /my-activities에서 데이터 가져와서 연결해야해 */}
       </div>
       <div>
         <BigCalendar />
