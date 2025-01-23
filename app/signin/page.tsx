@@ -54,7 +54,7 @@ export default function Page() {
       onSuccess: async (data) => {
         try {
           // Zustand에 로그인 상태 업데이트
-          setLogin(data.accessToken, data.refreshToken, data.userInfo);
+          setLogin(data.accessToken, data.refreshToken, data.user);
 
           sessionStorage.setItem('accessToken', data.accessToken);
           sessionStorage.setItem('refreshToken', data.refreshToken);
