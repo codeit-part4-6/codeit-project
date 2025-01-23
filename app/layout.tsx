@@ -1,21 +1,19 @@
-import type { Metadata } from 'next';
+import type {Metadata} from 'next';
 import '@/styles/globals.css';
 import Script from 'next/script';
-import Navbar from '@/components/common/navbar';
-import Footer from '@/components/common/footer';
 import ClientSideLayout from './ClientSideLayout';
 
 export const metadata: Metadata = {
   title: 'Global Nomad',
   description: '나에게 꼭 맞는 체험상품 찾기',
-  metadataBase: new URL('https://codeit-global-nomad.vercel.app/main'),
+  metadataBase: new URL('https://codeit-global-nomad.vercel.app'),
   icons: {
     icon: '/logo.svg',
     apple: '/logo.svg',
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return (
     <html lang="ko">
       <head>
@@ -26,9 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="max-w-full">
         <ClientSideLayout>
-          <Navbar />
           <main>{children}</main>
-          <Footer />
         </ClientSideLayout>
       </body>
     </html>

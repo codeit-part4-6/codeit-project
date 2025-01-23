@@ -56,12 +56,12 @@ export default function ReviewModal({data, message, onClose}: ReviewModalProps) 
         </div>
         <textarea
           placeholder="후기를 작성해주세요"
-          className="mb-6 h-346pxr w-full resize-none rounded border border-gray-700 px-4 py-2 placeholder-gray-700 placeholder:text-lg placeholder:font-regular tablet:h-60 tablet:min-h-60"
+          className="mb-6 h-346pxr min-h-346pxr w-full resize-none rounded border border-gray-700 px-4 py-2 placeholder-gray-700 placeholder:text-lg placeholder:font-regular tablet:h-60 tablet:min-h-60"
         />
 
         <Button
           className={
-            'h-54pxr w-full rounded-md bg-nomad-black px-8pxr text-center text-lg font-bold text-white tablet:h-56pxr tablet:min-h-56pxr tablet:rounded'
+            'h-54pxr min-h-54pxr w-full rounded-md bg-nomad-black px-8pxr text-center text-lg font-bold text-white tablet:h-56pxr tablet:min-h-56pxr tablet:rounded'
           }
           onClick={onClose}
         >

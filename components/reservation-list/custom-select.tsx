@@ -35,14 +35,17 @@ export default function CustomSelect({orderBy, handleOrderBy}: CustomSelectProps
       </div>
 
       {isOpen && (
-        <ul className="shadow-sidenavi-box absolute right-1pxr z-10 mt-6 w-40 rounded-md border border-gray-200 bg-white">
-          <li className="cursor-pointer px-40pxr py-18pxr text-2lg font-medium text-gray-800 hover:bg-green-50" onClick={() => handleSelect('')}>
+        <ul className="absolute right-1pxr z-10 mt-6 w-40 rounded-md border border-gray-200 bg-white shadow-sidenavi-box">
+          <li
+            className="cursor-pointer px-40pxr py-18pxr text-2lg font-medium text-gray-800 hover:bg-green-50 hover:text-nomad-black"
+            onClick={() => handleSelect('')}
+          >
             전체
           </li>
           {options.map(option => (
             <li
               key={option.value}
-              className="border-collapse cursor-pointer border-t border-gray-200 px-40pxr py-18pxr text-2lg font-medium text-gray-800 hover:bg-green-50"
+              className="border-collapse cursor-pointer border-t border-gray-200 px-40pxr py-18pxr text-2lg font-medium text-gray-800 hover:bg-green-50 hover:text-nomad-black"
               onClick={() => handleSelect(option.value)}
             >
               {option.label}
