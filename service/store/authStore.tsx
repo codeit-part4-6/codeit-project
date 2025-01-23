@@ -12,7 +12,7 @@ interface AuthState {
     updatedAt: string;
   } | null;
   setLogin: (accessToken: string, refreshToken: string, user: AuthState['user']) => void;
-  logout: () => void;
+  setLogout: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -25,7 +25,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       refreshToken,
       user,
     }),
-  logout: () =>
+  setLogout: () =>
     set({
       accessToken: null,
       refreshToken: null,
