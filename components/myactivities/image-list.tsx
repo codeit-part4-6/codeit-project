@@ -1,23 +1,35 @@
 import cancleBtn from '@/public/icon/ic_cancle_btn.svg';
 import plusIcon from '@/public/icon/ic_plus_icon.svg';
 import Image from 'next/image';
-import {Controller} from 'react-hook-form';
+import {Controller, useFormContext} from 'react-hook-form';
 import {useState, useRef} from 'react';
 
-export default function ImageList({maxImages = 5}: {maxImages?: number}) {
+interface ImageListType {
+  maxImages?: number;
+  name?: string;
+}
+
+export default function ImageList({maxImages = 5, name = 'defaultName'}: ImageListType) {
   const [imageUrls, setImageUrls] = useState<(string | ArrayBuffer)[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const {
+    control,
+    formState: {errors},
+    setError,
+    clearErrors,
+    setValue,
+  } = useFormContext();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
     if (files && files.length + selectedFiles.length > maxImages) {
-      setError(`최대 ${maxImages}개의 이미지만 선택할 수 있습니다.`);
+      setError(name, {type: 'manual', message: `최대 ${maxImages}개의 이미지만 선택할 수 있습니다.`});
       return;
     }
-    setError('');
+    clearErrors(name);
 
     if (files) {
       const newFiles = Array.from(files);
@@ -25,16 +37,16 @@ export default function ImageList({maxImages = 5}: {maxImages?: number}) {
 
       newFiles.forEach(file => {
         const reader = new FileReader();
-
         reader.onloadend = () => {
           const fileUrl = reader.result as string;
-
           if (!imageUrls.includes(fileUrl)) {
             setImageUrls(prevUrls => [...prevUrls, fileUrl]);
           }
         };
         reader.readAsDataURL(file);
       });
+
+      setValue(name, [...selectedFiles, ...newFiles]);
     }
   };
 
@@ -58,10 +70,16 @@ export default function ImageList({maxImages = 5}: {maxImages?: number}) {
           <div>이미지 등록</div>
         </div>
       </div>
-
       {/* 파일 인풋 */}
       <Controller
-        name="bannerImageUrl"
+        name={name}
+        control={control}
+        rules={{
+          required: '필수값입니다',
+          validate: {
+            maxImages: () => selectedFiles.length <= maxImages || `최대 ${maxImages}개의 이미지만 선택할 수 있습니다.`,
+          },
+        }}
         render={() => (
           <input
             type="file"
@@ -74,7 +92,6 @@ export default function ImageList({maxImages = 5}: {maxImages?: number}) {
           />
         )}
       />
-
       {/* 이미지 미리보기 및 삭제 버튼 */}
       {imageUrls.map((imageUrl, index) => (
         <div key={index} className="relative h-167pxr w-167pxr tablet:h-206pxr tablet:w-206pxr pc:h-180pxr pc:w-180pxr">
@@ -84,9 +101,8 @@ export default function ImageList({maxImages = 5}: {maxImages?: number}) {
           </div>
         </div>
       ))}
-
       {/* 오류 메시지 */}
-      {error && <div className="text-red-500">{error}</div>}
+      {typeof errors[name]?.message === 'string' && <span className="error-message">{errors[name]?.message}</span>}
     </div>
   );
 }

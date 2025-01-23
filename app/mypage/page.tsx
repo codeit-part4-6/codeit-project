@@ -61,7 +61,7 @@ export default function Page() {
       case 'reserveList':
         return <ReservationList onClose={() => setIsOpen(false)} />;
       case 'treatReservation':
-        return <MyActivities />;
+        return <MyActivities onclose={() => handleSelectMenu('treatReservation')} />;
       case 'activitiesRegister':
         return <ActivitiesRegister />;
       case 'reserveCalendar':

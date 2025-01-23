@@ -10,10 +10,8 @@ import Image from 'next/image';
 import ImageList from './image-list';
 
 export interface IFormInput {
-  username: string;
-  email: string;
+  title: string;
   time: string;
-  birthdate: string;
   category: string;
   description: string;
   price: number;
@@ -24,34 +22,35 @@ export interface IFormInput {
     endTime: string;
   }>;
   bannerImageUrl: string;
+  subImageUrls: Array<string>;
 }
 
 interface ActivitiesRegisterProps {
   onSubmitParent?: (data: IFormInput) => void;
 }
 
-const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegisterProps>(({onSubmitParent}, ref) => {
-  const {
-    control,
-    handleSubmit,
-    formState: {errors},
-    setError,
-    setValue,
-  } = useForm<IFormInput>({
+const ActivitiesRegister = forwardRef<{submitForm: () => void; isValid: boolean}, ActivitiesRegisterProps>(({onSubmitParent}, ref) => {
+  const methods = useForm<IFormInput>({
     mode: 'onChange',
     defaultValues: {
-      username: '',
-      email: '',
+      title: '',
       time: '',
-      birthdate: '',
       category: '',
       description: '',
       price: 0,
       address: '',
       rows: [{date: '', startTime: '', endTime: ''}],
       bannerImageUrl: '',
+      subImageUrls: [],
     },
   });
+
+  const {
+    control,
+    handleSubmit,
+    formState: {errors, isValid},
+    setValue,
+  } = methods;
 
   const [isFocused, setIsFocused] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +70,6 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
 
   const handleComplete = (data: {address: string; zonecode: string}) => {
     setIsOpen(false);
-    console.log(data);
     setValue('address', data.address);
   };
 
@@ -86,6 +84,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
       onSubmitParent(data);
     }
   };
+
   const generateTimeOptions = (): {value: string; label: string}[] => {
     const times: {value: string; label: string}[] = [];
     for (let hour = 0; hour < 24; hour++) {
@@ -100,6 +99,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
 
   useImperativeHandle(ref, () => ({
     submitForm: handleSubmit(onSubmit),
+    isValid: isValid,
   }));
 
   const options = [
@@ -112,31 +112,17 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
   ];
 
   return (
-    <FormProvider {...{handleSubmit, control, setValue, setError}}>
+    <FormProvider {...methods}>
       <form className="flex flex-col gap-4">
         <Controller
-          name="username"
+          name="title"
           control={control}
           rules={{
             required: '필수값입니다',
             minLength: {value: 5, message: '최소5 글자이상 입력해주세요'},
           }}
-          render={({field: {value, onBlur, onChange}}) => (
-            <Input
-              required={true}
-              value={value}
-              onBlur={() => {
-                if (!value.trim()) {
-                  setError('username', {type: 'manual', message: '필수값입니다.'});
-                } else {
-                  onBlur();
-                }
-              }}
-              onChange={onChange}
-              error={errors.username?.message}
-              placeholder="제목"
-              className="w-full"
-            />
+          render={({field: {value, onChange}}) => (
+            <Input required={true} value={value} onChange={onChange} error={errors.title?.message} placeholder="제목" className="w-full" />
           )}
         />
         <Controller
@@ -149,6 +135,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
             <SelectBox deleteButtonImage={arrowDown} value={value} className="w-full bg-white" onChange={onChange} options={options} />
           )}
         />
+        {errors.category?.message && <span className="error-message">{errors.category?.message}</span>}
         <Controller
           name="description"
           control={control}
@@ -165,6 +152,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
             ></textarea>
           )}
         />
+        {errors.description?.message && <span className="error-message">{errors.description?.message}</span>}
         <Controller
           name="price"
           control={control}
@@ -180,6 +168,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
                 onChange(newValue ? parseFloat(newValue) : '');
               }}
               className="w-full"
+              error={errors.price?.message}
               isMoney={true}
             ></Input>
           )}
@@ -190,21 +179,14 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
           rules={{
             required: '필수값입니다',
           }}
-          render={({field: {value, onBlur, onChange}}) => (
+          render={({field: {value, onChange}}) => (
             <Input
               label="주소"
               required={true}
               value={value}
-              onBlur={() => {
-                if (!value.trim()) {
-                  setError('username', {type: 'manual', message: '필수값입니다.'});
-                } else {
-                  onBlur();
-                }
-              }}
               onChange={onChange}
               onFocus={handleFocus}
-              error={errors.username?.message}
+              error={errors.address?.message}
               placeholder="주소를 입력해주세요"
               className="w-full"
             />
@@ -213,78 +195,91 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
         {isFocused && isOpen && <AddressModal onClose={() => setIsOpen(false)} onComplete={handleComplete} />}
         <label className="mb-3 block text-xl font-bold tablet:text-2xl">예약 가능한 시간대</label>
         {fields.map((row, index) => (
-          <div key={index} className="grid grid-cols-[1fr,auto,auto,auto] gap-5 pc:grid-cols-[1fr,auto,auto,auto,auto]">
-            <div>
-              <label className="text-xl font-medium text-gray-800">날짜</label>
-              <Controller
-                name={`rows.${index}.date` as const} // index로 고유하게 설정
-                control={control}
-                render={({field}) => (
-                  <Input
-                    type="date"
-                    value={field.value}
-                    onChange={e => field.onChange(e.target.value)} // onChange로 처리
-                    error={errors?.rows?.[index]?.date?.message}
-                    className="mt-10pxr w-full"
-                  />
-                )}
-              />
-            </div>
+          <div key={index}>
+            <div className="grid grid-cols-[1fr,auto,auto,auto] gap-5 pc:grid-cols-[1fr,auto,auto,auto,auto]">
+              <div>
+                {index === 0 && <label className="text-xl font-medium text-gray-800">예약 가능한 시간대</label>}
+                <Controller
+                  name={`rows.${index}.date` as const}
+                  control={control}
+                  rules={{
+                    required: '필수값입니다',
+                  }}
+                  render={({field}) => (
+                    <Input
+                      type="date"
+                      min={new Date().toISOString().split('T')[0]}
+                      required={true}
+                      value={field.value}
+                      onChange={e => field.onChange(e.target.value)}
+                      error={errors?.rows?.[index]?.date?.message}
+                      className="mt-10pxr w-full"
+                    />
+                  )}
+                />
+              </div>
 
-            <div>
-              <label className="text-xl font-medium text-gray-800">시작 시간</label>
-              <Controller
-                name={`rows.${index}.startTime` as const}
-                control={control}
-                render={({field}) => (
-                  <SelectBox
-                    value={field.value}
-                    onChange={e => field.onChange(e.target.value)}
-                    options={timeOptions}
-                    className="w-full bg-white"
-                    deleteButtonImage={arrowDown}
-                    label="00:00"
-                  />
-                )}
-              />
-            </div>
-            <div>
-              <label className="text-xl font-medium text-gray-800">종료 시간</label>
-              <Controller
-                name={`rows.${index}.endTime` as const}
-                control={control}
-                render={({field}) => (
-                  <SelectBox
-                    value={field.value}
-                    onChange={e => field.onChange(e.target.value)}
-                    options={timeOptions}
-                    className="w-full bg-white"
-                    deleteButtonImage={arrowDown}
-                    label="00:00"
-                  />
-                )}
-              />
-            </div>
-            {index === 0 ? (
-              <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={handleAddRow}>
-                <Image src={plusBtn} alt="Add row" fill />
+              <div>
+                {index === 0 && <label className="text-xl font-medium text-gray-800">시작 시간</label>}
+                <Controller
+                  name={`rows.${index}.startTime` as const}
+                  control={control}
+                  defaultValue="0:00"
+                  render={({field}) => (
+                    <SelectBox
+                      value={field.value}
+                      onChange={e => field.onChange(e.target.value)}
+                      options={timeOptions}
+                      deleteButtonImage={arrowDown}
+                      label="0:00"
+                      className="w-full bg-white"
+                    />
+                  )}
+                />
+                {errors?.rows?.[index]?.startTime?.message && <span className="error-message">{errors?.rows?.[index]?.startTime?.message}</span>}
               </div>
-            ) : (
-              <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={() => handleMinusRow(index)}>
-                <Image src={minusBtn} alt="Remove row" fill />
+              <div>
+                {index === 0 && <label className="text-xl font-medium text-gray-800">종료 시간</label>}
+                <Controller
+                  name={`rows.${index}.endTime` as const}
+                  control={control}
+                  defaultValue="0:00"
+                  render={({field}) => (
+                    <SelectBox
+                      value={field.value}
+                      onChange={e => field.onChange(e.target.value)}
+                      options={timeOptions}
+                      className="w-full bg-white"
+                      deleteButtonImage={arrowDown}
+                      label="0:00"
+                    />
+                  )}
+                />
               </div>
-            )}
+              {index === 0 ? (
+                <>
+                  <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={handleAddRow}>
+                    <Image src={plusBtn} alt="Add row" fill />
+                  </div>
+                </>
+              ) : (
+                <div className="relative h-16 w-16 cursor-pointer" onClick={() => handleMinusRow(index)}>
+                  <Image src={minusBtn} alt="Remove row" fill />
+                </div>
+              )}
+            </div>
+            {index === 0 && fields.length > 1 && <hr className="mt-4"></hr>}
           </div>
         ))}
         <label className="mb-3 block text-xl font-bold tablet:text-2xl">배너 이미지</label> (최대 1장)
-        <ImageList maxImages={1} />
+        <ImageList maxImages={1} name="bannerImageUrl" />
         <label className="mb-3 block text-xl font-bold tablet:text-2xl">소개 이미지</label> (최대 4장)
-        <ImageList maxImages={5} />
+        <ImageList maxImages={4} name="subImageUrls" />
       </form>
     </FormProvider>
   );
 });
 
-ActivitiesRegister.displayName = 'ActivitiesRegister'; // forwardRef 사용시 displayName 설정
+ActivitiesRegister.displayName = 'ActivitiesRegister'; // forwardRef를 사용할 때 displayName 설정
 
 export default ActivitiesRegister;
