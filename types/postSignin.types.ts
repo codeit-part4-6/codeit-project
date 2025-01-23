@@ -4,7 +4,7 @@ export interface SigninBody {
 }
 
 export interface SigninResponse {
-  users: {
+  user: {
     id: number;
     email: string;
     nickname: string;
