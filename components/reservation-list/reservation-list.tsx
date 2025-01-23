@@ -7,111 +7,9 @@ import CustomSelect from '@/components/reservation-list/custom-select';
 import {statusLabels, buttonByStatus} from '@/constant/reservation-list-constant';
 import NonDataPage from '../common/non-data';
 import closeButton from '@/public/icon/ic_close_button.svg';
-
-const mock = {
-  reservations: [
-    {
-      id: 1,
-      teamId: '11-6',
-      userId: 0,
-      activity: {
-        bannerImageUrl: '/img/img_navlogo.svg',
-        title: '테스트 예약 체험1',
-        id: 1,
-      },
-      scheduleId: 1,
-      status: 'pending',
-      reviewSubmitted: true,
-      totalPrice: 10000,
-      headCount: 0,
-      date: '날짜',
-      startTime: '시작 시간',
-      endTime: '종료 시간',
-      createdAt: '2025-01-20T01:55:20.317Z',
-      updatedAt: '2025-01-20T01:55:20.317Z',
-    },
-    {
-      id: 2,
-      teamId: '11-6',
-      userId: 0,
-      activity: {
-        bannerImageUrl: '/img/img_navlogo.svg',
-        title: '테스트 예약 체험2',
-        id: 2,
-      },
-      scheduleId: 2,
-      status: 'confirmed',
-      reviewSubmitted: true,
-      totalPrice: 20000,
-      headCount: 0,
-      date: '날짜',
-      startTime: '시작 시간',
-      endTime: '종료 시간',
-      createdAt: '2025-01-20T01:55:20.317Z',
-      updatedAt: '2025-01-20T01:55:20.317Z',
-    },
-    {
-      id: 3,
-      teamId: '11-6',
-      userId: 0,
-      activity: {
-        bannerImageUrl: '/img/img_navlogo.svg',
-        title: '테스트 예약 체험3',
-        id: 3,
-      },
-      scheduleId: 3,
-      status: 'completed',
-      reviewSubmitted: true,
-      totalPrice: 30000,
-      headCount: 0,
-      date: '날짜',
-      startTime: '시작 시간',
-      endTime: '종료 시간',
-      createdAt: '2025-01-20T01:55:20.317Z',
-      updatedAt: '2025-01-20T01:55:20.317Z',
-    },
-    {
-      id: 4,
-      teamId: '11-6',
-      userId: 0,
-      activity: {
-        bannerImageUrl: '/img/img_navlogo.svg',
-        title: '테스트 예약 체험4',
-        id: 4,
-      },
-      scheduleId: 4,
-      status: 'declined',
-      reviewSubmitted: true,
-      totalPrice: 40000,
-      headCount: 0,
-      date: '날짜',
-      startTime: '시작 시간',
-      endTime: '종료 시간',
-      createdAt: '2025-01-20T01:55:20.317Z',
-      updatedAt: '2025-01-20T01:55:20.317Z',
-    },
-    {
-      id: 5,
-      teamId: '11-6',
-      userId: 0,
-      activity: {
-        bannerImageUrl: '/img/img_navlogo.svg',
-        title: '테스트 예약 체험3',
-        id: 5,
-      },
-      scheduleId: 5,
-      status: 'canceled',
-      reviewSubmitted: true,
-      totalPrice: 50000,
-      headCount: 0,
-      date: '날짜',
-      startTime: '시작 시간',
-      endTime: '종료 시간',
-      createdAt: '2025-01-20T01:55:20.317Z',
-      updatedAt: '2025-01-20T01:55:20.317Z',
-    },
-  ],
-};
+import {getReservationList} from '@/service/api/reservation-list/getReservation.api';
+import {useQuery} from '@tanstack/react-query';
+import {ReservationListResponse} from '@/types/reservation-list';
 
 export const statusLabelsColor: Record<string, string> = {
   pending: 'text-blue-100',
@@ -134,6 +32,13 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
   const [modalType, setModalType] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
+  const {data, isLoading, isError} = useQuery<ReservationListResponse>({
+    queryKey: ['reservationList'],
+    queryFn: () => getReservationList({size: 10, status: ''}),
+  });
+
+  const reservationList = data?.reservations || [];
+
   const handleButtonClick = (status: string, id: number) => {
     setIsOpen(true);
     setModalType(status);
@@ -143,16 +48,16 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
   const getModalContent = () => {
     switch (modalType) {
       case 'pending':
-        return <Modal type="small" message="예약을 취소하시겠습니까?" onClose={() => setIsOpen(false)} />;
+        return <Modal reservationId={selectedId} type="small" message="예약을 취소하시겠습니까?" onClose={() => setIsOpen(false)} />;
       case 'completed':
-        const selectedData = mock.reservations.find(reservation => reservation.status === 'completed' && reservation.id === selectedId);
+        const selectedData = reservationList.find(reservation => reservation.status === 'completed' && reservation.id === selectedId);
         return <ReviewModal data={selectedData} message={'후기 작성'} onClose={() => setIsOpen(false)} />;
       default:
         return null;
     }
   };
 
-  const filteredReservation = mock.reservations.filter(reservation => !orderBy || reservation.status === orderBy);
+  const filteredReservation = reservationList.filter(reservation => !orderBy || reservation.status === orderBy);
 
   useEffect(() => {
     // 모달 dim 부분 스크롤 막기
@@ -165,6 +70,14 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
       document.body.style.overflow = ''; // 컴포넌트가 unmount 될 때도 스크롤 상태 복구
     };
   }, [isOpen]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading reservations</div>;
+  }
 
   return (
     <div className="mb-16 h-full w-full">
@@ -188,7 +101,7 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
           {filteredReservation.map(reservation => (
             <div key={`list_${reservation.id}`} className="flex h-32 w-full items-center rounded-3xl shadow-sidenavi-box tablet:h-156pxr pc:h-204pxr">
               <div className="relative h-32 w-32 flex-shrink tablet:h-156pxr tablet:w-156pxr pc:h-204pxr pc:w-204pxr">
-                <Image className="absolute" fill src={reservation.activity.bannerImageUrl} alt="체험 배너 이미지" />
+                <Image className="absolute rounded-bl-3xl rounded-tl-3xl" fill src={reservation.activity.bannerImageUrl} alt="체험 배너 이미지" />
               </div>
               <div className="flex-grow py-11pxr pl-2 pr-14pxr tablet:py-3 tablet:pl-3 tablet:pr-18pxr pc:px-6 pc:py-21pxr">
                 <p className={`${statusLabelsColor[reservation.status]} text-md font-bold tablet:text-lg pc:mb-2`}>

@@ -2,14 +2,41 @@ import Image from 'next/image';
 import checkConfirm from '@/public/icon/icon_confirm.svg';
 import OverlayContainer from './overlay-container';
 import Button from '../button';
+import {patchReservationList} from '@/service/api/reservation-list/patchReservation.api';
+import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 interface ModalProps {
   type: 'small' | 'big';
   message: string;
   onClose: () => void;
+  reservationId: number | null;
 }
 
-export default function Modal({type, message, onClose}: ModalProps) {
+export default function Modal({type, message, onClose, reservationId}: ModalProps) {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async (reservationId: number | null) => {
+      if (reservationId !== null) {
+        await patchReservationList({reservationId});
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['reservationList'],
+      });
+      onClose();
+    },
+    onError: () => {
+      console.error('error');
+    },
+  });
+
+  const handleCancelClick = () => {
+    if (reservationId !== null) {
+      mutation.mutate(reservationId);
+    }
+  };
+
   const modalConfig = {
     small: {
       containerClass:
@@ -32,7 +59,7 @@ export default function Modal({type, message, onClose}: ModalProps) {
               아니오
             </Button>
             <Button
-              onClick={onClose}
+              onClick={handleCancelClick}
               className={'h-38pxr w-80pxr rounded-md bg-nomad-black px-14pxr py-10pxr text-center text-md font-bold leading-none text-white'}
             >
               취소하기
