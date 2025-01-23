@@ -54,10 +54,16 @@ export default function Page() {
       onSuccess: async (data) => {
         try {
           // Zustand에 로그인 상태 업데이트
-          setLogin(data.accessToken, data.refreshToken);
+          setLogin(data.accessToken, data.refreshToken, data.userInfo);
 
           sessionStorage.setItem('accessToken', data.accessToken);
           sessionStorage.setItem('refreshToken', data.refreshToken);
+
+          const { id, email, nickname, profileImageUrl, createdAt, updatedAt } = data.user;
+          sessionStorage.setItem(
+            'userInfo',
+            JSON.stringify({ id, email, nickname, profileImageUrl, createdAt, updatedAt })
+          );
 
           const refreshedData = await postTokens(data.refreshToken);
           if (refreshedData) sessionStorage.setItem('accessToken', refreshedData.accessToken);
