@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import arrowDown from '@/public/icon/icon_arrow_down.svg';
+import sortIcon from '@/public/icon/ic_sortIcon.svg';
 import Image from 'next/image';
 
 interface CustomSelectProps {
@@ -27,11 +28,12 @@ export default function CustomSelect({orderBy, handleOrderBy}: CustomSelectProps
   return (
     <div
       onClick={() => setIsOpen(prev => !prev)}
-      className="relative hidden h-53pxr w-40 cursor-pointer rounded-2xl border border-nomad-black px-5 py-4 tablet:block pc:block"
+      className="relative cursor-pointer rounded-2xl px-5 py-4 tablet:block tablet:h-53pxr tablet:w-40 tablet:border tablet:border-nomad-black pc:block"
     >
       <div className="flex items-center justify-between rounded-md">
-        <span className="text-2lg font-medium leading-none text-green-100">{selectedLabel}</span>
-        <Image src={arrowDown} alt="Arrow Down" width={16} height={16} />
+        <span className="hidden text-2lg font-medium leading-none text-green-100 tablet:block">{selectedLabel}</span>
+        <Image className="hidden tablet:block" src={arrowDown} alt="Arrow Down" width={16} height={16} />
+        <Image className="tablet:hidden" src={sortIcon} alt="Arrow Down" width={28} height={28} />
       </div>
 
       {isOpen && (

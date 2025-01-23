@@ -82,16 +82,15 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
 
   return (
     <div className="mb-16 h-full w-full">
-      <div className="mb-3 flex w-full items-start justify-between tablet:hidden">
+      <div className="mb-3 flex w-full items-center justify-between">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
-        <div className="relative h-12 w-12 tablet:hidden" onClick={onClose}>
-          <Image src={closeButton} alt="모달 닫기 버튼" className="absolute cursor-pointer" fill />
-        </div>
-      </div>
-      <div className="mb-3 hidden w-full items-start justify-between tablet:mb-6 tablet:flex">
-        <p className="text-3xl font-bold text-black-100">예약 내역</p>
-        <div className="m-0">
-          <CustomSelect orderBy={orderBy} handleOrderBy={(value: string) => setOrderBy(value)} />
+        <div className="flex items-center gap-1">
+          <div className="m-0">
+            <CustomSelect orderBy={orderBy} handleOrderBy={(value: string) => setOrderBy(value)} />
+          </div>
+          <div className="relative h-12 w-12 tablet:hidden" onClick={onClose}>
+            <Image src={closeButton} alt="모달 닫기 버튼" className="absolute cursor-pointer" fill />
+          </div>
         </div>
       </div>
 
