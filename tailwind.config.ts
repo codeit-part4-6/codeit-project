@@ -14,6 +14,11 @@ export default {
   content: ['./pages/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
+      boxShadow: {
+        'sidenavi-box': '0 4px 16px rgba(17, 34, 17, 0.05)',
+        'sidenavi-profile': '0 4px 16px rgba(0, 0, 0, 0.08)',
+      },
+
       colors: {
         transparent: 'transparent',
         white: 'var(--white)',
@@ -33,7 +38,7 @@ export default {
           100: '#EEEEEE',
           200: '#DDDDDD',
           300: '#CBC9CF',
-          400: 'ADAEB8',
+          400: '#ADAEB8',
           500: '#A4A1AA',
           600: '#A1A1A1',
           700: '#79747E',
@@ -56,8 +61,13 @@ export default {
           100: '#2EB4FF',
           200: '#0085FF',
         },
+
+        green: {
+          50: '#CED8D5',
+          100: '#OB3B2D',
+        },
       },
-  
+
       fontSize: {
         '3xl': ['32px', '42px'],
         '2xl': ['24px', '32px'],
@@ -76,7 +86,7 @@ export default {
       },
       spacing: {
         // 기존 spacing 값에 pxr 단위 추가
-        ...range(1, 500).reduce(
+        ...range(1, 800).reduce(
           (acc, px) => {
             acc[`${px}pxr`] = pxToRem(px); // 1pxr은 rem으로 변환
             return acc;
