@@ -10,6 +10,7 @@ import closeButton from '@/public/icon/ic_close_button.svg';
 import {getReservationList} from '@/service/api/reservation-list/getReservation.api';
 import {useQuery} from '@tanstack/react-query';
 import {ReservationListResponse} from '@/types/reservation-list';
+import FormattedDotDate from '@/service/lib/formatted-dot-date';
 
 export const statusLabelsColor: Record<string, string> = {
   pending: 'text-blue-100',
@@ -32,9 +33,9 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
   const [modalType, setModalType] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const {data, isLoading, isError} = useQuery<ReservationListResponse>({
+  const {data, isLoading, isError, error} = useQuery<ReservationListResponse>({
     queryKey: ['reservationList'],
-    queryFn: () => getReservationList({size: 10, status: ''}),
+    queryFn: () => getReservationList({size: 20, status: ''}),
   });
 
   const reservationList = data?.reservations || [];
@@ -76,7 +77,7 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
   }
 
   if (isError) {
-    return <div>Error loading reservations</div>;
+    return <div>{error.message}</div>;
   }
 
   return (
@@ -109,11 +110,9 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
                 </p>
                 <p className="text-md font-bold text-nomad-black tablet:mb-1 tablet:text-2lg pc:mb-3 pc:text-xl">{reservation.activity.title}</p>
                 <div className="mb-0 flex items-center gap-[0.125rem] text-xs font-regular text-nomad-black tablet:mb-10pxr tablet:text-md pc:mb-4 pc:text-lg">
-                  <p>{reservation.date}</p>
-                  <p>·</p>
-                  <p>{reservation.startTime}</p>
-                  <p>·</p>
-                  <p>{reservation.endTime}</p>
+                  <p>
+                    {FormattedDotDate(reservation.date)} · {reservation.startTime} - {reservation.endTime} · {reservation.headCount}명
+                  </p>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-lg font-medium text-black-100 tablet:text-xl">￦{reservation.totalPrice}</p>
