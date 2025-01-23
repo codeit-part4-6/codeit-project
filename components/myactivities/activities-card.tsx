@@ -6,7 +6,7 @@ import iconMeatball from '@/public/icon/ic_meatball.svg';
 export default function ActivitiesCard() {
   return (
     <>
-      <div className="flex items-center gap-2 overflow-hidden rounded-3xl bg-white tablet:gap-3 pc:h-204pxr pc:w-800pxr pc:gap-6">
+      <div className="flex items-center gap-2 overflow-hidden rounded-3xl bg-white tablet:gap-3 pc:h-204pxr pc:gap-6">
         <div className="relative h-128pxr w-128pxr tablet:h-156pxr tablet:w-156pxr pc:h-204pxr pc:w-204pxr">
           <Image src={actifitytest} alt="체험관리사진" layout="fill" objectFit="cover" className="absolute" />
         </div>

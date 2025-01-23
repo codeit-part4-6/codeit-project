@@ -16,7 +16,6 @@ export default {
     extend: {
       boxShadow: {
         'sidenavi-box': '0 4px 16px rgba(17, 34, 17, 0.05)',
-        'sidenavi-profile': '0 4px 16px rgba(0, 0, 0, 0.08)',
       },
 
       colors: {
@@ -67,7 +66,7 @@ export default {
 
         green: {
           50: '#CED8D5',
-          100: '#OB3B2D',
+          100: '#0B3B2D',
         },
       },
 
