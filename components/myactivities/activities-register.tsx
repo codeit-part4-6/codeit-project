@@ -1,12 +1,13 @@
 import React, {forwardRef, useImperativeHandle, useState} from 'react';
 import Input from '@/components/common/Input';
 import SelectBox from '@/components/common/selectbox';
-import {Controller, SubmitHandler, useFieldArray, useForm} from 'react-hook-form';
+import {Controller, FormProvider, SubmitHandler, useFieldArray, useForm} from 'react-hook-form';
 import arrowDown from '@/public/icon/icon_arrow_down.svg';
 import minusBtn from '@/public/icon/ic_minus_btn.svg';
 import plusBtn from '@/public/icon/ic_plus_btn.svg';
 import AddressModal from './address-modal';
 import Image from 'next/image';
+import ImageList from './image-list';
 
 export interface IFormInput {
   username: string;
@@ -22,6 +23,7 @@ export interface IFormInput {
     startTime: string;
     endTime: string;
   }>;
+  bannerImageUrl: string;
 }
 
 interface ActivitiesRegisterProps {
@@ -47,6 +49,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
       price: 0,
       address: '',
       rows: [{date: '', startTime: '', endTime: ''}],
+      bannerImageUrl: '',
     },
   });
 
@@ -109,174 +112,176 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void}, ActivitiesRegist
   ];
 
   return (
-    <form className="flex flex-col gap-4">
-      <Controller
-        name="username"
-        control={control}
-        rules={{
-          required: '필수값입니다',
-          minLength: {value: 5, message: '최소5 글자이상 입력해주세요'},
-        }}
-        render={({field: {value, onBlur, onChange}}) => (
-          <Input
-            required={true}
-            value={value}
-            onBlur={() => {
-              if (!value.trim()) {
-                setError('username', {type: 'manual', message: '필수값입니다.'});
-              } else {
-                onBlur();
-              }
-            }}
-            onChange={onChange}
-            error={errors.username?.message}
-            placeholder="제목"
-            className="w-full"
-          />
-        )}
-      />
-      <Controller
-        name="category"
-        control={control}
-        rules={{
-          required: '필수값입니다',
-        }}
-        render={({field: {value, onChange}}) => (
-          <SelectBox deleteButtonImage={arrowDown} value={value} className="w-full bg-white" onChange={onChange} options={options} />
-        )}
-      />
-      <Controller
-        name="description"
-        control={control}
-        rules={{
-          required: '필수값입니다',
-        }}
-        render={({field: {value, onChange}}) => (
-          <textarea
-            required={true}
-            value={value}
-            onChange={onChange}
-            placeholder="내용"
-            className="h-40 w-full cursor-text resize-none rounded-s border border-gray-700 p-4 focus:outline-none focus:ring-2 focus:ring-green-950"
-          ></textarea>
-        )}
-      />
-      <Controller
-        name="price"
-        control={control}
-        rules={{
-          required: '필수값입니다',
-        }}
-        render={({field: {value, onChange}}) => (
-          <Input
-            label="가격"
-            value={value ? value.toString() : ''}
-            onChange={e => {
-              const newValue = e.target.value.replace(/[^0-9]/g, '');
-              onChange(newValue ? parseFloat(newValue) : '');
-            }}
-            className="w-full"
-            isMoney={true}
-          ></Input>
-        )}
-      />
-      <Controller
-        name="address"
-        control={control}
-        rules={{
-          required: '필수값입니다',
-        }}
-        render={({field: {value, onBlur, onChange}}) => (
-          <Input
-            label="주소"
-            required={true}
-            value={value}
-            onBlur={() => {
-              if (!value.trim()) {
-                setError('username', {type: 'manual', message: '필수값입니다.'});
-              } else {
-                onBlur();
-              }
-            }}
-            onChange={onChange}
-            onFocus={handleFocus}
-            error={errors.username?.message}
-            placeholder="주소를 입력해주세요"
-            className="w-full"
-          />
-        )}
-      ></Controller>
-      {isFocused && isOpen && <AddressModal onClose={() => setIsOpen(false)} onComplete={handleComplete} />}
-      <label className="mb-3 block text-xl font-bold tablet:text-2xl">예약 가능한 시간대</label>
-      {fields.map((row, index) => (
-        <div key={index} className="grid grid-cols-[1fr,auto,auto,auto] gap-5 pc:grid-cols-[1fr,auto,auto,auto,auto]">
-          <div>
-            <label className="text-xl font-medium text-gray-800">날짜</label>
-            <Controller
-              name={`rows.${index}.date` as const} // index로 고유하게 설정
-              control={control}
-              render={({field}) => (
-                <Input
-                  type="date"
-                  value={field.value}
-                  onChange={e => field.onChange(e.target.value)} // onChange로 처리
-                  error={errors?.rows?.[index]?.date?.message}
-                  className="mt-10pxr w-full"
-                />
-              )}
+    <FormProvider {...{handleSubmit, control, setValue, setError}}>
+      <form className="flex flex-col gap-4">
+        <Controller
+          name="username"
+          control={control}
+          rules={{
+            required: '필수값입니다',
+            minLength: {value: 5, message: '최소5 글자이상 입력해주세요'},
+          }}
+          render={({field: {value, onBlur, onChange}}) => (
+            <Input
+              required={true}
+              value={value}
+              onBlur={() => {
+                if (!value.trim()) {
+                  setError('username', {type: 'manual', message: '필수값입니다.'});
+                } else {
+                  onBlur();
+                }
+              }}
+              onChange={onChange}
+              error={errors.username?.message}
+              placeholder="제목"
+              className="w-full"
             />
-          </div>
-
-          <div>
-            <label className="text-xl font-medium text-gray-800">시작 시간</label>
-            <Controller
-              name={`rows.${index}.startTime` as const}
-              control={control}
-              render={({field}) => (
-                <SelectBox
-                  value={field.value}
-                  onChange={e => field.onChange(e.target.value)}
-                  options={timeOptions}
-                  className="w-full bg-white"
-                  deleteButtonImage={arrowDown}
-                  label="00:00"
-                />
-              )}
-            />
-          </div>
-
-          <div>
-            <label className="text-xl font-medium text-gray-800">종료 시간</label>
-            <Controller
-              name={`rows.${index}.endTime` as const}
-              control={control}
-              render={({field}) => (
-                <SelectBox
-                  value={field.value}
-                  onChange={e => field.onChange(e.target.value)}
-                  options={timeOptions}
-                  className="w-full bg-white"
-                  deleteButtonImage={arrowDown}
-                  label="00:00"
-                />
-              )}
-            />
-          </div>
-
-          {index === 0 ? (
-            <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={handleAddRow}>
-              <Image src={plusBtn} alt="Add row" fill />
-            </div>
-          ) : (
-            <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={() => handleMinusRow(index)}>
-              <Image src={minusBtn} alt="Remove row" fill />
-            </div>
           )}
-        </div>
-      ))}
-      <label className="mb-3 block text-xl font-bold tablet:text-2xl">배너 이미지</label>
-      <div></div>
-    </form>
+        />
+        <Controller
+          name="category"
+          control={control}
+          rules={{
+            required: '필수값입니다',
+          }}
+          render={({field: {value, onChange}}) => (
+            <SelectBox deleteButtonImage={arrowDown} value={value} className="w-full bg-white" onChange={onChange} options={options} />
+          )}
+        />
+        <Controller
+          name="description"
+          control={control}
+          rules={{
+            required: '필수값입니다',
+          }}
+          render={({field: {value, onChange}}) => (
+            <textarea
+              required={true}
+              value={value}
+              onChange={onChange}
+              placeholder="내용"
+              className="h-40 w-full cursor-text resize-none rounded-s border border-gray-700 p-4 focus:outline-none focus:ring-2 focus:ring-green-950"
+            ></textarea>
+          )}
+        />
+        <Controller
+          name="price"
+          control={control}
+          rules={{
+            required: '필수값입니다',
+          }}
+          render={({field: {value, onChange}}) => (
+            <Input
+              label="가격"
+              value={value ? value.toString() : ''}
+              onChange={e => {
+                const newValue = e.target.value.replace(/[^0-9]/g, '');
+                onChange(newValue ? parseFloat(newValue) : '');
+              }}
+              className="w-full"
+              isMoney={true}
+            ></Input>
+          )}
+        />
+        <Controller
+          name="address"
+          control={control}
+          rules={{
+            required: '필수값입니다',
+          }}
+          render={({field: {value, onBlur, onChange}}) => (
+            <Input
+              label="주소"
+              required={true}
+              value={value}
+              onBlur={() => {
+                if (!value.trim()) {
+                  setError('username', {type: 'manual', message: '필수값입니다.'});
+                } else {
+                  onBlur();
+                }
+              }}
+              onChange={onChange}
+              onFocus={handleFocus}
+              error={errors.username?.message}
+              placeholder="주소를 입력해주세요"
+              className="w-full"
+            />
+          )}
+        ></Controller>
+        {isFocused && isOpen && <AddressModal onClose={() => setIsOpen(false)} onComplete={handleComplete} />}
+        <label className="mb-3 block text-xl font-bold tablet:text-2xl">예약 가능한 시간대</label>
+        {fields.map((row, index) => (
+          <div key={index} className="grid grid-cols-[1fr,auto,auto,auto] gap-5 pc:grid-cols-[1fr,auto,auto,auto,auto]">
+            <div>
+              <label className="text-xl font-medium text-gray-800">날짜</label>
+              <Controller
+                name={`rows.${index}.date` as const} // index로 고유하게 설정
+                control={control}
+                render={({field}) => (
+                  <Input
+                    type="date"
+                    value={field.value}
+                    onChange={e => field.onChange(e.target.value)} // onChange로 처리
+                    error={errors?.rows?.[index]?.date?.message}
+                    className="mt-10pxr w-full"
+                  />
+                )}
+              />
+            </div>
+
+            <div>
+              <label className="text-xl font-medium text-gray-800">시작 시간</label>
+              <Controller
+                name={`rows.${index}.startTime` as const}
+                control={control}
+                render={({field}) => (
+                  <SelectBox
+                    value={field.value}
+                    onChange={e => field.onChange(e.target.value)}
+                    options={timeOptions}
+                    className="w-full bg-white"
+                    deleteButtonImage={arrowDown}
+                    label="00:00"
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <label className="text-xl font-medium text-gray-800">종료 시간</label>
+              <Controller
+                name={`rows.${index}.endTime` as const}
+                control={control}
+                render={({field}) => (
+                  <SelectBox
+                    value={field.value}
+                    onChange={e => field.onChange(e.target.value)}
+                    options={timeOptions}
+                    className="w-full bg-white"
+                    deleteButtonImage={arrowDown}
+                    label="00:00"
+                  />
+                )}
+              />
+            </div>
+            {index === 0 ? (
+              <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={handleAddRow}>
+                <Image src={plusBtn} alt="Add row" fill />
+              </div>
+            ) : (
+              <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={() => handleMinusRow(index)}>
+                <Image src={minusBtn} alt="Remove row" fill />
+              </div>
+            )}
+          </div>
+        ))}
+        <label className="mb-3 block text-xl font-bold tablet:text-2xl">배너 이미지</label> (최대 1장)
+        <ImageList maxImages={1} />
+        <label className="mb-3 block text-xl font-bold tablet:text-2xl">소개 이미지</label> (최대 4장)
+        <ImageList maxImages={5} />
+      </form>
+    </FormProvider>
   );
 });
 
