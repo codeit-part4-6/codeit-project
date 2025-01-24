@@ -8,11 +8,16 @@ import notification from '@/public/icon/ic_notification.svg';
 import defaultProfileImage from '@/public/icon/ic_defaultProfileImage.svg';
 
 export default function Navbar() {
-  const { user } = useAuthStore();
+  const { user, setLogout } = useAuthStore();
   const [isDropdown, setIsDropdown] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdown(!isDropdown);
+  };
+
+  const handleLogout = () => {
+    setLogout();
+    console.log('로그아웃');
   };
 
   return (
@@ -36,7 +41,6 @@ export default function Navbar() {
                 </div>
                 <hr className='h-[22px] border-[1px] border-[#DDDDDD] w-0' />
                 <div className='relative flex justify-center items-center gap-10pxr'>
-                  {/* z-index로 보이는거 추가 필요 */}
                   <div 
                     onClick={toggleDropdown}
                     className='cursor-pointer flex items-center gap-2'
@@ -55,9 +59,7 @@ export default function Navbar() {
                         마이페이지
                       </Link>
                       <div
-                        onClick={() => {
-                          console.log('로그아웃 실행');
-                        }}
+                        onClick={handleLogout}
                         className='block px-4 py-2 text-black cursor-pointer hover:bg-gray-100'
                       >
                         로그아웃
