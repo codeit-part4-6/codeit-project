@@ -1,6 +1,8 @@
 'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react'; 
 import { useAuthStore } from '@/service/store/authStore';
 import navlogo from '@/public/img/img_navlogo.svg';
@@ -9,7 +11,8 @@ import defaultProfileImage from '@/public/icon/ic_defaultProfileImage.svg';
 
 export default function Navbar() {
   const { user, setLogout } = useAuthStore();
-  const [isDropdown, setIsDropdown] = useState(false);
+  const [ isDropdown, setIsDropdown ] = useState(false);
+  const router = useRouter();
 
   const toggleDropdown = () => {
     setIsDropdown(!isDropdown);
@@ -18,6 +21,7 @@ export default function Navbar() {
   const handleLogout = () => {
     setLogout();
     console.log('로그아웃');
+    router.push('/');
   };
 
   return (
