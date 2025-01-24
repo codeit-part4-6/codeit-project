@@ -50,7 +50,7 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          <div className="flex gap-3 pt-4 tablet:mt-0 tablet:w-auto">
+          <div className="flex w-full items-center justify-center gap-3 pt-4 sm:w-auto tablet:mt-0 tablet:w-auto">
             {socialLinks.map(({href, src, alt}) => {
               return (
                 <div key={alt}>
