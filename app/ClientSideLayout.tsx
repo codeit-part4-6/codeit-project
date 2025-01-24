@@ -1,11 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import {useEffect, useState} from 'react';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+import {usePathname} from 'next/navigation';
+import Navbar from '@/components/common/navbar';
+import Footer from '@/components/common/footer';
 
-export default function ClientSideLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function ClientSideLayout({children}: Readonly<{children: React.ReactNode}>) {
   const [queryClient, setQueryClient] = useState<QueryClient | null>(null);
+  const pathname = usePathname();
+
+  const hideFooter = pathname === '/mypage' || pathname === '/signin' || pathname === '/signup';
 
   useEffect(() => {
     setQueryClient(new QueryClient());
@@ -17,8 +23,10 @@ export default function ClientSideLayout({ children }: Readonly<{ children: Reac
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Navbar />
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
+      {!hideFooter && <Footer />}
     </QueryClientProvider>
   );
 }

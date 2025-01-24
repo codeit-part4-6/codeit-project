@@ -35,7 +35,7 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="h-160pxr bg-nomad-black mt-10" style={{fontFamily: 'Arial'}}>
+    <footer className="mt-10 h-160pxr bg-nomad-black" style={{fontFamily: 'Arial'}}>
       <div className="flex flex-wrap items-center justify-between px-10 pt-7 pc:max-w-[1200px]">
         <div className="pt-4 font-normal text-[#676767]">@codeit - 2025</div>
         <div className="flex gap-8 pt-4 text-lg font-normal text-[#676767]">
