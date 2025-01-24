@@ -50,7 +50,7 @@ export default function SelectBox({className = '', options, value, onChange, del
   return (
     <div className={`relative ${className}`}>
       {/* 선택된 값 표시 및 드롭다운 토글 버튼 */}
-      <div onClick={handleToggleDropdown} className="flex cursor-pointer items-center justify-between rounded-s border border-gray-700 p-4">
+      <div onClick={handleToggleDropdown} className="flex cursor-pointer items-center justify-between rounded-e rounded-s border border-gray-700 p-4">
         <span>{selectedLabel || '선택하세요'}</span>
         <button type="button" onClick={handleDelete} className="ml-2">
           {deleteButtonImage ? (

@@ -196,7 +196,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void; isValid: boolean}
         <label className="mb-3 block text-xl font-bold tablet:text-2xl">예약 가능한 시간대</label>
         {fields.map((row, index) => (
           <div key={index}>
-            <div className="grid grid-cols-[1fr,auto,auto,auto] gap-5 pc:grid-cols-[1fr,auto,auto,auto,auto]">
+            <div className="grid grid-cols-[1fr,auto,auto,auto] gap-1 pc:grid-cols-[1fr,auto,auto,auto] pc:gap-4">
               <div>
                 {index === 0 && <label className="text-xl font-medium text-gray-800">예약 가능한 시간대</label>}
                 <Controller
@@ -213,7 +213,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void; isValid: boolean}
                       value={field.value}
                       onChange={e => field.onChange(e.target.value)}
                       error={errors?.rows?.[index]?.date?.message}
-                      className="mt-10pxr w-full"
+                      className="w-full"
                     />
                   )}
                 />
@@ -258,7 +258,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void; isValid: boolean}
               </div>
               {index === 0 ? (
                 <>
-                  <div className="relative mt-8 h-16 w-16 cursor-pointer" onClick={handleAddRow}>
+                  <div className="relative mt-26pxr h-16 w-16 cursor-pointer" onClick={handleAddRow}>
                     <Image src={plusBtn} alt="Add row" fill />
                   </div>
                 </>
