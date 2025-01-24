@@ -82,7 +82,7 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
 
   return (
     <div className="mb-16 h-full w-full">
-      <div className="mb-3 flex w-full items-center justify-between">
+      <div className="mb-3 flex w-full items-center justify-between tablet:items-start">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
         <div className="flex items-center gap-1">
           <div className="m-0">
