@@ -36,3 +36,13 @@ body {
     @apply ml-2 mt-2 text-xs text-red-200;
   }
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

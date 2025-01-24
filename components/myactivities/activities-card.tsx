@@ -34,11 +34,11 @@ export default function ActivitiesCard() {
   return (
     <>
       <div className="relative">
-        <div className="flex items-center gap-2 overflow-hidden rounded-3xl bg-white tablet:gap-3 pc:h-204pxr pc:gap-6">
+        <div className="flex items-center gap-2 overflow-hidden rounded-3xl bg-white shadow-sidenavi-box tablet:gap-3 pc:h-204pxr pc:gap-6">
           <div className="relative h-128pxr w-128pxr tablet:h-156pxr tablet:w-156pxr pc:h-204pxr pc:w-204pxr">
             <Image src={actifitytest} alt="체험관리사진" layout="fill" objectFit="cover" className="absolute" />
           </div>
-          <div className="flex w-full flex-col items-start pc:w-548pxr">
+          <div className="flex flex-grow flex-col items-start pc:w-548pxr">
             <div className="flex gap-6pxr">
               <Image src={iconStar} width={16} height={16} alt="별점" />
               <div className="text-md tablet:text-lg">4.9 (293)</div>

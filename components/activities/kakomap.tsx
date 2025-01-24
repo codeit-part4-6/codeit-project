@@ -67,7 +67,7 @@ export default function KakaoMap({address, houseName}: KakaoMapType) {
 
   return (
     <>
-      <div id="map" className={'m-0 h-481pxr w-327pxr rounded-2xl tablet:h-310pxr tablet:w-453pxr pc:h-476pxr pc:w-800pxr'} />
+      <div id="map" className={'m-0 min-h-481pxr min-w-327pxr rounded-2xl tablet:min-h-308pxr tablet:min-w-429pxr pc:min-h-476pxr pc:min-w-800pxr'} />
       <div className={'flex flex-wrap'}>
         <Image className={'m-0 mr-1'} src={LocationIcon} alt="Location" width={18} height={18} />
         <div className="text-md font-normal text-nomad-black opacity-75">{address}</div>
