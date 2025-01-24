@@ -4,6 +4,8 @@ import OverlayContainer from './overlay-container';
 import Button from '../button';
 import {patchReservationList} from '@/service/api/reservation-list/patchReservation.api';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
+import {ScaleLoader} from 'react-spinners';
+import {useState} from 'react';
 
 interface ModalProps {
   type: 'small' | 'big';
@@ -13,6 +15,7 @@ interface ModalProps {
 }
 
 export default function Modal({type, message, onClose, reservationId}: ModalProps) {
+  const [loading, setLoading] = useState<boolean>(false);
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (reservationId: number | null) => {
@@ -20,14 +23,19 @@ export default function Modal({type, message, onClose, reservationId}: ModalProp
         await patchReservationList({reservationId});
       }
     },
+    onMutate: () => {
+      setLoading(true);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['reservationList'],
       });
+      setLoading(false);
       onClose();
     },
     onError: () => {
-      console.error('error');
+      setLoading(false);
+      alert('예약 취소에 실패했어요');
     },
   });
 
@@ -59,10 +67,11 @@ export default function Modal({type, message, onClose, reservationId}: ModalProp
               아니오
             </Button>
             <Button
+              disabled={loading}
               onClick={handleCancelClick}
               className={'h-38pxr w-80pxr rounded-md bg-nomad-black px-14pxr py-10pxr text-center text-md font-bold leading-none text-white'}
             >
-              취소하기
+              {loading ? <ScaleLoader width={3} height={20} color="#ffffff" /> : '취소하기'}
             </Button>
           </div>
         </>

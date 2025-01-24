@@ -11,6 +11,7 @@ import {getReservationList} from '@/service/api/reservation-list/getReservation.
 import {useQuery} from '@tanstack/react-query';
 import {ReservationListResponse} from '@/types/reservation-list';
 import FormattedDotDate from '@/service/lib/formatted-dot-date';
+import {ScaleLoader} from 'react-spinners';
 
 export const statusLabelsColor: Record<string, string> = {
   pending: 'text-blue-100',
@@ -73,7 +74,11 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
   }, [isOpen]);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="no-scrollbar flex h-740pxr w-full items-center justify-center">
+        <ScaleLoader color="#0b3b2d" />
+      </div>
+    );
   }
 
   if (isError) {

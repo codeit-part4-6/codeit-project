@@ -8,22 +8,30 @@ import StarRating from '@/components/reservation-list/star-rating';
 import {useState} from 'react';
 import {postReview} from '@/service/api/reservation-list/postReview.api';
 import {useMutation} from '@tanstack/react-query';
+import {ScaleLoader} from 'react-spinners';
 
 export default function ReviewModal({data, message, onClose}: ReviewModalProps) {
   const [starRating, setStarRating] = useState<number>(0);
   const [content, setContent] = useState<string>('');
-
+  const [loading, setLoading] = useState<boolean>(false);
   const mutation = useMutation({
     mutationFn: async () => {
       if (data !== undefined) {
-        await postReview(data.id, content, starRating);
+        const response = await postReview(data.id, content, starRating);
+        return response;
       }
     },
+    onMutate: () => {
+      setLoading(true);
+    },
+
     onSuccess: () => {
+      setLoading(false);
       onClose();
     },
-    onError: () => {
-      console.error('error');
+    onError: error => {
+      setLoading(false);
+      alert(`${error.message}`);
     },
   });
 
@@ -67,11 +75,12 @@ export default function ReviewModal({data, message, onClose}: ReviewModalProps) 
         />
         <Button
           className={
-            'h-54pxr min-h-54pxr w-full rounded-md bg-nomad-black px-8pxr text-center text-lg font-bold text-white tablet:h-56pxr tablet:min-h-56pxr tablet:rounded'
+            'h-54pxr min-h-54pxr w-full rounded-md bg-nomad-black px-8pxr text-center text-lg font-bold text-white disabled:cursor-not-allowed tablet:h-56pxr tablet:min-h-56pxr tablet:rounded'
           }
           onClick={handlePostReview}
+          disabled={loading}
         >
-          작성하기
+          <div className="flex items-center justify-center gap-3">{loading ? <ScaleLoader width={3} height={20} color="#ffffff" /> : '작성하기'}</div>
         </Button>
       </div>
     </OverlayContainer>
