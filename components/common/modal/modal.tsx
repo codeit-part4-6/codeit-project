@@ -41,7 +41,7 @@ export default function Modal({type, message, onClose, reservationId}: ModalProp
 
   const handleCancelClick = () => {
     if (reservationId !== null) {
-      mutation.mutate(reservationId);
+      mutation.mutate(reservationId ?? null);
     }
   };
 
