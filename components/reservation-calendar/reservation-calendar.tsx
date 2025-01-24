@@ -4,6 +4,10 @@ import selectDown from '@/public/icon/ic_chevron_down.svg';
 import BigCalendar from '@/components/reservation-calendar/big-calendar';
 import NonDataPage from '../common/non-data';
 import closeButton from '@/public/icon/ic_close_button.svg';
+import {useQuery} from '@tanstack/react-query';
+import {MyActivitiesResponse} from '@/types/activities';
+import {getActivities} from '@/service/api/reservation-calendar/getActivities.api';
+import {ScaleLoader} from 'react-spinners';
 
 const mock = {
   activities: [
@@ -40,12 +44,30 @@ const mock = {
 
 export default function ReservationCalendar({onClose}: {onClose: () => void}) {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
-  const [selectedTitle, setSelectedTitle] = useState(mock.activities[0].title);
+  const {data, isLoading, isError, error} = useQuery<MyActivitiesResponse>({
+    queryKey: ['myActivites'],
+    queryFn: () => getActivities({size: 20}),
+  });
+
+  const myActivities = data?.activities || [];
+  const [selectedTitle, setSelectedTitle] = useState(myActivities[0].title);
 
   const handleSelect = (title: string) => {
     setSelectedTitle(title);
     setIsOptionOpen(prev => !prev);
   };
+
+  if (isLoading) {
+    return (
+      <div className="no-scrollbar flex h-740pxr w-full items-center justify-center">
+        <ScaleLoader color="#0b3b2d" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <div className="mb-16 h-full w-full">
@@ -55,7 +77,7 @@ export default function ReservationCalendar({onClose}: {onClose: () => void}) {
           <Image src={closeButton} alt="모달 닫기 버튼" className="absolute cursor-pointer" fill />
         </div>
       </div>
-      {mock.activities.length === 0 && <NonDataPage />}
+      {myActivities.length === 0 && <NonDataPage />}
       <div
         onClick={() => setIsOptionOpen(prev => !prev)}
         className="relative mb-8 h-14 min-h-14 w-full cursor-pointer rounded border border-gray-700 px-5"
@@ -69,7 +91,7 @@ export default function ReservationCalendar({onClose}: {onClose: () => void}) {
         </div>
         {isOptionOpen && (
           <ul className="absolute left-0 z-10 mt-5 w-full rounded border border-gray-300 bg-white shadow-sidenavi-box">
-            {mock.activities.map(activity => (
+            {myActivities.map(activity => (
               <li
                 key={activity.title}
                 onClick={e => {
