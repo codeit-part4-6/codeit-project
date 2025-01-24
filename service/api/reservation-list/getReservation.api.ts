@@ -1,5 +1,6 @@
 import {ReservationListResponse} from '@/types/reservation-list';
 import INSTANCE_URL from '../instance';
+import getAccessToken from './getAccessToken';
 
 export async function getReservationList({
   cursorId,
@@ -10,6 +11,7 @@ export async function getReservationList({
   size?: number;
   status?: string;
 }): Promise<ReservationListResponse> {
+  const accessToken = getAccessToken();
   const params = new URLSearchParams({
     ...(cursorId !== undefined && {cursorId: cursorId.toString()}),
     ...(size !== undefined && {size: size.toString()}),
@@ -18,7 +20,7 @@ export async function getReservationList({
   const response = await INSTANCE_URL.get(`/my-reservations?${params}`, {
     headers: {
       Accept: 'application/json',
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
+      Authorization: `Bearer ${accessToken}`,
     },
   });
   return response.data;

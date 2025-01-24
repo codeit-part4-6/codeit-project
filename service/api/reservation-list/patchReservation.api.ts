@@ -1,7 +1,9 @@
 import {Reservation} from '@/types/reservation-list';
 import INSTANCE_URL from '../instance';
+import getAccessToken from './getAccessToken';
 
 export async function patchReservationList({reservationId}: {reservationId: number | null}): Promise<Reservation> {
+  const accessToken = getAccessToken();
   const response = await INSTANCE_URL.patch(
     `/my-reservations/${reservationId}`,
     {
@@ -11,7 +13,7 @@ export async function patchReservationList({reservationId}: {reservationId: numb
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_ACCESS_TOKEN}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     },
   );
