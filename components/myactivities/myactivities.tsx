@@ -42,7 +42,7 @@ export default function MyActivities() {
         </div>
 
         {content === 'manage' && (
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-2 tablet:gap-4 pc:gap-6">
             <ActivitiesCard />
             <ActivitiesCard />
             <ActivitiesCard />

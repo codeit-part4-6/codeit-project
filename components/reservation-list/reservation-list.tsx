@@ -82,7 +82,7 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
 
   return (
     <div className="mb-16 h-full w-full">
-      <div className="mb-3 flex w-full items-center justify-between tablet:items-start">
+      <div className="mb-3 flex w-full items-center justify-between tablet:mb-6 tablet:items-start">
         <p className="text-3xl font-bold text-black-100">예약 내역</p>
         <div className="flex items-center gap-1">
           <div className="m-0">
@@ -99,7 +99,10 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
       ) : (
         <div className="flex flex-col gap-2 tablet:gap-4 pc:gap-6">
           {filteredReservation.map(reservation => (
-            <div key={`list_${reservation.id}`} className="flex h-32 w-full items-center rounded-3xl shadow-sidenavi-box tablet:h-156pxr pc:h-204pxr">
+            <div
+              key={`list_${reservation.id}`}
+              className="flex h-32 w-full items-center rounded-3xl bg-white shadow-sidenavi-box tablet:h-156pxr pc:h-204pxr"
+            >
               <div className="relative h-32 w-32 flex-shrink tablet:h-156pxr tablet:w-156pxr pc:h-204pxr pc:w-204pxr">
                 <Image className="absolute rounded-bl-3xl rounded-tl-3xl" fill src={reservation.activity.bannerImageUrl} alt="체험 배너 이미지" />
               </div>

@@ -28,7 +28,7 @@ export default function CustomSelect({orderBy, handleOrderBy}: CustomSelectProps
   return (
     <div
       onClick={() => setIsOpen(prev => !prev)}
-      className="no-scrollbar relative cursor-pointer rounded-2xl px-5 py-4 tablet:block tablet:h-53pxr tablet:w-40 tablet:border tablet:border-nomad-black pc:block"
+      className="relative cursor-pointer rounded-2xl border border-nomad-black bg-white px-2 py-2 tablet:block tablet:h-53pxr tablet:w-40 tablet:px-5 tablet:py-4 pc:block"
     >
       <div className="flex items-center justify-between rounded-md">
         <span className="hidden text-2lg font-medium leading-none text-green-100 tablet:block">{selectedLabel}</span>
@@ -37,9 +37,9 @@ export default function CustomSelect({orderBy, handleOrderBy}: CustomSelectProps
       </div>
 
       {isOpen && (
-        <ul className="absolute -right-12 z-10 mt-6 w-40 rounded-md border border-gray-200 bg-white shadow-sidenavi-box tablet:right-1pxr">
+        <ul className="no-scrollbar absolute -right-12 z-10 mt-6 w-40 rounded-md border border-gray-200 bg-white shadow-sidenavi-box tablet:right-1pxr">
           <li
-            className="cursor-pointer px-40pxr py-18pxr text-2lg font-medium text-gray-800 hover:bg-green-50 hover:text-nomad-black"
+            className="no-scrollbar cursor-pointer px-40pxr py-18pxr text-2lg font-medium text-gray-800 hover:bg-green-50 hover:text-nomad-black"
             onClick={() => handleSelect('')}
           >
             전체
@@ -47,7 +47,7 @@ export default function CustomSelect({orderBy, handleOrderBy}: CustomSelectProps
           {options.map(option => (
             <li
               key={option.value}
-              className="border-collapse cursor-pointer border-t border-gray-200 px-40pxr py-18pxr text-2lg font-medium text-gray-800 hover:bg-green-50 hover:text-nomad-black"
+              className="no-scrollbar border-collapse cursor-pointer border-t border-gray-200 px-40pxr py-18pxr text-2lg font-medium text-gray-800 hover:bg-green-50 hover:text-nomad-black"
               onClick={() => handleSelect(option.value)}
             >
               {option.label}
