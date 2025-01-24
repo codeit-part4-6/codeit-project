@@ -32,4 +32,7 @@ body {
   .big-button {
     @apply h-42pxr w-138pxr rounded-lg bg-nomad-black px-56pxr py-12pxr text-center align-middle text-md font-medium leading-none text-white tablet:h-48pxr tablet:w-120pxr tablet:px-46pxr tablet:py-14pxr tablet:text-lg tablet:leading-none pc:h-48pxr pc:w-120pxr pc:px-46pxr pc:py-14pxr pc:text-lg pc:leading-none;
   }
+  .error-message {
+    @apply ml-2 mt-2 text-xs text-red-200;
+  }
 }
