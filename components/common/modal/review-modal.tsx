@@ -37,7 +37,7 @@ export default function ReviewModal({data, message, onClose}: ReviewModalProps) 
 
   return (
     <OverlayContainer onClose={onClose}>
-      <div onClick={e => e.stopPropagation()} className="review-modal">
+      <div onClick={e => e.stopPropagation()} className="review-modal no-scrollbar">
         <div className="mb-35pxr flex items-center justify-between tablet:mb-41pxr">
           <p className="text-[1.75rem] font-bold text-black-100 tablet:text-2xl">{message}</p>
           <div className="relative h-12 w-12 tablet:h-10 tablet:w-10" onClick={onClose}>
