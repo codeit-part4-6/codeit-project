@@ -11,7 +11,7 @@ interface ModalProps {
   type: 'small' | 'big';
   message: string;
   onClose: () => void;
-  reservationId: number | null;
+  reservationId?: number | null;
 }
 
 export default function Modal({type, message, onClose, reservationId}: ModalProps) {
