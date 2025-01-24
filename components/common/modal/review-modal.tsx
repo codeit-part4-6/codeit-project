@@ -27,6 +27,7 @@ export default function ReviewModal({data, message, onClose}: ReviewModalProps) 
 
     onSuccess: () => {
       setLoading(false);
+      alert('후기 작성에 성공했습니다.');
       onClose();
     },
     onError: error => {
