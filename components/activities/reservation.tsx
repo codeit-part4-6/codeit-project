@@ -1,13 +1,56 @@
 'use client';
 import React, {useEffect, useState} from 'react';
-import {initialDevice} from '@/utile/initialDevice';
+import {StaticImport} from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
-import Button from '../common/button';
-import SmCalendar from './sm-calendar';
-import OverlayContainer from '../common/modal/overlay-container';
+import KakaoMap from '@/components/activities/kakomap';
+import Reviews from '@/components/activities/reviews';
+import SmCalendar from '@/components/activities/sm-calendar';
+import Button from '@/components/common/button';
+import OverlayContainer from '@/components/common/modal/overlay-container';
 import Plus from '@/public/icon/icon_plus.png';
 import Minus from '@/public/icon/icon_minus.png';
 import Cancle from '@/public/icon/icon_cancle.png';
+
+interface ImageType {
+  bannerImg: string | StaticImport;
+  subImages: {id: number; imageUrl: string}[];
+}
+
+interface BannerType extends ImageType {
+  device: string;
+}
+
+interface ReservationType extends ImageType {
+  address: string;
+}
+
+const BannerFromDivceType = ({device, bannerImg, subImages}: BannerType) => {
+  switch (device) {
+    case 'mobile':
+      return (
+        <div className="relative h-310pxr w-full">
+          <Image src={bannerImg} fill alt="bannerImag" />
+        </div>
+      );
+    default:
+      return (
+        <div className="my-32pxr mb-85pxr flex min-h-310pxr min-w-375pxr flex-row tablet:min-h-310pxr tablet:min-w-696pxr pc:min-h-534pxr pc:min-w-[75rem]">
+          <div className="relative min-h-310pxr min-w-375pxr rounded-l-lg tablet:min-h-310pxr tablet:min-w-346pxr pc:min-h-534pxr pc:min-w-595pxr">
+            <Image src={bannerImg} fill alt="bannerImag" />
+          </div>
+          <div className="flex min-h-310pxr w-full min-w-375pxr flex-row flex-wrap items-start rounded-r-lg p-0 tablet:h-310pxr tablet:w-346pxr tablet:gap-4pxr pc:h-534pxr pc:w-595pxr pc:gap-8pxr">
+            {subImages.map((dt, idx) => {
+              return (
+                <div key={`${idx}-subImages`} className="relative min-h-152pxr min-w-170pxr tablet:h-152pxr tablet:w-160pxr pc:h-263pxr pc:w-280pxr">
+                  <Image src={dt.imageUrl} fill alt="subImages" />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      );
+  }
+};
 
 const ReservationWindowsType = () => {
   return (
@@ -159,7 +202,7 @@ const ReservationMobileType = () => {
   };
   return (
     <>
-      <div className="fixed bottom-0 left-0 z-10 h-85pxr w-full min-w-375pxr border border-t border-solid border-gray-600 bg-white">
+      <div className="sticky bottom-0 left-0 z-10 h-85pxr w-full min-w-375pxr border border-t border-solid border-gray-600 bg-white">
         <div className="flex flex-row flex-wrap justify-between px-18pxr py-18pxr">
           <div className="flex flex-col items-start">
             <p className="text-xl font-bold text-nomad-black">₩ 1,000</p>
@@ -218,14 +261,20 @@ const ReservationMobileType = () => {
   );
 };
 
-const Reservation = () => {
-  const [device, setDevice] = useState<string>('windows');
+const Reservation = ({bannerImg, subImages, address}: ReservationType) => {
+  const [device, setDevice] = useState<string>('mobile');
 
-  useEffect(() => {
-    setDevice(initialDevice());
-  }, []);
+  const initialDevice = () => {
+    let device = 'mobile';
+    if (window.innerWidth > 1199) {
+      device = 'windows';
+    } else if (window.innerWidth > 767) {
+      device = 'tablet';
+    }
+    return device;
+  };
 
-  const RenderFromDivceType = () => {
+  const ReservationFromDivceType = () => {
     switch (device) {
       case 'windows':
         return <ReservationWindowsType />;
@@ -236,6 +285,40 @@ const Reservation = () => {
     }
   };
 
-  return <RenderFromDivceType />;
+  useEffect(() => {
+    const getDeviceType = initialDevice();
+    setDevice(getDeviceType);
+  }, []);
+
+  return (
+    <>
+      <BannerFromDivceType device={device} bannerImg={bannerImg} subImages={subImages} />
+      <div className={`relative flex ${device === 'mobile' ? 'flex-col' : 'flex-row'}`}>
+        <div className="mb-16pxr mr-24pxr min-w-327pxr tablet:min-w-428pxr pc:min-w-790pxr">
+          <hr />
+          <div>
+            <div className="w-full pb-16pxr pt-15pxr text-xl font-bold text-nomad-black tablet:pb-16pxr tablet:pt-41pxr pc:pb-34pxr pc:pt-40pxr">
+              체험 설명
+            </div>
+            <div className="text-nomad mb-16pxr h-auto min-w-327pxr text-xl font-normal opacity-75 tablet:mb-57pxr tablet:min-w-428pxr pc:mb-34pxr pc:min-w-790pxr">
+              안녕하세요! 저희 스트릿 댄스 체험을 소개합니다. 저희는 신나고 재미있는 스트릿 댄스 스타일을 가르칩니다. 크럼프는 세계적으로 인기 있는
+              댄스 스타일로, 어디서든 춤출 수 있습니다. 저희 체험에서는 새로운 스타일을 접할 수 있고, 즐거운 시간을 보낼 수 있습니다. 저희는
+              초보자부터 전문가까지 어떤 수준의 춤추는 사람도 가르칠 수 있도록 준비해놓았습니다. 저희와 함께 즐길 수 있는 시간을 기대해주세요! 각종
+              음악에 적합한 스타일로, 저희는 크럼프 외에도 전통적인 스트릿 댄스 스타일과 최신 스트릿 댄스 스타일까지 가르칠 수 있습니다. 저희
+              체험에서는 전문가가 직접 강사로 참여하기 때문에, 저희가 제공하는 코스는 어떤 수준의 춤추는 사람도 쉽게 이해할 수 있도록
+              준비해놓았습니다. 저희 체험을 참가하게 된다면, 즐거운 시간 뿐만 아니라 새로운 스타일을 접할 수 있을 것입니다.
+            </div>
+          </div>
+          <hr />
+          <div className="w-full pb-40pxr pt-16pxr text-xl font-bold text-nomad-black tablet:pb-42pxr tablet:pt-40pxr pc:pb-34pxr">
+            <KakaoMap address={address} houseName={address} />
+          </div>
+          <hr />
+          <Reviews />
+        </div>
+        <ReservationFromDivceType />
+      </div>
+    </>
+  );
 };
 export default Reservation;
