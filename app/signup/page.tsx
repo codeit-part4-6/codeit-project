@@ -60,10 +60,6 @@ export default function Page() {
 
   const passwordValue = watch('password');
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <>
       <div className="desktop:pt-[7.375rem] desktop:gap-[3.5rem] m-auto flex max-w-[40rem] flex-col items-center gap-[1.5rem] pt-[6.875rem] tablet:gap-[2.5rem] tablet:pt-[7.875rem]">
@@ -204,7 +200,7 @@ export default function Page() {
           </div>
         </form>
       </div>
-      {isModalOpen && <Modal type="big" message={modalMessage} onClose={handleCloseModal} />}
+      {isModalOpen && <Modal type="big" message={modalMessage} onClose={() => setIsModalOpen(false)} />}
     </>
   );
 }
