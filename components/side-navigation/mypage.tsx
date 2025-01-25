@@ -38,7 +38,7 @@ export default function MyPage() {
   const mypageMutation = useMutation({
     mutationFn: (mypageData: EditMypageBody) => patchMypage(mypageData),
     onError: () => {
-      console.error('마이페이지 수정 오류');
+      console.error('마이페이지 오류');
     },
     onSuccess: (data) => {
       updateNickname(data.nickname);
