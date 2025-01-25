@@ -1,5 +1,5 @@
 import { create } from 'zustand';
- 
+
 interface AuthState {
   accessToken: string | null;
   refreshToken: string | null;
@@ -11,8 +11,13 @@ interface AuthState {
     createdAt: string;
     updatedAt: string;
   } | null;
-  setLogin: (accessToken: string, refreshToken: string, user: AuthState['user']) => void;
+  setLogin: (
+    accessToken: string,
+    refreshToken: string,
+    user: AuthState['user']
+  ) => void;
   setLogout: () => void;
+  updateNickname: (nickname: string) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -31,4 +36,8 @@ export const useAuthStore = create<AuthState>((set) => ({
       refreshToken: null,
       user: null,
     }),
+  updateNickname: (nickname) =>
+    set((state) => ({
+      user: state.user ? { ...state.user, nickname } : null,
+    })),
 }));

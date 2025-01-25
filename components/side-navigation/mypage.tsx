@@ -18,7 +18,7 @@ interface IFormInput {
 
 export default function MyPage() {
   const router = useRouter();
-  const { user } = useAuthStore();
+  const { user, updateNickname } = useAuthStore();
 
   const {
     control,
@@ -38,9 +38,10 @@ export default function MyPage() {
   const mypageMutation = useMutation({
     mutationFn: (mypageData: EditMypageBody) => patchMypage(mypageData),
     onError: () => {
-      console.error('An error occurred while updating your profile.');
+      console.error('마이페이지 수정 오류');
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      updateNickname(data.nickname);
       router.push('/');
     },
   });
