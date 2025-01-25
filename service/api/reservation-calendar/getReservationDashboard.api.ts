@@ -1,22 +1,22 @@
+import {ReservationDashboardData} from '@/types/reservation-dashboard';
 import INSTANCE_URL from '../instance';
 import getAccessToken from '../reservation-list/getAccessToken';
-import {MyActivitiesResponse} from '@/types/activities';
 
 export async function getReservationDashboard({
   activityId,
   year,
   month,
 }: {
-  activityId: number;
-  year: number;
-  month: number;
-}): Promise<MyActivitiesResponse> {
+  activityId: number | null;
+  year: string;
+  month: string;
+}): Promise<ReservationDashboardData> {
   const accessToken = getAccessToken();
   const params = new URLSearchParams({
-    ...(cursorId !== undefined && {cursorId: cursorId.toString()}),
-    ...(size !== undefined && {size: size.toString()}),
+    ...(year !== undefined && {year: year.toString()}),
+    ...(month !== undefined && {month: month.toString()}),
   });
-  const response = await INSTANCE_URL.get(`/my-activities?${params}`, {
+  const response = await INSTANCE_URL.get(`/my-activities/${activityId}/reservation-dashboard?${params}`, {
     headers: {
       Accept: 'application/json',
       Authorization: `Bearer ${accessToken}`,

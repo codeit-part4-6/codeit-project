@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, {useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import selectDown from '@/public/icon/ic_chevron_down.svg';
 import BigCalendar from '@/components/reservation-calendar/big-calendar';
 import NonDataPage from '../common/non-data';
@@ -16,10 +16,17 @@ export default function ReservationCalendar({onClose}: {onClose: () => void}) {
     queryFn: () => getActivities({size: 20}),
   });
 
-  const myActivities = data?.activities || [];
-  const [selectedTitle, setSelectedTitle] = useState(myActivities[0].title);
-  const [selectedId, setSelectedId] = useState(myActivities[0].id);
+  const myActivities = useMemo(() => data?.activities || [], [data]);
+  const [selectedTitle, setSelectedTitle] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
   console.log(selectedId);
+  useEffect(() => {
+    if (myActivities.length > 0) {
+      setSelectedTitle(myActivities[0].title);
+      setSelectedId(myActivities[0].id);
+    }
+  }, [myActivities]);
+
   const handleSelect = (title: string, id: number) => {
     setSelectedTitle(title);
     setSelectedId(id);

@@ -8,6 +8,10 @@ import {calendarStatusLabels} from '@/constant/reservation-list-constant';
 import dayjs from 'dayjs';
 import updateLocale from 'dayjs/plugin/updateLocale';
 import enUS from 'antd/es/calendar/locale/en_US';
+import {useQuery} from '@tanstack/react-query';
+import {getReservationDashboard} from '@/service/api/reservation-calendar/getReservationDashboard.api';
+import {ReservationDashboardData} from '@/types/reservation-dashboard';
+import {ScaleLoader} from 'react-spinners';
 
 dayjs.extend(updateLocale);
 
@@ -15,63 +19,25 @@ dayjs.updateLocale('en', {
   weekdaysMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 });
 
-const mockReservationDashBoard = [
-  {
-    date: '2025-01-09',
-    reservations: {
-      completed: 1,
-      confirmed: 0,
-      pending: 1,
-    },
-  },
-  {
-    date: '2025-01-11',
-    reservations: {
-      completed: 1,
-      confirmed: 2,
-      pending: 1,
-    },
-  },
-  {
-    date: '2025-01-14',
-    reservations: {
-      completed: 3,
-      confirmed: 1,
-      pending: 1,
-    },
-  },
-  {
-    date: '2025-01-21',
-    reservations: {
-      completed: 1,
-      confirmed: 1,
-      pending: 2,
-    },
-  },
-  {
-    date: '2025-01-22',
-    reservations: {
-      completed: 0,
-      confirmed: 0,
-      pending: 2,
-    },
-  },
-  {
-    date: '2025-02-21',
-    reservations: {
-      completed: 1,
-      confirmed: 1,
-      pending: 2,
-    },
-  },
-];
-
-export default function BigCalendar({activityId}: {activityId: number}) {
+export default function BigCalendar({activityId}: {activityId: number | null}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTablet, setIsTablet] = useState<boolean | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>('');
+  const [year, setYear] = useState<string>('2025');
+  const [month, setMonth] = useState<string>('01');
   const modalRef = useRef<HTMLDivElement | null>(null);
+
+  const {data, isLoading, isError, error} = useQuery<ReservationDashboardData>({
+    queryKey: ['reservationDashboard', year, month],
+    queryFn: () => getReservationDashboard({activityId, year, month}),
+    enabled: !!activityId,
+  });
+
   console.log(selectedDate);
+  console.log(year);
+  console.log(month);
+  const reservationsData: ReservationDashboardData[] = Array.isArray(data) ? data : [];
+
   const handleClickOutside = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       setIsModalOpen(false);
@@ -115,7 +81,19 @@ export default function BigCalendar({activityId}: {activityId: number}) {
   }, [isModalOpen]);
 
   const DateCell = (date: Dayjs) => {
-    const reservationData = mockReservationDashBoard.find(reservation => reservation.date === date.format('YYYY-MM-DD'));
+    const reservationData = reservationsData.find(reservation => reservation.date === date.format('YYYY-MM-DD'));
+
+    if (isLoading) {
+      return (
+        <div className="no-scrollbar flex h-740pxr w-full items-center justify-center">
+          <ScaleLoader color="#0b3b2d" />
+        </div>
+      );
+    }
+
+    if (isError) {
+      return <div>{error.message}</div>;
+    }
 
     return (
       <div>
@@ -196,7 +174,7 @@ export default function BigCalendar({activityId}: {activityId: number}) {
         locale={customLocale}
         headerRender={(props: {value: Dayjs; onChange: (value: Dayjs) => void}) => (
           <>
-            <CalendarHeader {...props} />
+            <CalendarHeader {...props} setYear={setYear} setMonth={setMonth} />
           </>
         )}
         fullCellRender={DateCell}
