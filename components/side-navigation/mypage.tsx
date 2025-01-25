@@ -4,12 +4,13 @@ import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
 import {useForm, Controller} from 'react-hook-form';
 import { useAuthStore } from '@/service/store/authStore';
+import { patchMypage } from '@/service/api/users/patchMypage.api';
 
 interface IFormInput {
   email: string;
   nickname: string;
   password: string;
-  confirmPassword: string;
+  newPassword: string;
 }
 
 export default function MyPage() {
@@ -25,12 +26,17 @@ export default function MyPage() {
       email: user ? `${user.email}` : '',
       nickname: user ? `${user.nickname}` : '',
       password: ``,
-      confirmPassword: ``,
+      newPassword: ``,
     },
   });
 
-  const onSubmit = (data: IFormInput) => {
-    console.log('Form Data:', data);
+  const onSubmit = async (data: IFormInput) => {
+    try {
+      const response = await patchMypage(data);
+      console.log('Response:', response);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
   };
 
   const passwordValue = watch('password');
@@ -128,7 +134,7 @@ export default function MyPage() {
         />
         {/* Confirm Password Input */}
         <Controller
-          name="confirmPassword"
+          name="newPassword"
           control={control}
           rules={{
             required: '필수값입니다.',
@@ -145,7 +151,7 @@ export default function MyPage() {
               onChange={field.onChange}
               isPassword
               type="password"
-              error={errors.confirmPassword?.message}
+              error={errors.newPassword?.message}
             />
           )}
         />
