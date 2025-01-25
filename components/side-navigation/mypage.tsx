@@ -3,6 +3,7 @@
 import Input from '@/components/common/Input';
 import Button from '@/components/common/button';
 import {useForm, Controller} from 'react-hook-form';
+import { useAuthStore } from '@/service/store/authStore';
 
 interface IFormInput {
   email: string;
@@ -12,6 +13,7 @@ interface IFormInput {
 }
 
 export default function MyPage() {
+  const { user } = useAuthStore();
   const {
     control,
     handleSubmit,
@@ -20,10 +22,10 @@ export default function MyPage() {
   } = useForm<IFormInput>({
     mode: 'onChange',
     defaultValues: {
-      email: '',
-      nickname: '',
-      password: '',
-      confirmPassword: '',
+      email: user ? `${user.email}` : '',
+      nickname: user ? `${user.nickname}` : '',
+      password: ``,
+      confirmPassword: ``,
     },
   });
 
