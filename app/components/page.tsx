@@ -7,6 +7,7 @@ import InputPage from './InputPage';
 import Mypage from '../../components/side-navigation/mypage';
 import PagenationComponent from './pagenation';
 import KakaoMap from './kakomap';
+import InfinitePage from './InfinitePage';
 
 async function Page() {
   const data = await new Promise<string>(resolve => setTimeout(() => resolve('비동기 데이터 1초'), 1000));
@@ -53,6 +54,9 @@ async function Page() {
       <hr />
       <li>
         <KakaoMap address="서울 중구 청계천로 100" houseName="코드잇" />
+      </li>
+      <li>
+        <InfinitePage />
       </li>
     </ul>
   );
