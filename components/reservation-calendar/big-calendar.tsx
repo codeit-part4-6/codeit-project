@@ -66,12 +66,12 @@ const mockReservationDashBoard = [
   },
 ];
 
-export default function BigCalendar() {
+export default function BigCalendar({activityId}: {activityId: number}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isTablet, setIsTablet] = useState<boolean | null>(null);
-  const [selectedData, setSelectedData] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<string>('');
   const modalRef = useRef<HTMLDivElement | null>(null);
-  console.log(selectedData);
+  console.log(selectedDate);
   const handleClickOutside = (event: MouseEvent) => {
     if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       setIsModalOpen(false);
@@ -190,7 +190,7 @@ export default function BigCalendar() {
         onSelect={(date, {source}) => {
           if (source === 'date') {
             const newDate = date.format('YYYY-MM-DD');
-            setSelectedData(newDate);
+            setSelectedDate(newDate);
           }
         }}
         locale={customLocale}

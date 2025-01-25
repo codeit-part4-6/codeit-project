@@ -9,39 +9,6 @@ import {MyActivitiesResponse} from '@/types/activities';
 import {getActivities} from '@/service/api/reservation-calendar/getActivities.api';
 import {ScaleLoader} from 'react-spinners';
 
-const mock = {
-  activities: [
-    {
-      id: 1,
-      userId: 1,
-      title: '체험 1',
-      description: '체험 1 내용이야',
-      category: '스포츠',
-      price: 10000,
-      address: '주소1',
-      bannerImageUrl: '/img/img_navlogo.svg',
-      rating: 2,
-      reviewCount: 1,
-      createdAt: '2025-01-21T03:29:00.553Z',
-      updatedAt: '2025-01-21T03:29:00.553Z',
-    },
-    {
-      id: 2,
-      userId: 1,
-      title: '체험 2',
-      description: '체험 2 내용이야',
-      category: '영화',
-      price: 20000,
-      address: '주소2',
-      bannerImageUrl: '/img/img_navlogo.svg',
-      rating: 3,
-      reviewCount: 1,
-      createdAt: '2025-01-21T03:29:00.553Z',
-      updatedAt: '2025-01-21T03:29:00.553Z',
-    },
-  ],
-};
-
 export default function ReservationCalendar({onClose}: {onClose: () => void}) {
   const [isOptionOpen, setIsOptionOpen] = useState(false);
   const {data, isLoading, isError, error} = useQuery<MyActivitiesResponse>({
@@ -51,9 +18,11 @@ export default function ReservationCalendar({onClose}: {onClose: () => void}) {
 
   const myActivities = data?.activities || [];
   const [selectedTitle, setSelectedTitle] = useState(myActivities[0].title);
-
-  const handleSelect = (title: string) => {
+  const [selectedId, setSelectedId] = useState(myActivities[0].id);
+  console.log(selectedId);
+  const handleSelect = (title: string, id: number) => {
     setSelectedTitle(title);
+    setSelectedId(id);
     setIsOptionOpen(prev => !prev);
   };
 
@@ -96,7 +65,7 @@ export default function ReservationCalendar({onClose}: {onClose: () => void}) {
                 key={activity.title}
                 onClick={e => {
                   e.stopPropagation();
-                  handleSelect(activity.title);
+                  handleSelect(activity.title, activity.id);
                 }}
                 className="cursor-pointer px-5 py-18pxr text-lg font-regular text-gray-800 hover:bg-green-50 hover:text-nomad-black"
               >
@@ -105,10 +74,9 @@ export default function ReservationCalendar({onClose}: {onClose: () => void}) {
             ))}
           </ul>
         )}
-        {/* 위 list에는 /my-activities에서 데이터 가져와서 연결해야해 */}
       </div>
       <div>
-        <BigCalendar />
+        <BigCalendar activityId={selectedId} />
       </div>
     </div>
   );
