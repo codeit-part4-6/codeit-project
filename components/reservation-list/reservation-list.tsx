@@ -12,6 +12,7 @@ import {useQuery} from '@tanstack/react-query';
 import {ReservationListResponse} from '@/types/reservation-list';
 import FormattedDotDate from '@/service/lib/formatted-dot-date';
 import {ScaleLoader} from 'react-spinners';
+import FormattedPrice from '@/service/lib/formatted-price';
 
 export const statusLabelsColor: Record<string, string> = {
   pending: 'text-blue-100',
@@ -122,7 +123,7 @@ export default function ReservationList({onClose}: {onClose: () => void}) {
                   </p>
                 </div>
                 <div className="flex items-center justify-between">
-                  <p className="text-lg font-medium text-black-100 tablet:text-xl">￦{reservation.totalPrice}</p>
+                  <p className="text-lg font-medium text-black-100 tablet:text-xl">￦{FormattedPrice(reservation.totalPrice)}</p>
                   <Button
                     onClick={() => handleButtonClick(`${reservation.status}`, reservation.id)}
                     className={`${buttonStyleByStatus[reservation.status]}`}
