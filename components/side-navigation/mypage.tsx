@@ -88,13 +88,6 @@ export default function MyPage() {
         <Controller
           name="email"
           control={control}
-          rules={{
-            required: '필수값입니다.',
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: '이메일 형식으로 작성해 주세요.',
-            },
-          }}
           render={({ field }) => (
             <Input
               label="이메일"
@@ -102,7 +95,6 @@ export default function MyPage() {
               labelClassName="block text-lg pb-2"
               className="h-[3.625rem] w-[21.875rem] tablet:h-[3.625rem] tablet:w-[40rem]"
               value={field.value}
-              onChange={field.onChange}
               error={errors.email?.message}
             />
           )}
