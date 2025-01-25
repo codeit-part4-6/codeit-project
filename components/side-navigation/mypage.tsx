@@ -1,10 +1,13 @@
 'use client';
 
-import Input from '@/components/common/Input';
-import Button from '@/components/common/button';
 import {useForm, Controller} from 'react-hook-form';
+import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '@/service/store/authStore';
 import { patchMypage } from '@/service/api/users/patchMypage.api';
+import { EditMypageBody } from '@/types/patchMypage.types';
+import { useRouter } from 'next/navigation';
+import Input from '@/components/common/Input';
+import Button from '@/components/common/button';
 
 interface IFormInput {
   email: string;
@@ -14,7 +17,9 @@ interface IFormInput {
 }
 
 export default function MyPage() {
+  const router = useRouter();
   const { user } = useAuthStore();
+
   const {
     control,
     handleSubmit,
@@ -30,13 +35,18 @@ export default function MyPage() {
     },
   });
 
+  const mypageMutation = useMutation({
+    mutationFn: (mypageData: EditMypageBody) => patchMypage(mypageData),
+    onError: () => {
+      console.error('An error occurred while updating your profile.');
+    },
+    onSuccess: () => {
+      router.push('/');
+    },
+  });
+
   const onSubmit = async (data: IFormInput) => {
-    try {
-      const response = await patchMypage(data);
-      console.log('Response:', response);
-    } catch (error) {
-      console.error('Error updating profile:', error);
-    }
+    mypageMutation.mutate(data);
   };
 
   const passwordValue = watch('password');
