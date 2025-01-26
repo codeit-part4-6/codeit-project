@@ -24,7 +24,7 @@ export default function EntireCard() {
             </div>
             <div className="flex items-center gap-5pxr">
               <span className="text-lg font-semibold tablet:text-[1.75rem]/[2.063rem]">₩ 0</span>
-              <span className="text-md font-regular text-gray-600 tablet:text-[1.25rem]/[1.438rem]">/ 인</span>
+              <span className="text-md font-regular text-gray-800 tablet:text-[1.25rem]/[1.438rem]">/ 인</span>
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@ export default function EntireCard() {
             </div>
             <div className="flex items-center gap-5pxr">
               <span className="text-lg font-semibold tablet:text-[1.75rem]/[2.063rem]">₩ 30,000</span>
-              <span className="text-md font-regular text-gray-600 tablet:text-[1.25rem]/[1.438rem]">/ 인</span>
+              <span className="text-md font-regular text-gray-800 tablet:text-[1.25rem]/[1.438rem]">/ 인</span>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ export default function EntireCard() {
             </div>
             <div className="flex items-center gap-5pxr">
               <span className="text-lg font-semibold tablet:text-[1.75rem]/[2.063rem]">₩ 50,000</span>
-              <span className="text-md font-regular text-gray-600 tablet:text-[1.25rem]/[1.438rem]">/ 인</span>
+              <span className="text-md font-regular text-gray-800 tablet:text-[1.25rem]/[1.438rem]">/ 인</span>
             </div>
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function EntireCard() {
             </div>
             <div className="flex items-center gap-5pxr">
               <span className="text-lg font-semibold tablet:text-[1.75rem]/[2.063rem]">₩ 40,000</span>
-              <span className="text-md font-regular text-gray-600 tablet:text-[1.25rem]/[1.438rem]">/ 인</span>
+              <span className="text-md font-regular text-gray-800 tablet:text-[1.25rem]/[1.438rem]">/ 인</span>
             </div>
           </div>
         </div>
