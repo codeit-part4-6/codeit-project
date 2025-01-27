@@ -190,13 +190,14 @@ export default function Page() {
               </Link>
             </span>
             <div className="flex flex-col gap-[1.5rem] tablet:gap-[2.5rem]">
-              {/* SNS 로그인 섹션 */}
-              <div className="flex items-center">
+              <div className="flex justify-center items-center">
                 <hr className="w-[5rem] border border-gray-300" />
-                <span className="text-center text-[0.875rem] font-regular leading-[1.5rem] text-gray-700">SNS 계정으로 로그인하기</span>
+                <span className="text-center text-[0.875rem] font-regular leading-[1.5rem] text-gray-700">
+                  SNS 계정으로 로그인하기
+                </span>
                 <hr className="w-[5rem] border border-gray-300" />
               </div>
-              <div className="flex gap-[1rem]">
+              <div className="flex justify-center gap-[1rem]">
                 <Image src={GoogleIcon} alt="google icon" />
                 <Image src={KakaoIcon} alt="kakao icon" />
               </div>
@@ -204,7 +205,12 @@ export default function Page() {
           </div>
         </form>
       </div>
-      {isModalOpen && <Modal type="big" message={modalMessage} onClose={handleCloseModal} />}
+      {isModalOpen && 
+        <Modal 
+          type="big" 
+          message={modalMessage} 
+          onClose={handleCloseModal} 
+        />}
     </>
   );
 }
