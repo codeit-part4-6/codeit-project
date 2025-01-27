@@ -198,7 +198,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void; isValid: boolean}
           <div key={index}>
             <div className="grid grid-cols-[1fr,auto,auto,auto] gap-1 pc:grid-cols-[1fr,auto,auto,auto] pc:gap-4">
               <div>
-                {index === 0 && <label className="text-xl font-medium text-gray-800">예약 가능한 시간대</label>}
+                {index === 0 && <label className="text-xl font-medium text-gray-800">날짜</label>}
                 <Controller
                   name={`rows.${index}.date` as const}
                   control={control}
@@ -230,9 +230,9 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void; isValid: boolean}
                       value={field.value}
                       onChange={e => field.onChange(e.target.value)}
                       options={timeOptions}
-                      deleteButtonImage={arrowDown}
+                      selectButtonImage={arrowDown}
                       label="0:00"
-                      className="w-full bg-white"
+                      className="w-full max-w-79pxr bg-white tablet:max-w-none"
                     />
                   )}
                 />
@@ -249,8 +249,8 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void; isValid: boolean}
                       value={field.value}
                       onChange={e => field.onChange(e.target.value)}
                       options={timeOptions}
-                      className="w-full bg-white"
-                      deleteButtonImage={arrowDown}
+                      className="w-full max-w-79pxr bg-white tablet:max-w-none"
+                      selectButtonImage={arrowDown}
                       label="0:00"
                     />
                   )}
@@ -259,7 +259,7 @@ const ActivitiesRegister = forwardRef<{submitForm: () => void; isValid: boolean}
               {index === 0 ? (
                 <>
                   <div className="relative mt-26pxr h-16 w-16 cursor-pointer" onClick={handleAddRow}>
-                    <Image src={plusBtn} alt="Add row" fill />
+                    <Image src={plusBtn} alt="Add row" fill className="absolute" />
                   </div>
                 </>
               ) : (
