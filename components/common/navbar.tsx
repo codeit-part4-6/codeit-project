@@ -24,7 +24,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="sticky top-0 z-50 bg-[#FFFFFF] border-b-[1px] border-[#DDDDDD]">
       <nav className='sticky flex h-[4.375rem] px-[1.25rem] py-[1.25rem] md:gap-[1.3125rem] md:px-[0.625rem] md:py-[0.625rem]'>
         <div className='flex w-full items-center justify-between'>
           <div>
@@ -84,7 +84,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      <hr className='border-b-[0.0625rem] border-gray-200' />
     </header>
   );
 }
