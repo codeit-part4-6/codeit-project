@@ -57,7 +57,7 @@ export default function Navbar() {
                     <div>{user.nickname}</div>
                   </div>
                   {isDropdown && (
-                    <div className='absolute top-[100%] right-0 mt-2 w-[150px]border border-gray-300 rounded-lg shadow-md'>
+                    <div className='absolute top-[100%] right-0 mt-2 w-[150px] bg-white border border-gray-300 rounded-lg shadow-md'>
                       <Link href='/mypage' className='block px-4 py-2 text-black hover:bg-gray-100'>
                         마이페이지
                       </Link>
