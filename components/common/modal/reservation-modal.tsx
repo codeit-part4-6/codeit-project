@@ -2,27 +2,27 @@ import Image from 'next/image';
 import React, {useState} from 'react';
 import closeButton from '@/public/icon/ic_close_button.svg';
 import ReservationInfo from '@/components/reservation-calendar/reservation-info';
+import {useQuery} from '@tanstack/react-query';
+import {getReservedSchedule} from '@/service/api/reservation-calendar/getReservedSchedule.api';
+import {Schedules} from '@/types/reserved-schedule';
 
 interface ReservationModalProps {
   onClose: () => void;
+  selectedDate: string;
+  activityId: number | null;
 }
 
-const mockReservedSchedule = [
-  {
-    scheduleId: 0,
-    startTime: 'string',
-    endTime: 'string',
-    count: {
-      declined: 2,
-      confirmed: 1,
-      pending: 3,
-    },
-  },
-];
-
-export default function ReservationModal({onClose}: ReservationModalProps) {
+export default function ReservationModal({onClose, selectedDate, activityId}: ReservationModalProps) {
   const [reservationStatus, setReservationStatus] = useState('pending');
 
+  const {data} = useQuery<Schedules>({
+    queryKey: ['reservedSchedule', selectedDate],
+    queryFn: () => getReservedSchedule({activityId, date: selectedDate}),
+    enabled: !!activityId,
+  });
+
+  const reservedScheduleData: Schedules = Array.isArray(data) ? data : [];
+  console.log(reservedScheduleData);
   return (
     <div
       onClick={e => e.stopPropagation()}
@@ -41,19 +41,19 @@ export default function ReservationModal({onClose}: ReservationModalProps) {
               onClick={() => setReservationStatus('pending')}
               className={`relative cursor-pointer pb-15pxr text-xl ${reservationStatus === 'pending' ? 'z-10 -mb-1pxr border-b-2 border-green-100 font-semibold text-green-100' : 'font-regular text-gray-800'} `}
             >
-              신청 {mockReservedSchedule[0].count.pending}
+              신청 {reservedScheduleData.reduce((sum, schedule) => sum + schedule.count.pending, 0)}
             </div>
             <div
               onClick={() => setReservationStatus('confirmed')}
               className={`relative cursor-pointer pb-15pxr text-xl ${reservationStatus === 'confirmed' ? 'z-10 -mb-1pxr border-b-2 border-green-100 font-semibold text-green-100' : 'font-regular text-gray-800'}`}
             >
-              승인 {mockReservedSchedule[0].count.confirmed}
+              승인 {reservedScheduleData.reduce((sum, schedule) => sum + schedule.count.confirmed, 0)}
             </div>
             <div
               onClick={() => setReservationStatus('declined')}
               className={`relative cursor-pointer pb-15pxr text-xl ${reservationStatus === 'declined' ? 'z-10 -mb-1pxr border-b-2 border-green-100 font-semibold text-green-100' : 'font-regular text-gray-800'}`}
             >
-              거절 {mockReservedSchedule[0].count.declined}
+              거절 {reservedScheduleData.reduce((sum, schedule) => sum + schedule.count.declined, 0)}
             </div>
           </div>
         </div>

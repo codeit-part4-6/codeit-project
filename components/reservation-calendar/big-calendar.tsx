@@ -11,7 +11,6 @@ import enUS from 'antd/es/calendar/locale/en_US';
 import {useQuery} from '@tanstack/react-query';
 import {getReservationDashboard} from '@/service/api/reservation-calendar/getReservationDashboard.api';
 import {ReservationDashboardData} from '@/types/reservation-dashboard';
-import {ScaleLoader} from 'react-spinners';
 
 dayjs.extend(updateLocale);
 
@@ -27,15 +26,12 @@ export default function BigCalendar({activityId}: {activityId: number | null}) {
   const [month, setMonth] = useState<string>('01');
   const modalRef = useRef<HTMLDivElement | null>(null);
 
-  const {data, isLoading, isError, error} = useQuery<ReservationDashboardData>({
-    queryKey: ['reservationDashboard', year, month],
+  const {data} = useQuery<ReservationDashboardData>({
+    queryKey: ['reservationDashboard', activityId, year, month],
     queryFn: () => getReservationDashboard({activityId, year, month}),
     enabled: !!activityId,
   });
 
-  console.log(selectedDate);
-  console.log(year);
-  console.log(month);
   const reservationsData: ReservationDashboardData[] = Array.isArray(data) ? data : [];
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -82,18 +78,6 @@ export default function BigCalendar({activityId}: {activityId: number | null}) {
 
   const DateCell = (date: Dayjs) => {
     const reservationData = reservationsData.find(reservation => reservation.date === date.format('YYYY-MM-DD'));
-
-    if (isLoading) {
-      return (
-        <div className="no-scrollbar flex h-740pxr w-full items-center justify-center">
-          <ScaleLoader color="#0b3b2d" />
-        </div>
-      );
-    }
-
-    if (isError) {
-      return <div>{error.message}</div>;
-    }
 
     return (
       <div>
@@ -156,12 +140,12 @@ export default function BigCalendar({activityId}: {activityId: number | null}) {
     <div className="tablet:relative" ref={modalRef}>
       {isModalOpen && !isTablet && (
         <ReservationContainer onClose={() => setIsModalOpen(false)}>
-          <ReservationModal onClose={() => setIsModalOpen(false)} />
+          <ReservationModal onClose={() => setIsModalOpen(false)} selectedDate={selectedDate} activityId={activityId} />
         </ReservationContainer>
       )}
       {isModalOpen && isTablet && (
         <div>
-          <ReservationModal onClose={() => setIsModalOpen(false)} />
+          <ReservationModal onClose={() => setIsModalOpen(false)} selectedDate={selectedDate} activityId={activityId} />
         </div>
       )}
       <Calendar
