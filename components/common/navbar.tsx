@@ -25,7 +25,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b-[1px] border:bg-gray-100">
-      <nav className='sticky flex h-[4.375rem] px-[1.25rem] py-[1.25rem] md:gap-[1.3125rem] md:px-[0.625rem] md:py-[0.625rem]'>
+      <nav className='sticky flex h-[4.375rem] px-[1.25rem] py-[1.25rem] md:gap-[1.3125rem] md:px-[0.625rem] md:py-[0.625rem]  max-w-[1200px] mx-auto'>
         <div className='flex w-full items-center justify-between'>
           <div>
             <Link href='/'>
