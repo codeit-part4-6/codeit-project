@@ -189,7 +189,7 @@ export default function Page() {
               {/* SNS 로그인 섹션 */}
               <div className="flex items-center">
                 <hr className="w-[5rem] border border-gray-300" />
-                <span className="text-center text-[0.875rem] font-regular leading-[1.5rem] text-gray-700">SNS 계정으로 로그인하기</span>
+                <span className="text-center text-[0.875rem] font-regular leading-[1.5rem] text-gray-700">SNS 계정으로 회원가입하기</span>
                 <hr className="w-[5rem] border border-gray-300" />
               </div>
               <div className="flex gap-[1rem]">
