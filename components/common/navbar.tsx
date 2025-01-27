@@ -24,7 +24,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FFFFFF] border-b-[1px] border-[#DDDDDD]">
+    <header className="sticky top-0 z-50 bg-white border-b-[1px] border:bg-gray-100">
       <nav className='sticky flex h-[4.375rem] px-[1.25rem] py-[1.25rem] md:gap-[1.3125rem] md:px-[0.625rem] md:py-[0.625rem]'>
         <div className='flex w-full items-center justify-between'>
           <div>
@@ -42,7 +42,7 @@ export default function Navbar() {
                 <div className='flex'>
                   <Image src={notification} alt='알림 아이콘' />
                 </div>
-                <hr className='h-[22px] border-[1px] border-[#DDDDDD] w-0' />
+                <hr className='h-[22px] border-[1px] border:bg-gray-100 w-0' />
                 <div className='relative flex justify-center items-center gap-10pxr'>
                   <div 
                     onClick={toggleDropdown}
@@ -57,7 +57,7 @@ export default function Navbar() {
                     <div>{user.nickname}</div>
                   </div>
                   {isDropdown && (
-                    <div className='absolute top-[100%] right-0 mt-2 w-[150px] bg-white border border-gray-300 rounded-lg shadow-md'>
+                    <div className='absolute top-[100%] right-0 mt-2 w-[150px]border border-gray-300 rounded-lg shadow-md'>
                       <Link href='/mypage' className='block px-4 py-2 text-black hover:bg-gray-100'>
                         마이페이지
                       </Link>
