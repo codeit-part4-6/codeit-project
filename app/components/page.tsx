@@ -7,6 +7,7 @@ import InputPage from './InputPage';
 import Mypage from '../../components/side-navigation/mypage';
 import PagenationComponent from './pagenation';
 import KakaoMap from './kakomap';
+import Dropbox from '@/components/common/dropbox';
 
 async function Page() {
   const data = await new Promise<string>(resolve => setTimeout(() => resolve('비동기 데이터 1초'), 1000));
@@ -42,9 +43,21 @@ async function Page() {
       </li>
       <hr />
       <br />
-      <li>
-        <InputPage />
-      </li>
+      <ul className="flex items-center">
+        <li>
+          <InputPage />
+        </li>
+        <li className="relative">
+          <Dropbox
+            items={[
+              {id: 1, label: '수정하기', type: 'modify'},
+              {id: 2, label: '삭제하기', type: 'delete'},
+              {id: 3, label: '등록하기', type: 'register'},
+            ]}
+            className="w-160pxr"
+          />
+        </li>
+      </ul>
       <li>
         <Mypage />
         <Footer />
