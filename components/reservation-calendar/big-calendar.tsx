@@ -40,7 +40,9 @@ export default function BigCalendar({activityId}: {activityId: number | null}) {
     }
   };
 
-  const handleDateClick = () => {
+  const handleDateClick = (clickedDate: string) => {
+    const hasReservation = reservationsData.some(reservation => reservation.date === clickedDate);
+    if (!hasReservation) return;
     setIsModalOpen(prev => !prev);
   };
 
@@ -78,12 +80,11 @@ export default function BigCalendar({activityId}: {activityId: number | null}) {
 
   const DateCell = (date: Dayjs) => {
     const reservationData = reservationsData.find(reservation => reservation.date === date.format('YYYY-MM-DD'));
-
     return (
       <div>
         <div
           onClick={() => {
-            handleDateClick();
+            handleDateClick(date.format('YYYY-MM-DD'));
           }}
           className="relative h-154pxr border-collapse border border-gray-900 hover:bg-green-50"
         >
