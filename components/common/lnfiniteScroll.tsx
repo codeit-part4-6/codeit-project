@@ -35,6 +35,7 @@ const InfiniteScroll = <T,>({queryKey, fetchData, render, className}: InfiniteSc
     <>
       <div className={`relative ${className}`}>
         {/* 데이터 영역 */}
+
         <div className="custom-scrollbar h-full overflow-x-hidden overflow-y-scroll pr-4">
           {data?.pages.map((group, i) => (
             <div key={i} className="relative">

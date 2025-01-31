@@ -1,10 +1,13 @@
 import Button from '@/components/common/button';
-import {useState, useRef, useEffect} from 'react';
-import ActivitiesCard from './activities-card';
+import {useState, useRef, useEffect, Fragment} from 'react';
 import ActivitiesRegister, {IFormInput} from './activities-register';
 import Modal from '@/components/common/modal/modal';
 import Image from 'next/image';
 import closeButton from '@/public/icon/ic_close_button.svg';
+import InfiniteScroll from '../common/lnfiniteScroll';
+import {getActivitiesList} from '@/service/api/myactivities/getActivities';
+import {Activity} from '@/types/myactivities';
+import ActivitiesCard from './activities-card';
 
 export default function MyActivities({onclose}: {onclose: () => void}) {
   const [content, setContent] = useState<'manage' | 'register'>('manage');
@@ -65,11 +68,22 @@ export default function MyActivities({onclose}: {onclose: () => void}) {
           </div>
 
           {content === 'manage' && (
-            <div className="flex flex-col gap-2 tablet:gap-4 pc:gap-6">
-              <ActivitiesCard />
-              <ActivitiesCard />
-              <ActivitiesCard />
-            </div>
+            <InfiniteScroll
+              className="h-500pxr w-full pc:h-700pxr"
+              queryKey="key"
+              fetchData={context => getActivitiesList({...context, meta: {size: 20}})}
+              render={group => (
+                <div className="flex flex-col gap-2 tablet:gap-4 pc:gap-6">
+                  {group.pages.flatMap(page =>
+                    page.map((data: Activity) => (
+                      <Fragment key={data.id}>
+                        <ActivitiesCard data={data} />
+                      </Fragment>
+                    )),
+                  )}
+                </div>
+              )}
+            ></InfiniteScroll>
           )}
 
           {content === 'register' && (
