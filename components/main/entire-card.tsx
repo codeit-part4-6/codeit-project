@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import ExPopular from '@/public/img/img_exPopular.webp';
 import Star from '@/public/icon/ic_yellowStar.svg';
+import PagenationComponent from '@/app/components/pagenation';
 
 export default function EntireCard() {
   return (
-    <>
-      <div className="grid grid-cols-2 gap-x-2 gap-y-[0.313rem] tablet:grid-cols-3 tablet:gap-x-8 tablet:gap-y-4 pc:grid-cols-4 pc:gap-x-6 pc:gap-y-12">
+    <div className="flex flex-col">
+      <div className="tablet:mb-18 mb-16 grid grid-cols-2 gap-x-2 gap-y-[0.313rem] tablet:grid-cols-3 tablet:gap-x-8 tablet:gap-y-4 pc:grid-cols-4 pc:gap-x-6 pc:gap-y-12">
         {/* 카드 1 */}
         <div className="flex flex-col gap-16pxr">
           <div className="relative flex h-168pxr w-168pxr flex-col gap-16pxr tablet:h-221pxr tablet:w-221pxr">
@@ -98,6 +99,7 @@ export default function EntireCard() {
           </div>
         </div>
       </div>
-    </>
+      <PagenationComponent />
+    </div>
   );
 }
