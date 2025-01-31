@@ -80,7 +80,7 @@ function Pagenation({size, showItemCount, onChange}: PagenationType) {
   }, [showItemCount, size]);
 
   return (
-    <div className={'flex flex-row items-center gap-10pxr p-0'}>
+    <div className={'flex flex-row items-center justify-center gap-10pxr p-0'}>
       <Button
         key={'prevBtn'}
         className={
@@ -110,11 +110,11 @@ function Pagenation({size, showItemCount, onChange}: PagenationType) {
       <Button
         key={'nextBtn'}
         className={
-          'h-40pxr w-40pxr flex-row items-center justify-center gap-10pxr rounded-2xl border border-solid border-gray-500 bg-white p-0 pc:h-55pxr pc:w-55pxr'
+          'relative h-40pxr w-40pxr flex-row items-center justify-center gap-10pxr rounded-2xl border border-solid border-gray-500 bg-white p-0 pc:h-55pxr pc:w-55pxr'
         }
         onClick={handleNextPage}
       >
-        <Image src="/icon/icon_next.svg" alt="next" width={21} height={21} />
+        <Image className={'absolute right-[25%] top-[23%] pc:right-[30%] pc:top-[34%]'} src="/icon/icon_next.svg" alt="next" width={21} height={21} />
       </Button>
     </div>
   );

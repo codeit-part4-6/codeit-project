@@ -32,4 +32,59 @@ body {
   .big-button {
     @apply h-42pxr w-138pxr rounded-lg bg-nomad-black px-56pxr py-12pxr text-center align-middle text-md font-medium leading-none text-white tablet:h-48pxr tablet:w-120pxr tablet:px-46pxr tablet:py-14pxr tablet:text-lg tablet:leading-none pc:h-48pxr pc:w-120pxr pc:px-46pxr pc:py-14pxr pc:text-lg pc:leading-none;
   }
+  .error-message {
+    @apply ml-2 mt-2 text-xs text-red-200;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer base {
+  .mySwiper {
+    width: 100%;
+    height: 100px;
+    position: relative; /* 부모 요소가 relative여야 절대 위치가 제대로 적용됨 */
+  }
+
+  /* SwiperSlide 스타일 */
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    width: 5rem; /* 원하는 너비 */
+    height: 5rem; /* 원하는 높이 */
+    font-size: 1.25rem; /* 원하는 글자 크기 */
+    color: #333;
+    text-align: center;
+  }
+
+  /* 페이지네이션 스타일 */
+  .mySwiper .swiper-pagination {
+    position: absolute;
+    bottom: 0; /* 페이지네이션을 하단에 위치시킴 */
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 10; /* 페이지네이션이 다른 요소 위에 표시되도록 */
+    padding: 10px 0; /* 페이지네이션과 슬라이드 간 간격 조정 */
+  }
+
+  /* 페이지네이션 불릿 스타일 */
+  .swiper-pagination-bullet {
+    background-color: #000; /* 페이지네이션 불릿의 색상 */
+  }
+
+  /* 추가적인 스타일링을 원하는 경우 */
+  .swiper-pagination-bullet-active {
+    background-color: #ff0000; /* 활성화된 불릿 색상 */
+  }
 }
