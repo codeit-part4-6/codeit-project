@@ -5,6 +5,7 @@ import KakaoMap from '@/components/activities/kakomap';
 import Reviews from '@/components/activities/reviews';
 import Dropbox from '@/components/common/dropbox';
 import {ReservationMobileType, ReservationTabletType, ReservationWindowsType} from '@/components/activities/side-reservation';
+import InitialDevice from '@/utiles/initial-device';
 import Star from '@/public/icon/ic_star.svg';
 import IconMeatball from '@/public/icon/ic_meatball.svg';
 import LocationIcon from '@/public/icon/icon_location.svg';
@@ -99,16 +100,6 @@ const Reservation = () => {
   const [device, setDevice] = useState<string>('mobile');
   const [isOpenDropbox, setIsOpenDropbox] = useState<boolean>(false);
 
-  const initialDevice = () => {
-    let device = 'mobile';
-    if (window.innerWidth > 1199) {
-      device = 'windows';
-    } else if (window.innerWidth > 767) {
-      device = 'tablet';
-    }
-    return device;
-  };
-
   const ReservationFromDivceType = () => {
     switch (device) {
       case 'windows':
@@ -126,7 +117,7 @@ const Reservation = () => {
   };
 
   useEffect(() => {
-    const getDeviceType = initialDevice();
+    const getDeviceType = InitialDevice();
     setDevice(getDeviceType);
   }, []);
 
