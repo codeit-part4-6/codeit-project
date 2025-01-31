@@ -22,7 +22,7 @@ export default function ReservationModal({onClose, selectedDate, activityId}: Re
   });
 
   const reservedScheduleData: Schedules = Array.isArray(data) ? data : [];
-  console.log(reservedScheduleData);
+
   return (
     <div
       onClick={e => e.stopPropagation()}
@@ -57,7 +57,7 @@ export default function ReservationModal({onClose, selectedDate, activityId}: Re
             </div>
           </div>
         </div>
-        <ReservationInfo reservationStatus={reservationStatus} />
+        <ReservationInfo reservationStatus={reservationStatus} reservedScheduleData={reservedScheduleData} activityId={activityId} />
       </div>
     </div>
   );

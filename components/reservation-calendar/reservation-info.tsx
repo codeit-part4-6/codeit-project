@@ -1,124 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import arrowDown from '@/public/icon/icon_arrow_down.svg';
 import Image from 'next/image';
-import {ReservationInfoProps} from '@/types/reservation-info-props';
 import ConfirmButton from './confirm-button';
 import ConfirmChip from './confirm-chip';
+import {Schedules} from '@/types/reserved-schedule';
+import {useQuery} from '@tanstack/react-query';
+import {ReservationsResponse} from '@/types/my-reservations';
+import {getReservations} from '@/service/api/reservation-calendar/getReservations.api';
 
-const mockReservations = {
-  cursorId: 0,
-  totalCount: 0,
-  reservations: [
-    {
-      id: 1,
-      nickname: '홍길동',
-      userId: 1,
-      teamId: '11-6',
-      activityId: 1,
-      scheduleId: 1,
-      status: 'pending',
-      reviewSubmitted: true,
-      totalPrice: 10000,
-      headCount: 3,
-      date: '체험 일자1',
-      startTime: '09:00',
-      endTime: '10:00',
-      createdAt: '2025-01-21T15:23:32.245Z',
-      updatedAt: '2025-01-21T15:23:32.245Z',
-    },
-    {
-      id: 2,
-      nickname: '홍길동',
-      userId: 1,
-      teamId: '11-6',
-      activityId: 2,
-      scheduleId: 2,
-      status: 'pending',
-      reviewSubmitted: true,
-      totalPrice: 20000,
-      headCount: 6,
-      date: '체험 일자2',
-      startTime: '10:00',
-      endTime: '11:00',
-      createdAt: '2025-01-21T15:23:32.245Z',
-      updatedAt: '2025-01-21T15:23:32.245Z',
-    },
-    {
-      id: 3,
-      nickname: '홍길동',
-      userId: 1,
-      teamId: '11-6',
-      activityId: 3,
-      scheduleId: 3,
-      status: 'pending',
-      reviewSubmitted: true,
-      totalPrice: 30000,
-      headCount: 7,
-      date: '체험 일자3',
-      startTime: '10:00',
-      endTime: '11:00',
-      createdAt: '2025-01-21T15:23:32.245Z',
-      updatedAt: '2025-01-21T15:23:32.245Z',
-    },
-    {
-      id: 4,
-      nickname: '김철수',
-      userId: 1,
-      teamId: '11-6',
-      activityId: 4,
-      scheduleId: 4,
-      status: 'confirmed',
-      reviewSubmitted: true,
-      totalPrice: 30000,
-      headCount: 8,
-      date: '체험 일자4',
-      startTime: '10:00',
-      endTime: '11:00',
-      createdAt: '2025-01-21T15:23:32.245Z',
-      updatedAt: '2025-01-21T15:23:32.245Z',
-    },
-    {
-      id: 5,
-      nickname: '김영희',
-      userId: 1,
-      teamId: '11-6',
-      activityId: 5,
-      scheduleId: 5,
-      status: 'declined',
-      reviewSubmitted: true,
-      totalPrice: 40000,
-      headCount: 11,
-      date: '체험 일자5',
-      startTime: '10:00',
-      endTime: '11:00',
-      createdAt: '2025-01-21T15:23:32.245Z',
-      updatedAt: '2025-01-21T15:23:32.245Z',
-    },
-    {
-      id: 6,
-      nickname: '이진수수',
-      userId: 1,
-      teamId: '11-6',
-      activityId: 6,
-      scheduleId: 6,
-      status: 'declined',
-      reviewSubmitted: true,
-      totalPrice: 40000,
-      headCount: 21,
-      date: '체험 일자6',
-      startTime: '11:00',
-      endTime: '12:00',
-      createdAt: '2025-01-21T15:23:32.245Z',
-      updatedAt: '2025-01-21T15:23:32.245Z',
-    },
-  ],
-};
+interface ReservationProps {
+  reservationStatus: string;
+  reservedScheduleData: Schedules;
+  activityId: number | null;
+}
 
-export default function ReservationInfo({reservationStatus}: ReservationInfoProps) {
+export default function ReservationInfo({reservationStatus, reservedScheduleData, activityId}: ReservationProps) {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const reservations = mockReservations.reservations.filter(reservation => reservation.status === reservationStatus);
+  const {data} = useQuery<ReservationsResponse>({
+    queryKey: ['myReservations', activityId, reservationStatus],
+    queryFn: () => getReservations({activityId, size: 10, scheduleId: reservedScheduleData[0].scheduleId, status: reservationStatus}),
+    enabled: !!activityId,
+  });
+
+  const reservations = data?.reservations || [];
+  const reservationsData = reservations.filter(reservation => reservation.status === reservationStatus);
+  console.log(reservationsData);
+  console.log(reservedScheduleData);
 
   const times = Array.from(new Set(reservations.map(reservation => `${reservation.startTime} ~ ${reservation.endTime}`)));
 
