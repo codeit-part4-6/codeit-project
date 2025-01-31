@@ -1,8 +1,9 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import Star from '@/public/icon/ic_star.svg';
 import Pagenation from '@/components/common/pagenation';
+import FormatDate from '@/utiles/format-date';
+import Star from '@/public/icon/ic_star.svg';
 import DefaultProfile from '@/public/img/img_default_profile.svg';
 
 const ReviewsMoc = {
@@ -44,11 +45,6 @@ const Reviews = () => {
     console.log(page);
   };
 
-  const formatDate = (date: string) => {
-    const getDate = new Date(date).toLocaleDateString().replace(/\./g, '').replace(/\s/g, '-');
-    return getDate;
-  };
-
   return (
     <>
       <div className="w-full pb-34pxr pt-40pxr text-xl font-bold text-nomad-black">후기</div>
@@ -75,7 +71,7 @@ const Reviews = () => {
                 <div className="flex flex-row">
                   <p className="text-lg font-bold text-nomad-black">{dt.user.nickname}</p>
                   <p className="mx-8pxr text-lg font-normal text-nomad-black">|</p>
-                  <p className="text-lg font-normal text-gray-500">{formatDate(dt.createdAt)}</p>
+                  <p className="text-lg font-normal text-gray-500">{FormatDate(dt.createdAt)}</p>
                 </div>
                 <p>{dt.content}</p>
                 {idx !== ReviewsMoc.reviews.length - 1 && <hr className="my-24pxr" />}
