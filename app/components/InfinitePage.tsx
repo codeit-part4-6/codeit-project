@@ -40,7 +40,7 @@ const RedditProjects: React.FC = () => {
           {/* 각 페이지에서 children을 순회하며 데이터 출력 */}
           {group.pages.flatMap(page =>
             page.data.children.map(({data: project}) => (
-              <div key={project.id} className="mb-3 h-[200px] w-[600px] bg-slate-600">
+              <div key={project.id} className="mb-3 h-[200px] w-[540px] bg-slate-600">
                 <div>{project.author}</div>
                 <div>{project.title}</div>
               </div>
