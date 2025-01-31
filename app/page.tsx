@@ -6,9 +6,6 @@ import Option from '../components/main/option';
 import SearchList from '@/components/main/search-list';
 import PopularCard from '@/components/main/popular-card';
 import EntireCard from '@/components/main/entire-card';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
 
 export default function Mainpage() {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -17,10 +14,6 @@ export default function Mainpage() {
     setSearchKeyword(keyword);
     setIsShown(true);
   };
-
-  // api later ~
-  // const debouncedOnChange = useDebouncedCallback((value: string) => {
-  // }, 500);
 
   useEffect(() => {
     if (searchKeyword === '') {
@@ -40,19 +33,17 @@ export default function Mainpage() {
       {isShown ? (
         <SearchList keyword={searchKeyword} />
       ) : (
-        <>
-          <div className="mx-auto flex flex-col items-center justify-center">
-            <section className="mx-15pxr mb-40pxr mt-101pxr flex flex-col gap-16pxr tablet:mt-110pxr pc:mt-126pxr">
-              <h2 className="text-[1.125rem]/[1.313rem] font-bold text-black-100 tablet:text-[2.25rem]/[2.625rem]">🔥 인기 체험</h2>
-              <PopularCard />
-            </section>
-            <Option />
-            <section className="mx-15pxr mb-24pxr mt-24pxr flex flex-col gap-24pxr tablet:mt-35pxr tablet:gap-32pxr">
-              <h2 className="text-[1.125rem]/[1.313rem] font-bold text-black-100 tablet:text-3xl">🥽 모든 체험</h2>
-              <EntireCard />
-            </section>
-          </div>
-        </>
+        <div>
+          <section className="mx-15pxr mb-40pxr mt-101pxr flex flex-col items-start justify-center gap-16pxr tablet:mt-110pxr pc:mt-126pxr">
+            <h2 className="text-[1.125rem]/[1.313rem] font-bold text-black-100 tablet:text-[2.25rem]/[2.625rem]">🔥 인기 체험</h2>
+          </section>
+          <PopularCard className="mx-15pxr" />
+          <Option className="pc:mt-15 mx-15pxr mb-6 mt-10 flex max-w-[75.25rem] items-center justify-between tablet:mb-[2.188rem] tablet:mt-[3.375rem]" />
+          <section className="mx-15pxr mb-24pxr mt-24pxr flex flex-col items-start justify-center gap-24pxr tablet:mt-35pxr tablet:gap-32pxr">
+            <h2 className="text-[1.125rem]/[1.313rem] font-bold text-black-100 tablet:text-3xl">🥽 모든 체험</h2>
+            <EntireCard />
+          </section>
+        </div>
       )}
     </div>
   );
