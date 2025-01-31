@@ -6,12 +6,12 @@ export interface SelectBoxType {
   options: {value: string; label: string}[];
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  deleteButtonImage?: string;
+  selectButtonImage?: string;
   onDelete?: () => void;
   label?: string;
 }
 
-export default function SelectBox({className = '', options, value, onChange, deleteButtonImage, onDelete, label}: SelectBoxType) {
+export default function SelectBox({className = '', options, value, onChange, selectButtonImage, onDelete, label}: SelectBoxType) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedLabel, setSelectedLabel] = useState(label);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -53,8 +53,8 @@ export default function SelectBox({className = '', options, value, onChange, del
       <div onClick={handleToggleDropdown} className="flex cursor-pointer items-center justify-between rounded-e rounded-s border border-gray-700 p-4">
         <span>{selectedLabel || '선택하세요'}</span>
         <button type="button" onClick={handleDelete} className="ml-2">
-          {deleteButtonImage ? (
-            <Image src={deleteButtonImage} alt="삭제" width={24} height={24} className="h-6 w-6" />
+          {selectButtonImage ? (
+            <Image src={selectButtonImage} alt="선택" width={24} height={24} layout="intrinsic" className="h-6 w-6" />
           ) : (
             <span className="text-red-500">🗑️</span>
           )}

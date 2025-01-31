@@ -171,7 +171,12 @@ export default function Page() {
           </div>
         </form>
       </div>
-      {isModalOpen && <Modal type="big" message={modalMessage} onClose={handleCloseModal} />}
+      {isModalOpen && 
+        <Modal 
+          type="big" 
+          message={modalMessage} 
+          onClose={handleCloseModal} 
+        />}
     </>
   );
 }

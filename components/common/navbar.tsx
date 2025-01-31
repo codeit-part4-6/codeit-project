@@ -39,9 +39,9 @@ export default function Navbar() {
   ];
 
   return (
-    <header className="sticky top-0 z-50">
-      <nav className="sticky flex h-[4.375rem] px-[1.25rem] py-[1.25rem] md:gap-[1.3125rem] md:px-[0.625rem] md:py-[0.625rem]">
-        <div className="flex w-full items-center justify-between">
+    <header className="sticky top-0 z-50 bg-white border-b-[1px] border:bg-gray-100">
+      <nav className='sticky flex h-[4.375rem] px-[1.25rem] py-[1.25rem] md:gap-[1.3125rem] md:px-[0.625rem] md:py-[0.625rem]  max-w-[1200px] mx-auto'>
+        <div className='flex w-full items-center justify-between'>
           <div>
             <Link href="/">
               <Image src={navlogo} alt="로고 아이콘" />
@@ -57,9 +57,9 @@ export default function Navbar() {
                 <div className="flex">
                   <Image src={notification} alt="알림 아이콘" />
                 </div>
-                <hr className="h-[22px] border-[1px] border-[#DDDDDD] w-0" />
-                <div className="relative flex justify-center items-center gap-10pxr">
-                  <div
+                <hr className='h-[22px] border-[1px] border:bg-gray-100 w-0' />
+                <div className='relative flex justify-center items-center gap-10pxr'>
+                  <div 
                     onClick={toggleDropdown}
                     className="cursor-pointer flex items-center gap-2"
                   >
@@ -94,7 +94,6 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      <hr className="border-b-[0.0625rem] border-gray-200" />
     </header>
   );
 }
