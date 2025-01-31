@@ -8,9 +8,16 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Button from '@/components/common/button';
+import arrow from '@/public/icon/ic_arrow_next.svg';
+import Image from 'next/image';
 
-const Option = () => {
+interface OptionType {
+  className: string;
+}
+
+export default function Option({className}: OptionType) {
   const [optionState, setOptionState] = useState({price: '가격'});
+  const [activeCategory, setActiveCategory] = useState<string | null>(null); // 현재 선택된 카테고리
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setOptionState({...optionState, price: event.target.value});
@@ -36,49 +43,45 @@ const Option = () => {
   };
 
   return (
-    <>
-      <div className="relative w-full">
-        <Swiper
-          ref={swiperRef} // Swiper 인스턴스를 참조
-          slidesPerView={6}
-          spaceBetween={10}
-          navigation={{
-            nextEl: '.swiper-button-next',
-          }}
-          breakpoints={{
-            344: {
-              slidesPerView: 3, // 모바일: 3개
-            },
-            768: {
-              slidesPerView: 4, // 태블릿: 4개
-            },
-            1200: {
-              slidesPerView: 6, // PC: 6개
-            },
-          }}
-          modules={[Navigation]}
-          className="mySwiper"
-        >
-          {categories.map(category => (
-            <SwiperSlide key={category.id} className="flex items-center justify-center text-xl font-semibold text-gray-800">
-              <Button type="button" className="rounded border border-primary px-4 py-2">
-                {category.label}
-              </Button>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+    <div className={className}>
+      <Swiper
+        ref={swiperRef} // Swiper 인스턴스를 참조
+        slidesPerView="auto"
+        spaceBetween={10}
+        breakpoints={{
+          340: {
+            slidesPerView: 3, // 모바일: 3개
+          },
+          745: {
+            slidesPerView: 4, // 태블릿: 4개
+          },
+          1200: {
+            slidesPerView: 6, // PC: 6개
+          },
+        }}
+        modules={[Navigation]}
+      >
+        {categories.map(category => (
+          <SwiperSlide key={category.id}>
+            <Button
+              type="button"
+              className={`tablet:w-30 flex h-10 w-20 items-center justify-center gap-2 rounded-[0.938rem] border border-primary text-lg font-medium text-primary hover:bg-secondary tablet:h-[3.625rem] tablet:gap-[0.875rem] tablet:text-2lg pc:w-[7.938rem] pc:gap-6 ${activeCategory === category.id ? 'bg-primary text-white' : ''} `}
+              onClick={() => setActiveCategory(category.id)} // 버튼 클릭 시 상태 변경
+            >
+              {category.label}
+            </Button>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-        {/* 오른쪽 화살표 버튼 클릭 시 이동 */}
-        <button
-          onClick={handleNextClick} // 버튼 클릭 시 오른쪽으로 이동
-          className="absolute right-4 top-1/2 z-20 -translate-y-1/2 transform"
-        >
-          클릭
-        </button>
+      {/* 오른쪽 화살표 버튼 클릭 시 이동 */}
+      <Button
+        onClick={handleNextClick} // 버튼 클릭 시 오른쪽으로 이동
+        className="absolute right-[13rem] top-[78rem] z-20 hidden h-8 w-8 translate-y-1/2 transform rounded-full border tablet:flex tablet:items-center tablet:justify-center tablet:hover:bg-secondary pc:hidden"
+      >
+        <Image src={arrow} alt="오른쪽 화살표" width={7} height={13} />
+      </Button>
 
-        {/* 페이지네이션 버튼 */}
-        <div className="swiper-pagination" />
-      </div>
       <select defaultValue="default" onChange={handleChange} className="rounded border px-2 py-1">
         <option value="default" disabled hidden>
           가격
@@ -86,8 +89,6 @@ const Option = () => {
         <option value="price_desc">가격이 낮은 순</option>
         <option value="price_asc">가격이 높은 순</option>
       </select>
-    </>
+    </div>
   );
-};
-
-export default Option;
+}
