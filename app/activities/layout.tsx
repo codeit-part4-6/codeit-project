@@ -5,11 +5,11 @@ import IconMeatball from '@/public/icon/ic_meatball.svg';
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
-    <div className="container">
+    <div className="container mx-auto">
       <main>
         <Suspense
           fallback={
-            <div className="table:w-696pxr mx-auto px-24pxr pb-133pxr pt-16pxr tablet:px-24pxr tablet:pb-145pxr tablet:pt-24pxr pc:w-full pc:max-w-[75rem] pc:p-0 pc:pb-128pxr pc:pt-78pxr">
+            <div className="mx-auto w-full px-24pxr pb-133pxr pt-16pxr tablet:min-w-696pxr tablet:pb-145pxr tablet:pt-24pxr pc:px-0 pc:pb-128pxr pc:pt-78pxr">
               <Skeleton className="mb-10pxr h-24pxr w-100pxr text-md font-normal text-nomad-black" />
               <div className="relative mb-16pxr flex flex-row justify-between">
                 <Skeleton className="h-42pxr w-382pxr flex-row items-center gap-16pxr p-0 text-xl font-bold text-nomad-black tablet:text-3xl pc:text-3xl" />
